@@ -1,3 +1,4 @@
 (executable
- (name main))
+ (name main)
+ (libraries r0 lex_parse))
 
