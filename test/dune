@@ -1,3 +1,7 @@
 (tests
   (names r0_tests)
-  (libraries oUnit pretty_print))
+  (libraries oUnit lex_parse pretty_print))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))
