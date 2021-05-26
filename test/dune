@@ -1,0 +1,3 @@
+(tests
+  (names r0_tests)
+  (libraries oUnit pretty_print))

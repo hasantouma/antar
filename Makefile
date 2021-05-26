@@ -4,6 +4,9 @@ build:
 run:
 	dune exec bin/main.exe
 
+test_all:
+	dune runtest
+
 .PHONY: clean
 
 clean:
