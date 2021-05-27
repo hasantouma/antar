@@ -1,6 +1,6 @@
 (tests
   (names r0_tests)
-  (libraries oUnit lex_parse pretty_print))
+  (libraries oUnit lex_parse pretty_print interp))
 
 (env
   (dev

@@ -52,6 +52,14 @@ let add_read_72 = {
   message = "add (3)"
 }
 
+let add_read_read = {
+  ast = `EAdd (`ERead, `ERead);
+  pp = "(+ (read) (read))";
+  interp = 5;
+  input = [2; 3];
+  message = "add (4)"
+}
+
 
 (* negate *)
 let negate_1 = {

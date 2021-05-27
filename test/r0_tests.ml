@@ -23,7 +23,10 @@ let test_add _ctxt =
   test_interp add_33_read;
 
   test_pp     add_read_72;
-  test_interp add_read_72
+  test_interp add_read_72;
+
+  test_pp     add_read_read;
+  test_interp add_read_read
 
 
 let test_negate _ctxt =
