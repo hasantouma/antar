@@ -1,0 +1,4 @@
+(library
+  (name repl)
+  (libraries interp lex_parse utils))
+

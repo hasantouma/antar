@@ -1,4 +1,4 @@
 (executable
  (name main)
- (libraries r0 lex_parse pretty_print))
+ (libraries lex_parse pretty_print repl))
 

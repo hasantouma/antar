@@ -1,22 +1,15 @@
 
-exception Read_input of string
-
-let read_top lst =
-  match lst with
-  | [] -> raise (Read_input "Empty list!")
-  | h :: t -> (h, t)
-
-let interp h expr lst =
+let interp f expr read_int =
   match expr with
-  | `EInt n -> (n, lst)
-  | `ERead -> read_top lst
+  | `EInt n -> n
+  | `ERead -> read_int ()
   | `ENegate e ->
-      let (e', lst') = h e lst in
+      let e' = f e read_int in
       let v = (-1) * e' in
-      (v, lst')
+      v
   | `EAdd(l, r) ->
-      let (vl, lst') = h l lst in
-      let (vr, lst'') = h r lst' in
+      let vl = f l read_int in
+      let vr = f r read_int in
       let v = vl + vr in
-      (v, lst'')
+      v
 
