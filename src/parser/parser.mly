@@ -5,10 +5,11 @@
 %type <Ast.expr> expr_start
 %%
 expr_start:
+  expr EOF { $1 }
+expr:
 | INT { `EInt $1 }
 | LP READ RP { `ERead }
-| LP NEGATE expr_start RP { `ENegate $3 }
-| LP PLUS expr_start expr_start RP { `EAdd($3, $4) }
-| LP expr_start RP { $2 }
+| LP NEGATE expr RP { `ENegate $3 }
+| LP PLUS expr expr RP { `EAdd($3, $4) }
 ;
 
