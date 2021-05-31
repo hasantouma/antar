@@ -2,9 +2,10 @@
 let make_read (readings : int list) : (unit -> int) =
   match readings with
   | [] ->
-      (*output_string stdout "Need input for 'read'> ";
-      flush stdout;*)
-      read_int
+      (fun () ->
+        output_string stdout "In *> ";
+        flush stdout;
+        read_int ())
   | _ ->
       let box = ref readings in
       let rec f () =
