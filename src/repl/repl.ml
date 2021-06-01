@@ -1,7 +1,6 @@
 open Interp
 open Lex_parse.Ast
 open Lex_parse.Main
-open Utils
 
 let handle_exit repl_in =
   if repl_in = "#quit" then
@@ -14,6 +13,6 @@ let rec repl () : unit =
   handle_exit repl_in;
   let lexbuf = Lexing.from_string repl_in in
   let (p : program) = make_prog lexbuf in
-  print_endline (string_of_int (interp p.e (make_read [])));
+  print_endline (string_of_int (interp p.e []));
   repl ()
 

@@ -3,7 +3,6 @@ open String
 open Pretty_print
 open Interp
 open Lex_parse.Ast
-open Utils
 
 type test = {
   ast     : expr;
@@ -14,5 +13,5 @@ type test = {
 }
 
 let test_pp     (t : test) = assert_equal t.pp     (pp t.ast)             ~msg:("pp: " ^ t.message)		~printer:lowercase_ascii
-let test_interp (t : test) = assert_equal t.interp (interp t.ast (make_read t.input)) ~msg:("interp: " ^ t.message) ~printer:string_of_int
+let test_interp (t : test) = assert_equal t.interp (interp t.ast t.input) ~msg:("interp: " ^ t.message) ~printer:string_of_int
 

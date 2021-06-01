@@ -1,2 +1,2 @@
-val interp : Lex_parse.Ast.expr -> (unit -> int) -> int
+val interp : Lex_parse.Ast.expr -> int list -> int
 
