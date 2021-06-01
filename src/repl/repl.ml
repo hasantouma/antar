@@ -1,5 +1,5 @@
 open Interp
-open Lex_parse.Ast
+open Ast
 open Lex_parse.Main
 
 let handle_exit repl_in =

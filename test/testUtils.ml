@@ -2,7 +2,7 @@ open OUnit2
 open String
 open Pretty_print
 open Interp
-open Lex_parse.Ast
+open Ast
 
 type test = {
   ast     : expr;

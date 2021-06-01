@@ -1,4 +1,4 @@
-open Lex_parse.Ast
+open Ast
 
 let interp_all (f : expr -> (unit -> int) -> int) (expr : expr) (read_int : (unit -> int)) : int =
   match expr with

@@ -1,4 +1,4 @@
 (library
   (name interp)
-  (libraries r0 lex_parse))
+  (libraries ast r0))
 

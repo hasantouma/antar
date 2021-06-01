@@ -1,4 +1,4 @@
-open Lex_parse.Ast
+open Ast
 
 let pp_all (f : expr -> string) (expr : expr) : string =
   match expr with

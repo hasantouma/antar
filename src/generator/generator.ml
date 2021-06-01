@@ -1,4 +1,4 @@
-open Lex_parse.Ast
+open Ast
 
 let () = Random.init (int_of_float (Unix.time ()))
 let random_float_gen : (float -> float) = Random.float
