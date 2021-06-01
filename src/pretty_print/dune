@@ -1,4 +1,4 @@
 (library
   (name pretty_print)
-  (libraries r0 lex_parse))
+  (libraries r0 lex_parse sexpr))
 
