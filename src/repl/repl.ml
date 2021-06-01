@@ -1,6 +1,6 @@
 open Interp
 open Ast
-open Lex_parse.Main
+open Parser.Main
 
 let handle_exit repl_in =
   if repl_in = "#quit" then

@@ -1,5 +1,5 @@
 {
- open Parser
+ open Parse
  exception Eof
 }
 rule token = parse

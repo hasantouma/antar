@@ -1,5 +1,5 @@
 open Pretty_print
-open Lex_parse.Main
+open Parser.Main
 open Repl
 open Interp
 open Generator
