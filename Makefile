@@ -1,5 +1,6 @@
 build:
 	dune build bin/main.exe
+	ln -sf _build/default/bin/main.exe antar
 
 run:
 	dune exec bin/main.exe
@@ -10,6 +11,7 @@ test_all:
 .PHONY: clean
 
 clean:
+	rm -f antar
 	dune clean
 
 # You can stick this section in your own project if you wish.

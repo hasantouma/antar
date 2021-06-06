@@ -1,28 +1,12 @@
-open Pretty_print
-open Parser.Main
 open Repl
-open Interp
-open Generator
 
 let () =
-  let e3 = exp2 3 in
-  print_endline ("exp of 3: " ^ (pp e3));
-  print_endline ("exp of 3 with indent: " ^ (pp_with_indent e3));
-  print_endline ("interp exp of 3: " ^ (string_of_int (interp e3 [])))
-
-
-let () =
-  let r3 = randp 3 in
-  let p3 = pp r3 in
-  let indent_p3 = pp_with_indent r3 in
-  print_endline ("randp3: " ^ p3);
-  print_endline ("indent_p3" ^ indent_p3);
-  print_endline ("interp randp3: " ^ (string_of_int (interp r3 [])))
-
-let () =
-  let p = parse_file "src/ex1.ht" in
-  print_endline (pp p.e);
-  print_endline (pp_with_indent p.e)
-
-let () = repl ()
+  let args_len = Array.length Sys.argv in
+  if args_len > 1 then
+    interp_file Sys.argv.(1)
+  else
+    begin
+      print_endline "Welcome to the 'Antar' REPL";
+      repl ()
+    end
 
