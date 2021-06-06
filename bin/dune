@@ -1,4 +1,4 @@
 (executable
  (name main)
- (libraries repl))
+ (libraries pretty_print interp repl generator))
 
