@@ -3,6 +3,13 @@ open Ast
 open Parser.Main
 open Pretty_print
 
+let parse_file (name : string) : program =
+  let chan = open_in name in
+  let lexbuf = Lexing.from_channel chan in
+  let p : program = make_prog lexbuf in
+  close_in chan;
+  p
+
 let handle_exit repl_in =
   if repl_in = "#quit" then
     exit 0
