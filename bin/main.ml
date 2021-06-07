@@ -11,7 +11,7 @@ let interp_randp (n : int) : unit =
   print_endline s
 
 
-let () =
+let parse_cmd_line_args () =
   let speclist = [
     ("-f", Arg.String interp_file, "Parsing file");
     ("-g", Arg.Int interp_randp, "Generate random program of size n")
@@ -23,7 +23,9 @@ let () =
 
 let () =
   let args_len = Array.length Sys.argv in
-  if args_len = 1 then
+  if args_len > 1 then
+    parse_cmd_line_args ()
+  else
     begin
       print_endline "Welcome to the 'Antar' REPL";
       repl ()
