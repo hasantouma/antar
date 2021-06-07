@@ -46,13 +46,19 @@ let test_negate _ctxt =
   test_interp negate_negate_5
 
 
+let test_randp _ctxt =
+  let randp3 = randp3 () in
+  test_pp     randp3;
+  test_interp randp3
+
 
 let suite =
   "r0_tests" >::: [
     "int" >:: test_int;
     "read" >:: test_read;
     "add" >:: test_add;
-    "negate" >:: test_negate
+    "negate" >:: test_negate;
+    "randp" >:: test_randp
   ]
 
 let _ = run_test_tt_main suite

@@ -1,4 +1,7 @@
 open TestUtils
+open Generator
+open Pretty_print
+open Interp
 
 (* int *)
 let one = {
@@ -102,4 +105,17 @@ let negate_negate_5 = {
   message = "negate (5)"
 }
 
+let randp3 () =
+  let ast = randp 3 in
+  let pp = pp ast in
+  let input = generate_input_for_randp ast in
+  let interp = interp ast input in
+  let message = "randp3" in
+  {
+    ast = ast;
+    pp = pp;
+    interp = interp;
+    input = input;
+    message = message
+  }
 
