@@ -14,5 +14,6 @@
   (depends
     (ocaml
       (>= 4.02.3))
-    dune))
+    dune
+    ounit2))
 
