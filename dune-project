@@ -7,6 +7,10 @@
 
 (generate_opam_files true)
 
+(maintainers "Hasan Touma")
+(authors "Hasan Touma")
+(source (github hasantouma/antar))
+
 (package
   (name antar)
   ; The "depends" and "build" field are written in dune.opam.template
