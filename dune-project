@@ -13,7 +13,6 @@
 
 (package
   (name antar)
-  ; The "depends" and "build" field are written in dune.opam.template
   (synopsis "Antar is a subset programming language of Racket")
   (depends
     (ocaml
