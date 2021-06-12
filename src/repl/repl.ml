@@ -39,7 +39,7 @@ let rec repl () : unit =
 
 let interp_file (file_name : string) : unit =
   let p : program = parse_file file_name in
-  print_endline (R1.Pp.pp p.e);
+  print_endline (R1.Pp.pp p.e 0);
   let i = R1.Interp.interp p.e (Utils.make_read []) in
   print_endline (string_of_int i)
 
