@@ -1,8 +1,9 @@
 
-let pp h expr =
+let pp_open f expr =
   match expr with
   | `EInt n -> string_of_int n
   | `ERead -> "(read)"
-  | `ENegate e -> "(- " ^ (h e) ^ ")"
-  | `EAdd(l, r) -> "(+ " ^ (h l) ^ " " ^ (h r) ^ ")"
+  | `ENegate e -> "(- " ^ (f e) ^ ")"
+  | `EAdd(l, r) -> "(+ " ^ (f l) ^ " " ^ (f r) ^ ")"
 
+let rec pp expr = pp_open pp expr

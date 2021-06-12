@@ -1,4 +1,4 @@
 (library
   (name repl)
-  (libraries interp parser pretty_print))
+  (libraries parser))
 

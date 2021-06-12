@@ -1,6 +1,6 @@
 
 %token <int> INT
-%token READ PROGRAM LP RP PLUS NEGATE WILDCARD EOF
+%token READ PROGRAM LP RP PLUS NEGATE WILDCARD EOF MULT
 %start expr_start
 %type <Ast.expr> expr_start
 %%
@@ -11,5 +11,6 @@ expr:
 | LP READ RP { `ERead }
 | LP NEGATE expr RP { `ENegate $3 }
 | LP PLUS expr expr RP { `EAdd($3, $4) }
+| LP MULT expr expr RP { `EMult($3, $4) }
 ;
 
