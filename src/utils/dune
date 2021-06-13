@@ -1,4 +1,4 @@
 (library
-  (name generator_utils)
+  (name utils)
   (libraries unix))
 

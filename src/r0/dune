@@ -1,4 +1,4 @@
 (library
  (name r0)
- (libraries generator_utils))
+ (libraries utils))
 

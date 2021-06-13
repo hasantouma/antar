@@ -1,5 +1,5 @@
 open Ast
-open Generator_utils.Generator
+open Utils.Generator
 
 let rec exp2 (n : int) : expr =
   match n with
@@ -7,6 +7,15 @@ let rec exp2 (n : int) : expr =
   | n ->
       let result = exp2 (n - 1) in
       `EAdd(result, result)
+
+let num_of_reads (expr : expr) : int =
+  let rec aux expr acc =
+    match expr with
+    | `EInt _ -> acc
+    | `ERead -> 1 + acc
+    | `EAdd(l, r) -> (aux l acc) + (aux r acc)
+    | `ENegate e -> aux e acc
+  in aux expr 0
 
 let rec randp (n : int) : expr =
   let random_float = next_float () in
@@ -24,7 +33,7 @@ let rec randp (n : int) : expr =
         `EAdd (left, right)
 
 let generate_input_for_randp (expr : expr) : int list =
-  let reads : int = Utils.num_of_reads expr in
+  let reads : int = num_of_reads expr in
   let rec aux n acc =
     match n with
     | 0 -> acc
