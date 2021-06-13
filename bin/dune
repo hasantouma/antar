@@ -1,10 +1,12 @@
 (executable
  (name main)
  (modules main)
+ (promote (until-clean))
  (libraries r0 r1 repl))
 
 (executable
  (name antar_r0)
  (modules antar_r0)
+ (promote (until-clean))
  (libraries r0 repl))
 
