@@ -1,26 +1,16 @@
-open Ast
 open Utils.Generator
-
-let rec exp2 (n : int) : expr =
-  match n with
-  | 0 -> `EInt 1
-  | n ->
-      let result = exp2 (n - 1) in
-      `EAdd(result, result)
 
 let num_of_reads_open f expr =
   match expr with
-  | `EInt _ -> 0
-  | `ERead -> 1
-  | `EAdd(l, r) -> (f l) + (f r)
-  | `ENegate e -> f e
+  | `EMult(l, r) -> (f l) + (f r)
+  | #R0.Ast.expr_open as e -> R0.Generator.num_of_reads_open f e
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
 let rec randp n =
   if n = 0 then
     let random_int = next_int () in
-    match next_float () with
+    match next_float ()  with
     | f when f < 0.5 -> `ERead
     | _ -> `EInt random_int
   else
