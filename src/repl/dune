@@ -1,4 +1,4 @@
 (library
   (name repl)
-  (libraries parser))
+  (libraries parser r1_interp r1_pp utils))
 

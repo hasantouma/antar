@@ -2,7 +2,7 @@
  (name main)
  (modules main)
  (promote (until-clean))
- (libraries r1 repl))
+ (libraries r1_generator r1_interp r1_pp repl))
 
 (executable
  (name antar_r0)
