@@ -1,4 +1,4 @@
 (library
   (name ast)
-  (libraries r0 r1))
+  (libraries r1))
 
