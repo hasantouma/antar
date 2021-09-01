@@ -49,7 +49,7 @@ let add_33_read = {
 
 let add_read_72 = {
   ast = `EAdd (`ERead, `EInt 72);
-  optimized = `EAdd (`ERead, `EInt 72);
+  optimized = `EAdd (`EInt 72, `ERead);
   interp = 80;
   input = [8];
   message = "add (3)"
@@ -84,7 +84,7 @@ let negate_read = {
 
 let add_read_and_negate_72 = {
   ast = `EAdd (`ERead, `ENegate (`EInt 72));
-  optimized = `EAdd (`ERead, `EInt (-72));
+  optimized = `EAdd (`EInt (-72), `ERead);
   interp = -72;
   input = [0];
   message = "negate (3)"

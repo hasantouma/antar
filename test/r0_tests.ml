@@ -14,15 +14,18 @@ let test_read _ctxt =
   optimize_iter read_list
 
 let test_add _ctxt =
-  interp_iter add_list
+  interp_iter add_list;
+  optimize_iter add_list
 
 let test_negate _ctxt =
-  interp_iter negate_list
+  interp_iter negate_list;
+  optimize_iter negate_list
 
 let test_randp _ctxt =
   for _ = 1 to 100 do
     let randp3 = randp3 () in
-    test_interp randp3
+    test_interp randp3;
+    test_optimize randp3
   done
 
 
