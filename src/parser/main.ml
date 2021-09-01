@@ -5,6 +5,6 @@ open Parse
 let make_prog (lexbuf : Lexing.lexbuf) : program =
   {
     info = false;
-    e = expr_start token lexbuf
+    e = main token lexbuf
   }
 
