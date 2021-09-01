@@ -1,4 +1,0 @@
-(library
- (name r1_interp)
- (libraries r0_ast r0_interp))
-

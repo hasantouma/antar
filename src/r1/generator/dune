@@ -1,4 +1,0 @@
-(library
- (name r1_generator)
- (libraries r0_ast r0_generator utils))
-

@@ -2,7 +2,7 @@
 %token <int> INT
 %token READ PROGRAM LP RP PLUS NEGATE WILDCARD EOF MULT
 %start expr_start
-%type <R1_ast.expr> expr_start
+%type <R1.Ast.expr> expr_start
 %%
 expr_start:
   expr EOF { $1 }

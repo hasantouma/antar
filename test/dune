@@ -1,6 +1,6 @@
 (tests
   (names r0_tests)
-  (libraries ounit2 r0_generator r0_interp r1_ast r1_interp repl))
+  (libraries ounit2 r0_generator r0_interp repl))
 
 (env
   (dev

@@ -34,12 +34,12 @@ let rec repl () : unit =
   handle_exit repl_in;
   let lexbuf = Lexing.from_string repl_in in
   let p : program = make_prog lexbuf in
-  print_endline (string_of_int (R1_interp.interp p.e (Utils.Repl.make_read [])));
+  print_endline (string_of_int (R1.Interp.interp p.e (Utils.Repl.make_read [])));
   repl ()
 
 let interp_file (file_name : string) : unit =
   let p : program = parse_file file_name in
-  print_endline (R1_pp.pp p.e 0);
-  let i = R1_interp.interp p.e (Utils.Repl.make_read []) in
+  print_endline (R1.Pp.pp p.e 0);
+  let i = R1.Interp.interp p.e (Utils.Repl.make_read []) in
   print_endline (string_of_int i)
 
