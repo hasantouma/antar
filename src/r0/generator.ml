@@ -1,7 +1,7 @@
 open Ast
 open Utils.Generator
 
-let rec exp2 (n : int) : expr =
+let rec exp2 (n : int) : r0 =
   match n with
   | 0 -> `EInt 1
   | n ->

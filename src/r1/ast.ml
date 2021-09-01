@@ -1,8 +1,8 @@
 
-type 'a expr_open = [
-  | 'a R0.Ast.expr_open
+type 'a r1_open = [
+  | 'a R0.Ast.r0_open
   | `EMult of 'a * 'a
 ]
 
-type expr = expr expr_open
+type r1 = r1 r1_open
 

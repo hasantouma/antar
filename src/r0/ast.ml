@@ -1,10 +1,10 @@
 
-type 'a expr_open = [
+type 'a r0_open = [
   | `EInt of int
   | `ERead
   | `ENegate of 'a
   | `EAdd of 'a * 'a
 ]
 
-type expr = expr expr_open
+type r0 = r0 r0_open
 
