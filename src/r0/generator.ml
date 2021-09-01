@@ -12,8 +12,8 @@ let num_of_reads_open f expr =
   match expr with
   | `EInt _ -> 0
   | `ERead -> 1
-  | `EAdd(l, r) -> (f l) + (f r)
   | `ENegate e -> f e
+  | `EAdd (l, r) | `EMult (l, r) -> (f l) + (f r)
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
@@ -25,11 +25,14 @@ let rec randp_open func n =
     | _ -> `EInt random_int
   else
     match next_float () with
-    | f when f < 0.5 -> `ENegate (randp_open func (n - 1))
-    | _ ->
+    | f when f < 0.33 -> `ENegate (randp_open func (n - 1))
+    | f ->
         let left = randp_open func (n - 1) in
         let right = randp_open func (n - 1) in
-        `EAdd (left, right)
+        if f < 0.66 then
+          `EAdd (left, right)
+        else
+          `EMult (left, right)
 
 let rec randp n = randp_open randp n
 
