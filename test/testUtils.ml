@@ -1,7 +1,7 @@
 open OUnit2
 
 type test = {
-  ast     : R1.Ast.expr;
+  ast     : R0.Ast.expr;
   interp  : int;
   input   : int list;
   message : string

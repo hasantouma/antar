@@ -91,9 +91,9 @@ let negate_negate_5 = {
 }
 
 let randp3 () =
-  let ast = R0_generator.randp 3 in
-  let input = R0_generator.generate_input_for_randp ast in
-  let interp = R0_interp.interp ast (Repl.make_read input) in
+  let ast = R0.Generator.randp 3 in
+  let input = R0.Generator.generate_input_for_randp ast in
+  let interp = R0.Interp.interp ast (Repl.make_read input) in
   let message = "randp3" in
   {
     ast = ast;

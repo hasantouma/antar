@@ -1,6 +1,6 @@
 
 type 'a expr_open = [
-  | 'a R0_ast.expr_open
+  | 'a R0.Ast.expr_open
   | `EMult of 'a * 'a
 ]
 

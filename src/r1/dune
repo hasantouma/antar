@@ -1,4 +1,4 @@
 (library
  (name r1)
- (libraries r0_ast r0_generator r0_interp r0_pp))
+ (libraries r0))
 
