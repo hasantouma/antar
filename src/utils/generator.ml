@@ -6,6 +6,7 @@ let next_float () : float = random_float_gen 1.0
 
 let random_int_gen : (int -> int) = Random.int
 let next_int () : int = random_int_gen 1024
+let depth () : int = random_int_gen 10
 
 let generate_input (n : int) : int list =
   let rec aux n acc =

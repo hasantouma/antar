@@ -23,9 +23,10 @@ let test_negate _ctxt =
 
 let test_randp _ctxt =
   for _ = 1 to 100 do
-    let randp3 = randp3 () in
-    test_interp randp3;
-    test_optimize randp3
+    let n = Utils.Generator.depth () in
+    let randp = randp n in
+    test_interp randp;
+    test_optimize randp
   done
 
 

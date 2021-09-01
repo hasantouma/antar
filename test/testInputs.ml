@@ -109,12 +109,12 @@ let negate_negate_5 = {
 let negate_list = [negate_1; negate_read; add_read_and_negate_72; negate_add_99_50; negate_negate_5]
 
 (* random *)
-let randp3 () =
-  let ast = R0.Generator.randp 3 in
+let randp n =
+  let ast = R0.Generator.randp n in
   let optimized = R0.Interp.optimize ast in
   let input = R0.Generator.generate_input_for_randp ast in
   let interp = R0.Interp.interp ast (Repl.make_read input) in
-  let message = "randp3" in
+  let message = "randp" ^ string_of_int n in
   {
     ast = ast;
     optimized = optimized;
