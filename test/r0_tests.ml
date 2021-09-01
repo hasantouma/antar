@@ -2,28 +2,22 @@ open OUnit2
 open TestUtils
 open TestInputs
 
-let test_int _ctxt =
-  test_interp one;
-  test_interp fourty_two
+let interp_iter = List.iter test_interp
+let optimize_iter = List.iter test_optimize
 
+let test_int _ctxt =
+  interp_iter int_list;
+  optimize_iter int_list
 
 let test_read _ctxt =
-  test_interp read
-
+  interp_iter read_list;
+  optimize_iter read_list
 
 let test_add _ctxt =
-  test_interp add_1_2;
-  test_interp add_33_read;
-  test_interp add_read_72;
-  test_interp add_read_read
-
+  interp_iter add_list
 
 let test_negate _ctxt =
-  test_interp negate_1;
-  test_interp negate_read;
-  test_interp add_read_and_negate_72;
-  test_interp negate_add_99_50;
-  test_interp negate_negate_5
+  interp_iter negate_list
 
 let test_randp _ctxt =
   for _ = 1 to 100 do

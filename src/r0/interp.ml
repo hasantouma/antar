@@ -15,3 +15,5 @@ let interp_open f expr read_int =
 
 let rec interp expr read_int = interp_open interp expr read_int
 
+let optimize expr = expr (* TODO: Implement me! *)
+
