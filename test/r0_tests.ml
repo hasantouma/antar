@@ -25,10 +25,11 @@ let test_negate _ctxt =
   test_interp negate_add_99_50;
   test_interp negate_negate_5
 
-
 let test_randp _ctxt =
-  let randp3 = randp3 () in
-  test_interp randp3
+  for _ = 1 to 100 do
+    let randp3 = randp3 () in
+    test_interp randp3
+  done
 
 
 let suite =

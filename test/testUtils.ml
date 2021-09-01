@@ -7,5 +7,8 @@ type test = {
   message : string
 }
 
-let test_interp (t : test) = assert_equal t.interp (R1.Interp.interp t.ast (Repl.make_read t.input)) ~msg:("interp: " ^ t.message) ~printer:string_of_int
+let test_interp (t : test) =
+  assert_equal
+    t.interp (R1.Interp.interp t.ast (Repl.make_read t.input))
+    ~msg:("interp: " ^ t.message) ~printer:string_of_int
 
