@@ -16,8 +16,7 @@ rule token = parse
 | '-' { NEGATE }
 | '_' { WILDCARD }
 | ['0'-'9']+ as lxm { INT (int_of_string lxm) }
-| ['A'-'Z''a'-'z''_']+ as lxm { VAR (lxm) }
+| [^ ' ' '\t' '\n' '\r' '(' ')' '[' ']']+ as lxm { VAR (lxm) }
 | eof { EOF }
 | _ as lxm { Printf.printf "Illegal character '%c'. " lxm; failwith "Bad input" }
-
 
