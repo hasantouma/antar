@@ -1,0 +1,7 @@
+(tests
+  (names r1)
+  (libraries ounit2 r1 parser repl utils))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))
