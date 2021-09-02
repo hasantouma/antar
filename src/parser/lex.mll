@@ -12,7 +12,6 @@ rule token = parse
 | '[' { LB }
 | ']' { RB }
 | '+' { PLUS }
-| '*' { MULT }
 | '-' { NEGATE }
 | '_' { WILDCARD }
 | ['0'-'9']+ as lxm { INT (int_of_string lxm) }

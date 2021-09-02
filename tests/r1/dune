@@ -1,5 +1,5 @@
 (tests
-  (names r1)
+  (names r1_tests)
   (libraries ounit2 r1 parser repl utils))
 
 (env

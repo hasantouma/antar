@@ -10,6 +10,10 @@ let test_var _ctxt =
   interp_iter var_list;
   optimize_iter var_list
 
+let test_let _ctxt =
+  interp_iter let_list;
+  optimize_iter let_list
+
 let test_randp _ctxt =
   for _ = 1 to 100 do
     let n = Utils.Generator.depth () in
@@ -22,6 +26,7 @@ let test_randp _ctxt =
 let suite =
   "r1_tests" >::: [
     "var" >:: test_var;
+    "let" >:: test_let;
     "randp" >:: test_randp
   ]
 

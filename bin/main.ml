@@ -2,7 +2,7 @@
 let interp_randp (n : int) : unit =
   let r = R1.Generator.randp n in
   print_endline (R1.Pp.pp r 0);
-  let p = R1.Interp.interp r (Utils.Repl.make_read []) in
+  let p = R1.Interp.interp r [] (Utils.Repl.make_read []) in
   let s = string_of_int p in
   print_endline s
 

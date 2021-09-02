@@ -2,12 +2,16 @@ open Utils.Generator
 
 let num_of_reads_open f expr =
   match expr with
-  | `EMult(l, r) -> (f l) + (f r)
+  | `EVar _ -> 0
+  | `ELet (_, ex, eb) ->
+    let vx = f ex in
+    let vb = f eb in
+    vx + vb
   | #R0.Ast.r0_open as e -> R0.Generator.num_of_reads_open f e
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
-let rec randp_open func n =
+let randp_open func n =
   if n = 0 then
     R0.Generator.randp_open func n
   else
@@ -15,9 +19,7 @@ let rec randp_open func n =
     | f when f < 0.5 ->
         R0.Generator.randp_open func n
     | _ ->
-        let left = randp_open func (n - 1) in
-        let right = randp_open func (n - 1) in
-        `EMult (left, right)
+      R0.Generator.randp_open func n (* TODO: Add generator for r1 *)
 
 let rec randp n = randp_open randp n
 

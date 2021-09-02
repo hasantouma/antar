@@ -4,7 +4,6 @@ type 'a r0_open = [
   | `ERead
   | `ENegate of 'a
   | `EAdd of 'a * 'a
-  | `EMult of 'a * 'a
 ]
 
 type r0 = r0 r0_open
