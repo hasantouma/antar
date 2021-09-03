@@ -3,12 +3,13 @@ open Parser.Main
 
 let lex_parse (lexbuf : Lexing.lexbuf) : program option =
   try
-    Some (make_prog lexbuf) with
-  Exceptions.BadInput s ->
-  (
-    print_endline ("Exception! Bad Input: " ^ s);
-    None
-  )
+    Some (make_prog lexbuf)
+  with
+    Exceptions.BadInput s ->
+    (
+      print_endline ("Exception! Bad Input: " ^ s);
+      None
+    )
 
 let make_read (readings : int list) : (unit -> int) =
   match readings with
@@ -42,9 +43,12 @@ let handle_display (p : program option) : unit =
     | None -> print_endline "Invalid program"
     | Some p ->
       (
-        let n = R1.Interp.interp p.e [] (Utils.Repl.make_read []) in
-        let answer = string_of_int n in
-        print_endline ((R1.Pp.pp p.e 0) ^ " -> " ^ answer)
+        try
+          let n = R1.Interp.interp p.e [] (Utils.Repl.make_read []) in
+          let answer = string_of_int n in
+          print_endline ((R1.Pp.pp p.e 0) ^ " -> " ^ answer)
+        with
+        Not_found -> print_endline "Can't find var in env."
       )
   )
 
