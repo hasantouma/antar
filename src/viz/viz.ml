@@ -95,11 +95,16 @@ let rec generate_graph (g : G.t) expr =
 
 let g = G.empty
 
-let write_expr_to_graphviz (expr: r1) : unit =
+let write_expr_to_graphviz (program_opt : Ast.program option) : unit =
   let name = "mygraph.dot" in
-  let (g, _) = generate_graph g expr in
-  let file = open_out_bin name in
-  Dot.output_graph file g;
-  let _ = Sys.command (Printf.sprintf "dot %s -Tpng -o mygraph.png && rm %s" name name) in
-  print_endline "Success! Open 'mygraph.png' to see your visualized expr."
+  (
+    match program_opt with
+    | Some p ->
+      let (g, _) = generate_graph g p.e in
+      let file = open_out_bin name in
+      Dot.output_graph file g;
+      let _ = Sys.command (Printf.sprintf "dot %s -Tpng -o mygraph.png && rm %s" name name) in
+      print_endline "Success! Open 'mygraph.png' to see your visualized expr."
+    | None -> print_endline "Invalid expression. Can't visualize"
+  )
 

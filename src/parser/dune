@@ -1,6 +1,6 @@
 (library
   (name parser)
-  (libraries ast r1))
+  (libraries ast exceptions r1))
 
 (ocamllex lex)
 (ocamlyacc parse)

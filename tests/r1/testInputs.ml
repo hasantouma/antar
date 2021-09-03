@@ -1,7 +1,4 @@
 open TestUtils
-open R1.Generator
-open R1.Interp
-open R1.Pp
 open Repl
 
 let var_1 = {
@@ -50,11 +47,11 @@ let let_list = [let_read_order; let_number_read]
 
 (* random *)
 let randp n =
-  let ast = randp n in
-  let expr = pp ast 0 in
-  let optimized = pp (optimize ast) 0 in
-  let input = generate_input_for_randp ast in
-  let interp = interp ast [] (make_read input) in
+  let ast = R1.Generator.randp n in
+  let expr = R1.Pp.pp ast 0 in
+  let optimized = R1.Pp.pp (R1.Interp.optimize ast) 0 in
+  let input = R1.Generator.generate_input_for_randp ast in
+  let interp = R1.Interp.interp ast [] (make_read input) in
   let message = "randp" ^ string_of_int n in
   {
     expr = expr;

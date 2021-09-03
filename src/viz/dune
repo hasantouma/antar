@@ -1,4 +1,4 @@
 (library
  (name viz)
- (libraries r1 ocamlgraph))
+ (libraries ast ocamlgraph))
 

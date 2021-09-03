@@ -1,4 +1,5 @@
 {
+ open Exceptions
  open Parse
  exception Eof
 }
@@ -17,5 +18,5 @@ rule token = parse
 | ['0'-'9']+ as lxm { INT (int_of_string lxm) }
 | [^ ' ' '\t' '\n' '\r' '(' ')' '[' ']']+ as lxm { VAR (lxm) }
 | eof { EOF }
-| _ as lxm { Printf.printf "Illegal character '%c'. " lxm; failwith "Bad input" }
+| _ as lxm { raise (BadInput (Printf.sprintf "Illegal character %c" lxm)) }
 
