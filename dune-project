@@ -21,3 +21,4 @@
     ocamlgraph
     ounit2))
 
+(using menhir 2.1)

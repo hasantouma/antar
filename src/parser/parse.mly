@@ -1,9 +1,9 @@
 
 %token <int> INT
 %token <string> VAR
-%token PROGRAM READ LET
+%token READ LET
 %token LP RP LB RB
-%token NEGATE PLUS WILDCARD
+%token NEGATE PLUS
 %token EOF
 %start main
 %type <R1.Ast.r1> main
@@ -11,11 +11,11 @@
 main:
   expr EOF { $1 }
 expr:
-| INT { `EInt $1 }
-| VAR { `EVar $1 }
-| LP READ RP { `ERead }
-| LP NEGATE expr RP { `ENegate $3 }
-| LP PLUS expr expr RP { `EAdd($3, $4) }
-| LP LET LP LB VAR expr RB RP expr RP { `ELet ($5, $6, $9) }
+| n = INT { `EInt n }
+| v = VAR { `EVar v }
+| LP; READ; RP { `ERead }
+| LP; NEGATE; e = expr; RP { `ENegate e }
+| LP; PLUS; l = expr; r = expr; RP { `EAdd (l, r) }
+| LP; LET; LP; LB; x = VAR; ex = expr; RB; RP; eb = expr; RP { `ELet (x, ex, eb) }
 ;
 

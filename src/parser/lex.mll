@@ -3,9 +3,11 @@
  open Parse
  exception Eof
 }
+
+let white = [' ' '\t' '\n' '\r']*
+let var = [^ ' ' '\t' '\n' '\r' '(' ')' '[' ']']+
 rule token = parse
-  [' ' '\t' '\n' '\r']* { token lexbuf }
-| "program" { PROGRAM }
+  white { token lexbuf }
 | "read" { READ }
 | "let" { LET }
 | '(' { LP }
@@ -14,9 +16,8 @@ rule token = parse
 | ']' { RB }
 | '+' { PLUS }
 | '-' { NEGATE }
-| '_' { WILDCARD }
 | ['0'-'9']+ as lxm { INT (int_of_string lxm) }
-| [^ ' ' '\t' '\n' '\r' '(' ')' '[' ']']+ as lxm { VAR (lxm) }
+| var as lxm { VAR (lxm) }
 | eof { EOF }
 | _ as lxm { raise (BadInput (Printf.sprintf "Illegal character %c" lxm)) }
 
