@@ -1,4 +1,4 @@
 (library
   (name repl)
-  (libraries parser))
+  (libraries parser viz))
 

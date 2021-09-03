@@ -15,6 +15,8 @@ test_all:
 clean:
 	rm -f antar
 	rm -f antar-r0
+	rm -f mygraph.dot
+	rm -f mygraph.png
 	dune clean
 
 # You can stick this section in your own project if you wish.

@@ -1,4 +1,4 @@
-(lang dune 2.8)
+(lang dune 2.9)
 ;          ^^^
 ; When changing the version, don't forget to regenerate *.opam files
 ; by running [dune build].
@@ -15,8 +15,9 @@
   (name antar)
   (synopsis "Antar is a subset programming language of Racket")
   (depends
+    dune
     (ocaml
       (>= 4.02.3))
-    dune
+    ocamlgraph
     ounit2))
 

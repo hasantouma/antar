@@ -43,3 +43,7 @@ let interp_file (file_name : string) : unit =
   let i = R1.Interp.interp p.e [] (Utils.Repl.make_read []) in
   print_endline (string_of_int i)
 
+let visualize (file_name : string) : unit =
+  let p = parse_file file_name in
+  Viz.write_expr_to_graphviz p.e
+

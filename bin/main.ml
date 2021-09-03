@@ -10,7 +10,8 @@ let interp_randp (n : int) : unit =
 let parse_cmd_line_args () =
   let speclist = [
     ("-f", Arg.String Repl.interp_file, "<file_path> Parsing file");
-    ("-g", Arg.Int interp_randp, "<int> Generate random program of size n")
+    ("-g", Arg.Int interp_randp, "<int> Generate random program of size n");
+    ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
   ] in
   let usage_msg = "'Antar' programming language" in
   Arg.parse speclist print_endline usage_msg
