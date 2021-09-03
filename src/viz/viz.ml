@@ -32,7 +32,7 @@ let shape_of_expr_type expr lst =
    | `ERead -> `Box
    | `ENegate _ -> `Oval
    | `EAdd _ -> `Oval
-   | `EVar _ -> `Oval
+   | `EVar _ -> `Box
    | `ELet _ -> `Oval
 in `Shape shape :: lst
 
@@ -83,8 +83,8 @@ let rec generate_graph (g : G.t) expr =
       let g = G.add_edge g add_v rv in
       (g, add_v)
    | `ELet (x, ex, eb) ->
-     let add_x = G.V.create (`EVar x, id) in
      let add_v = G.V.create (expr, id) in
+     let add_x = G.V.create (`EVar x, fresh ()) in
      let g = G.add_vertex g add_v in
      let (g, xv) = generate_graph g ex in
      let (g, xb) = generate_graph g eb in
