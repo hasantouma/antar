@@ -16,6 +16,8 @@
   (synopsis "Antar is a subset programming language of Racket")
   (depends
     dune
+    (menhir
+      (>= 2.1))
     (ocaml
       (>= 4.02.3))
     ocamlgraph
