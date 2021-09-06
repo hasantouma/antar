@@ -113,7 +113,7 @@ let randp n =
   let ast = R0.Generator.randp n in
   let optimized = R0.Interp.optimize ast in
   let input = R0.Generator.generate_input_for_randp ast in
-  let interp = R0.Interp.interp ast [] (Repl.make_read input) in
+  let interp = R0.Interp.interp ast ~input:(Repl.make_read input) in
   let message = "randp" ^ string_of_int n in
   {
     ast = ast;

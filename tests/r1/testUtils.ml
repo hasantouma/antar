@@ -15,7 +15,7 @@ let test_interp (t : test) =
   let lexbuf = Lexing.from_string t.expr in
   let p = make_prog lexbuf in
   assert_equal
-    t.interp (interp p.e [] (make_read t.input))
+    t.interp (interp p.e ~input:(make_read t.input))
     ~msg:("interp: " ^ t.message) ~printer:string_of_int
 
 let test_optimize (t : test) =
@@ -25,6 +25,6 @@ let test_optimize (t : test) =
   let p_opt = make_prog lexbuf_opt in
   let input = make_read t.input in
   assert_equal
-    (interp p_opt.e [] input) (interp p_expr.e [] input)
+    (interp p_opt.e ~input:input) (interp p_expr.e ~input:input)
     ~msg:("optimize: " ^ t.message) ~printer:string_of_int
 

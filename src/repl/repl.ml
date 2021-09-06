@@ -44,9 +44,9 @@ let handle_display (p : program option) : unit =
     | Some p ->
       (
         try
-          let n = R1.Interp.interp p.e [] (Utils.Repl.make_read []) in
+          let n = R1.Interp.interp p.e in
           let answer = string_of_int n in
-          print_endline ((R1.Pp.pp p.e 0) ^ " -> " ^ answer)
+          print_endline ((R1.Pp.pp p.e) ^ " -> " ^ answer)
         with
         Not_found -> print_endline "Can't find var in env."
       )

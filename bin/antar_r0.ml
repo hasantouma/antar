@@ -1,8 +1,8 @@
 
 let interp_randp (n : int) : unit =
   let r = R0.Generator.randp n in
-  print_endline (R0.Pp.pp r 0);
-  let p = R0.Interp.interp r [] (Utils.Repl.make_read []) in
+  print_endline (R0.Pp.pp r);
+  let p = R0.Interp.interp r in
   let s = string_of_int p in
   print_endline s
 

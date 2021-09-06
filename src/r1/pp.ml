@@ -8,5 +8,8 @@ let pp_open f expr indent =
     "(let ([" ^ v ^ " " ^ variable_expr ^ "]) " ^ body_expr ^ ")"
   | #R0.Ast.r0_open as e -> R0.Pp.pp_open f e indent
 
-let rec pp expr indent = pp_open pp expr indent
+let pp expr =
+  let rec pp expr indent =
+    pp_open pp expr indent in
+  pp expr 0
 

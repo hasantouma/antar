@@ -10,5 +10,8 @@ let pp_open f expr indent =
       let right = f r (indent + 3) in
       "(+ " ^ left ^ "\n" ^ spaces ^ right ^ ")"
 
-let rec pp expr indent = pp_open pp expr indent
+let pp expr =
+  let rec pp expr indent =
+    pp_open pp expr indent in
+  pp expr 0
 
