@@ -5,15 +5,15 @@ let rec exp2 (n : int) : r0 =
   match n with
   | 0 -> `EInt 1
   | n ->
-      let result = exp2 (n - 1) in
-      `EAdd(result, result)
+    let result = exp2 (n - 1) in
+    `EAdd (result, result)
 
 let num_of_reads_open f expr =
   match expr with
   | `EInt _ -> 0
   | `ERead -> 1
   | `ENegate e -> f e
-  | `EAdd (l, r) -> (f l) + (f r)
+  | `EAdd (l, r) -> f l + f r
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
@@ -27,13 +27,12 @@ let rec randp_open func n =
     match next_float () with
     | f when f < 0.5 -> `ENegate (randp_open func (n - 1))
     | _ ->
-        let left = randp_open func (n - 1) in
-        let right = randp_open func (n - 1) in
-        `EAdd (left, right)
+      let left = randp_open func (n - 1) in
+      let right = randp_open func (n - 1) in
+      `EAdd (left, right)
 
 let rec randp n = randp_open randp n
 
 let generate_input_for_randp expr : int list =
   let reads : int = num_of_reads expr in
   generate_input reads
-

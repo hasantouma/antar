@@ -1,7 +1,8 @@
 (tests
-  (names r0_tests)
-  (libraries ounit2 r0 repl utils))
+ (names r0_tests)
+ (libraries ounit2 r0 repl utils))
 
 (env
-  (dev
-    (flags (:standard -warn-error -A))))
+ (dev
+  (flags
+   (:standard -warn-error -A))))

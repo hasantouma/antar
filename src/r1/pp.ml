@@ -1,4 +1,3 @@
-
 let pp_open f expr indent =
   match expr with
   | `EVar v -> v
@@ -9,7 +8,5 @@ let pp_open f expr indent =
   | #R0.Ast.r0_open as e -> R0.Pp.pp_open f e indent
 
 let pp expr =
-  let rec pp expr indent =
-    pp_open pp expr indent in
+  let rec pp expr indent = pp_open pp expr indent in
   pp expr 0
-

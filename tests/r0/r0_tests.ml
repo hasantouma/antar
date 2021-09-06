@@ -3,6 +3,7 @@ open TestUtils
 open TestInputs
 
 let interp_iter = List.iter test_interp
+
 let optimize_iter = List.iter test_optimize
 
 let test_int _ctxt =
@@ -29,15 +30,13 @@ let test_randp _ctxt =
     test_optimize randp
   done
 
-
 let suite =
-  "r0_tests" >::: [
-    "int" >:: test_int;
-    "read" >:: test_read;
-    "add" >:: test_add;
-    "negate" >:: test_negate;
-    "randp" >:: test_randp
-  ]
+  "r0_tests"
+  >::: [ "int" >:: test_int
+       ; "read" >:: test_read
+       ; "add" >:: test_add
+       ; "negate" >:: test_negate
+       ; "randp" >:: test_randp
+       ]
 
 let _ = run_test_tt_main suite
-
