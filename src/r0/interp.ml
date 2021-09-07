@@ -12,9 +12,9 @@ let interp_open f expr env read_int =
     let v = vl + vr in
     v
 
-let interp ?(input = Utils.Repl.make_read []) expr =
+let interp ?(env = []) ?(input = Utils.Repl.make_read []) expr =
   let rec interp expr env read_int = interp_open interp expr env read_int in
-  interp expr [] input
+  interp expr env input
 
 let rec optimize expr =
   match expr with

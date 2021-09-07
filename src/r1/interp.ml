@@ -7,8 +7,8 @@ let interp_open f expr env read_int =
     f eb env' read_int
   | #R0.Ast.r0_open as e -> R0.Interp.interp_open f e env read_int
 
-let interp ?(input = Utils.Repl.make_read []) expr =
+let interp ?(env = []) ?(input = Utils.Repl.make_read []) expr =
   let rec interp expr env read_int = interp_open interp expr env read_int in
-  interp expr [] input
+  interp expr env input
 
 let optimize expr = expr
