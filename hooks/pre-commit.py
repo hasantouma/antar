@@ -12,6 +12,7 @@ except subprocess.CalledProcessError as exc:
     print("Command:", cmd)
     print("Return code:", exc.returncode)
     print("Output:", exc.output)
+    print("Run command: dune promote")
 
     exit(exc.returncode)
 else:
