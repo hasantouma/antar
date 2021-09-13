@@ -4,9 +4,10 @@ let pp_open f expr indent =
   | `ERead -> "(read)"
   | `ENegate e -> "(- " ^ f e indent ^ ")"
   | `EAdd (l, r) ->
-    let left = f l (indent + 3) in
-    let spaces = String.make (indent + 3) ' ' in
-    let right = f r (indent + 3) in
+    let indent' = indent + 3 in
+    let left = f l indent' in
+    let spaces = String.make indent' ' ' in
+    let right = f r indent' in
     "(+ " ^ left ^ "\n" ^ spaces ^ right ^ ")"
 
 let pp expr =
