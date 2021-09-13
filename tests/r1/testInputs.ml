@@ -6,6 +6,9 @@ let var_1 = { expr = "(let ([x 1]) x)"; optimized = "1"; interp = 1; input = [];
 let var_shadow =
   { expr = "(let ([x (let ([x 2]) x)]) x)"; optimized = "2"; interp = 2; input = []; message = "var (2)" }
 
+let body_shadow =
+  { expr = "(let ([x 1]) (let ([x 2]) x))"; optimized = "2"; interp = 2; input = []; message = "var (2)" }
+
 let var_name =
   { expr = "(let ([x-1+program (let ([x 2]) x)]) x-1+program)"
   ; optimized = "2"
@@ -14,7 +17,7 @@ let var_name =
   ; message = "var (3)"
   }
 
-let var_list = [ var_1; var_shadow; var_name ]
+let var_list = [ var_1; var_shadow; body_shadow; var_name ]
 
 let let_read_order =
   { expr = "(let ([x (read)]) (+ x (- (read))))"
