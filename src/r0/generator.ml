@@ -17,7 +17,7 @@ let num_of_reads_open f expr =
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
-let rec randp_open func n =
+let randp_open func vars n =
   if n = 0 then
     let random_int = next_int () in
     match next_float () with
@@ -25,13 +25,15 @@ let rec randp_open func n =
     | _ -> `EInt random_int
   else
     match next_float () with
-    | f when f < 0.5 -> `ENegate (randp_open func (n - 1))
+    | f when f < 0.5 -> `ENegate (func vars (n - 1))
     | _ ->
-      let left = randp_open func (n - 1) in
-      let right = randp_open func (n - 1) in
+      let left = func vars (n - 1) in
+      let right = func vars (n - 1) in
       `EAdd (left, right)
 
-let rec randp n = randp_open randp n
+let randp ?(vars = []) n =
+  let rec randp vars n = randp_open randp vars n in
+  randp vars n
 
 let generate_input_for_randp expr : int list =
   let reads : int = num_of_reads expr in

@@ -11,16 +11,47 @@ let num_of_reads_open f expr =
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
-let randp_open func n =
+let fresh_var =
+  let counter = ref 0 in
+  fun () ->
+    let x = "x" ^ string_of_int !counter in
+    counter := !counter + 1;
+    x
+
+let choice func vars =
+  match vars with
+  | [] -> R0.Generator.randp_open func vars 0
+  | _ -> (
+    match next_float () with
+    | f when f < 0.66 -> R0.Generator.randp_open func vars 0
+    | _ ->
+      let rand_index = next_int ~bound:(List.length vars) () in
+      let v = List.nth vars rand_index in
+      `EVar v)
+
+let choose_vars vars =
+  if List.length vars > 0 && next_float () < 0.5 then
+    vars
+  else
+    let x = fresh_var () in
+    x :: vars
+
+let randp_open func vars n =
   if n = 0 then
-    R0.Generator.randp_open func n
+    choice func vars
   else
     match next_float () with
-    | f when f < 0.5 -> R0.Generator.randp_open func n
-    | _ -> R0.Generator.randp_open func n
-(* TODO: Add generator for r1 *)
+    | f when f < 0.66 -> R0.Generator.randp_open func vars n
+    | _ ->
+      let vars' = choose_vars vars in
+      let x = List.hd vars' in
+      let ex = func vars (n - 1) in
+      let eb = func vars' (n - 1) in
+      `ELet (x, ex, eb)
 
-let rec randp n = randp_open randp n
+let randp ?(vars = []) n =
+  let rec randp vars n = randp_open randp vars n in
+  randp vars n
 
 let generate_input_for_randp expr : int list =
   let reads : int = num_of_reads expr in

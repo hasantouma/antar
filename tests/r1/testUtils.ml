@@ -23,3 +23,12 @@ let test_optimize (t : test) =
   let p_opt = make_prog lexbuf_opt in
   let input = make_read t.input in
   assert_equal (interp p_opt.e ~input) (interp p_expr.e ~input) ~msg:("optimize: " ^ t.message) ~printer:string_of_int
+
+let pp_list (lst : int list) : string =
+  let s = List.fold_left (fun acc h -> acc ^ string_of_int h ^ "; ") "" lst in
+  let len = String.length s in
+  if len > 1 then
+    let s' = String.sub s 0 (len - 2) in
+    "[" ^ s' ^ "]"
+  else
+    "[]"

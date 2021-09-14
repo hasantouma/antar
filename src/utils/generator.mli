@@ -1,6 +1,6 @@
 val next_float : unit -> float
 
-val next_int : unit -> int
+val next_int : ?bound:int -> unit -> int
 
 val depth : unit -> int
 

@@ -44,5 +44,5 @@ let randp n =
   let optimized = R1.Pp.pp (R1.Interp.optimize ast) in
   let input = R1.Generator.generate_input_for_randp ast in
   let interp = R1.Interp.interp ast ~input:(make_read input) in
-  let message = "randp" ^ string_of_int n in
+  let message = "randp" ^ string_of_int n ^ ":\nInput: " ^ pp_list input ^ "\nExpr:" ^ expr in
   { expr; optimized; interp; input; message }
