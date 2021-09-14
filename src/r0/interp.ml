@@ -16,7 +16,7 @@ let interp ?(env = []) ?(input = Utils.Repl.make_read []) expr =
   let rec interp expr env read_int = interp_open interp expr env read_int in
   interp expr env input
 
-let rec optimize expr =
+let optimize_open func env expr =
   match expr with
   | `EInt n -> `EInt n
   | `ERead -> `ERead
@@ -28,12 +28,16 @@ let rec optimize expr =
       | `EAdd (`EInt n, e') -> `EAdd (negate_opt (`EInt n), negate_opt e')
       | e' -> `ENegate e'
     in
-    negate_opt (optimize e)
+    negate_opt (func env e)
   | `EAdd (l, r) -> (
-    match (optimize l, optimize r) with
+    match (func env l, func env r) with
     | `EInt ln, `EInt rn -> `EInt (ln + rn)
     | `EInt ln, `EAdd (`EInt rn, re) -> `EAdd (`EInt (ln + rn), re)
     | `EAdd (`EInt ln, le), `EInt rn -> `EAdd (`EInt (ln + rn), le)
     | `EAdd (`EInt ln, le), `EAdd (`EInt rn, re) -> `EAdd (`EInt (ln + rn), `EAdd (le, re))
     | le, `EInt rn -> `EAdd (`EInt rn, le)
     | le, re -> `EAdd (le, re))
+
+let optimize ?(env = []) expr =
+  let rec optimize env expr = optimize_open optimize env expr in
+  optimize env expr
