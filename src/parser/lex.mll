@@ -16,7 +16,7 @@ rule token = parse
 | ']' { RB }
 | '+' { PLUS }
 | '-' { NEGATE }
-| ['0'-'9']+ as lxm { INT (int_of_string lxm) }
+| ('-'?)['0'-'9']+ as lxm { INT (int_of_string lxm) }
 | var as lxm { VAR (lxm) }
 | eof { EOF }
 | _ as lxm { raise (BadInput (Printf.sprintf "Illegal character %c" lxm)) }

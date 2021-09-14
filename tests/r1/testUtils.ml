@@ -14,7 +14,8 @@ type test =
 let test_interp (t : test) =
   let lexbuf = Lexing.from_string t.expr in
   let p = make_prog lexbuf in
-  assert_equal t.interp (interp p.e ~input:(make_read t.input)) ~msg:("interp: " ^ t.message) ~printer:string_of_int
+  let input = make_read t.input in
+  assert_equal t.interp (interp p.e ~input) ~msg:("interp: " ^ t.message) ~printer:string_of_int
 
 let test_optimize (t : test) =
   let lexbuf_expr = Lexing.from_string t.expr in
