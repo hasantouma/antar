@@ -1,7 +1,7 @@
 open R1.Ast
 
 module Node = struct
-  type t = r1 * int
+  type t = expr * int
 
   (* This will preserve the order of nodes, which will preserve the order of operation in the graph *)
   let compare (_, id1) (_, id2) = compare id1 id2
@@ -55,7 +55,7 @@ let style_of_expr_type expr lst =
     `Style `Filled :: lst
   | _ -> lst
 
-let vertex_attr (expr : r1) : Graph.Graphviz.DotAttributes.vertex list =
+let vertex_attr (expr : expr) : Graph.Graphviz.DotAttributes.vertex list =
   label_of_expr_type expr [] |> shape_of_expr_type expr |> style_of_expr_type expr
 
 (* Graphviz.DotAttributes : http://ocamlgraph.lri.fr/doc/Graphviz.DotAttributes.html#TYPEgraph *)

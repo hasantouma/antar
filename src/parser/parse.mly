@@ -6,7 +6,7 @@
 %token NEGATE PLUS
 %token EOF
 %start main
-%type <R1.Ast.r1> main
+%type <R1.Ast.expr> main
 %%
 main:
   expr EOF { $1 }

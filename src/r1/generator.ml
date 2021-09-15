@@ -7,7 +7,7 @@ let num_of_reads_open f expr =
     let vx = f ex in
     let vb = f eb in
     vx + vb
-  | #R0.Ast.r0_open as e -> R0.Generator.num_of_reads_open f e
+  | #R0.Ast.expr_open as e -> R0.Generator.num_of_reads_open f e
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 

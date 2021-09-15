@@ -81,7 +81,7 @@ let visualize (file_name : string) : unit =
     interp_stdin file_name
 
 let randp (viz : bool) (n : int) : unit =
-  let r : R1.Ast.r1 = R1.Generator.randp n in
+  let r : R1.Ast.expr = R1.Generator.randp n in
   let p = { info = false; e = r } in
   handle_display (Some p);
   if viz then
