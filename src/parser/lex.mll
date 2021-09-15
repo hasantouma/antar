@@ -5,6 +5,7 @@
 }
 
 let white = [' ' '\t' '\n' '\r']*
+let digits = ('-'?)['0'-'9']+
 let var = [^ ' ' '\t' '\n' '\r' '(' ')' '[' ']']+
 rule token = parse
   white { token lexbuf }
@@ -16,7 +17,7 @@ rule token = parse
 | ']' { RB }
 | '+' { PLUS }
 | '-' { NEGATE }
-| ('-'?)['0'-'9']+ as lxm { INT (int_of_string lxm) }
+| digits as lxm { INT (int_of_string lxm) }
 | var as lxm { VAR (lxm) }
 | eof { EOF }
 | _ as lxm { raise (BadInput (Printf.sprintf "Illegal character %c" lxm)) }

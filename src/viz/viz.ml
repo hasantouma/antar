@@ -38,12 +38,11 @@ let label_of_expr_type expr lst =
 let shape_of_expr_type expr lst =
   let shape =
     match expr with
-    | `EInt _ -> `Box
-    | `ERead -> `Box
-    | `ENegate _ -> `Oval
-    | `EAdd _ -> `Oval
-    | `EVar _ -> `Box
-    | `ELet _ -> `Oval
+    | `EInt _
+    | `ERead
+    | `EVar _ ->
+      `Box
+    | _ -> `Oval
   in
   `Shape shape :: lst
 

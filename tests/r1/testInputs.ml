@@ -1,5 +1,4 @@
 open TestUtils
-open Repl
 
 let var_1 = { expr = "(let ([x 1]) x)"; optimized = "1"; interp = 1; input = []; message = "var (1)" }
 
@@ -67,6 +66,6 @@ let randp n =
   let expr = R1.Pp.pp ast in
   let optimized = R1.Pp.pp (R1.Interp.optimize ast) in
   let input = R1.Generator.generate_input_for_randp ast in
-  let interp = R1.Interp.interp ast ~input:(make_read input) in
+  let interp = R1.Interp.interp ast ~input:(Utils.Repl.make_read input) in
   let message = "randp" ^ string_of_int n ^ ":\nInput: " ^ pp_list input ^ "\nExpr:" ^ expr in
   { expr; optimized; interp; input; message }

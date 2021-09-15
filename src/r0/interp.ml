@@ -1,20 +1,20 @@
-let interp_open f expr env read_int =
+let interp_open f env read_int expr =
   match expr with
   | `EInt n -> n
   | `ERead -> read_int ()
   | `ENegate e ->
-    let e' = f e env read_int in
+    let e' = f env read_int e in
     let v = -1 * e' in
     v
   | `EAdd (l, r) ->
-    let vl = f l env read_int in
-    let vr = f r env read_int in
+    let vl = f env read_int l in
+    let vr = f env read_int r in
     let v = vl + vr in
     v
 
-let interp ?(env = []) ?(input = Utils.Repl.make_read []) expr =
-  let rec interp expr env read_int = interp_open interp expr env read_int in
-  interp expr env input
+let interp ?(env = []) ?input:(read_int = Utils.Repl.make_read []) expr =
+  let rec interp env read_int expr = interp_open interp env read_int expr in
+  interp env read_int expr
 
 let optimize_open func env expr =
   match expr with

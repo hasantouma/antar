@@ -1,6 +1,6 @@
 (executable
- (name main)
- (modules main)
+ (name antar_r1)
+ (modules antar_r1)
  (promote (until-clean))
  (libraries r0 r1 repl))
 

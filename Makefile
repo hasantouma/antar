@@ -1,11 +1,11 @@
 build:
-	dune build bin/main.exe
-	ln -sf _build/default/bin/main.exe antar
+	dune build bin/antar_r1.exe
+	ln -sf _build/default/bin/antar_r1.exe antar
 	dune build bin/antar_r0.exe
 	ln -sf _build/default/bin/antar_r0.exe antar-r0
 
 run:
-	dune exec bin/main.exe
+	dune exec bin/antar_r1.exe
 
 test_all:
 	dune runtest

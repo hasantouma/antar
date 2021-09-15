@@ -7,26 +7,6 @@ let lex_parse (lexbuf : Lexing.lexbuf) : program option =
     print_endline ("Exception! Bad Input: " ^ s);
     None
 
-let make_read (readings : int list) : unit -> int =
-  match readings with
-  | [] ->
-    fun () ->
-      output_string stdout "In *> ";
-      flush stdout;
-      read_int ()
-  | _ ->
-    let box = ref readings in
-    let rec f () =
-      match !box with
-      | [] ->
-        box := readings;
-        f ()
-      | head :: tail ->
-        box := tail;
-        head
-    in
-    f
-
 let parse_file (name : string) : program option =
   let chan = open_in name in
   let lexbuf = Lexing.from_channel chan in

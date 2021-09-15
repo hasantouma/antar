@@ -1,14 +1,14 @@
-let pp_open f expr indent =
+let pp_open f indent expr =
   match expr with
   | `EVar v -> v
-  | `ELet (v, ve, be) ->
+  | `ELet (x, ex, eb) ->
     let indent' = indent + 5 in
-    let variable_expr = f ve indent' in
-    let body_expr = f be indent' in
+    let variable_expr = f indent' ex in
+    let body_expr = f indent' eb in
     let spaces = String.make indent' ' ' in
-    "(let ([" ^ v ^ " " ^ variable_expr ^ "])\n" ^ spaces ^ body_expr ^ ")"
-  | #R0.Ast.expr_open as e -> R0.Pp.pp_open f e indent
+    "(let ([" ^ x ^ " " ^ variable_expr ^ "])\n" ^ spaces ^ body_expr ^ ")"
+  | #R0.Ast.expr_open as expr -> R0.Pp.pp_open f indent expr
 
 let pp expr =
-  let rec pp expr indent = pp_open pp expr indent in
-  pp expr 0
+  let rec pp indent expr = pp_open pp indent expr in
+  pp 0 expr

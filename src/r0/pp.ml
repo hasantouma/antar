@@ -1,15 +1,15 @@
-let pp_open f expr indent =
+let pp_open f indent expr =
   match expr with
   | `EInt n -> string_of_int n
   | `ERead -> "(read)"
-  | `ENegate e -> "(- " ^ f e indent ^ ")"
+  | `ENegate e -> "(- " ^ f indent e ^ ")"
   | `EAdd (l, r) ->
     let indent' = indent + 3 in
-    let left = f l indent' in
+    let left = f indent' l in
     let spaces = String.make indent' ' ' in
-    let right = f r indent' in
+    let right = f indent' r in
     "(+ " ^ left ^ "\n" ^ spaces ^ right ^ ")"
 
 let pp expr =
-  let rec pp expr indent = pp_open pp expr indent in
-  pp expr 0
+  let rec pp indent expr = pp_open pp indent expr in
+  pp 0 expr
