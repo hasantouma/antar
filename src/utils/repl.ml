@@ -5,15 +5,11 @@ let make_read (readings : int list) : unit -> int =
       output_string stdout "In *> ";
       flush stdout;
       read_int ()
-  | _ ->
+  | _ -> (
     let box = ref readings in
-    let rec f () =
+    fun () ->
       match !box with
-      | [] ->
-        box := readings;
-        f ()
+      | [] -> raise Exceptions.TooManyReads
       | head :: tail ->
         box := tail;
-        head
-    in
-    f
+        head)

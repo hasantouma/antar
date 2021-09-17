@@ -14,6 +14,7 @@ let test_interp (t : test) =
     ~msg:("interp: " ^ t.message) ~printer:string_of_int
 
 let test_optimize (t : test) =
-  let input = Utils.Repl.make_read t.input in
-  assert_equal (R0.Interp.interp t.optimized ~input) (R0.Interp.interp t.ast ~input) ~msg:("optimize: " ^ t.message)
-    ~printer:string_of_int
+  assert_equal
+    (R0.Interp.interp t.optimized ~input:(Utils.Repl.make_read t.input))
+    (R0.Interp.interp t.ast ~input:(Utils.Repl.make_read t.input))
+    ~msg:("optimize: " ^ t.message) ~printer:string_of_int

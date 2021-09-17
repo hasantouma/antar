@@ -58,7 +58,24 @@ let let_nested_let =
   ; message = "let (5)"
   }
 
-let let_list = [ let_read_order; let_number_read; let_no_opt; let_simple_opt; let_nested_let ]
+let let_double_read =
+  { expr = "(let ([x (+ (read) (read))]) (+ 2 x))"
+  ; optimized = "(let ([x (+ (read) (read))]) (+ 2 x))"
+  ; interp = 7
+  ; input = [ 2; 3 ]
+  ; message = "let (6)"
+  }
+
+let let_no_opt_read =
+  { expr = "(let ([x (+ (read) (read))]) (+ x x))"
+  ; optimized = "(let ([x (+ (read) (read))]) (+ x x))"
+  ; interp = 10
+  ; input = [ 2; 3 ]
+  ; message = "let (7)"
+  }
+
+let let_list =
+  [ let_read_order; let_number_read; let_no_opt; let_simple_opt; let_nested_let; let_double_read; let_no_opt_read ]
 
 (* random *)
 let randp n =

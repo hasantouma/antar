@@ -9,6 +9,7 @@ run:
 
 test_all:
 	dune runtest
+	make clean
 
 .PHONY: clean
 
