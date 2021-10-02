@@ -1,3 +1,5 @@
+open Ast
+
 let emitr (reg : register) : string =
   "%"
   ^
