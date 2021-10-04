@@ -1,0 +1,8 @@
+(tests
+ (names x0_tests)
+ (libraries ounit2 x0))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))

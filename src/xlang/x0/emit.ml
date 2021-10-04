@@ -21,7 +21,7 @@ let emitr (reg : register) : string =
   | R14 -> "r14"
   | R15 -> "r15"
 
-let emita (arg : arg) (var : bool) : string =
+let emita (var : bool) (arg : arg) : string =
   match arg with
   | Constant n -> "$" ^ string_of_int n
   | Reg reg -> emitr reg
@@ -32,20 +32,20 @@ let emita (arg : arg) (var : bool) : string =
     else
       raise (Failure "var is false")
 
-let emiti (instr : instr) (var : bool) : string =
+let emiti (var : bool) (instr : instr) : string =
   match instr with
-  | Addq (src, dst) -> "addq " ^ emita src var ^ ", " ^ emita dst var
-  | Subq (src, dst) -> "subq " ^ emita src var ^ ", " ^ emita dst var
-  | Movq (src, dst) -> "movq " ^ emita src var ^ ", " ^ emita dst var
+  | Addq (src, dst) -> "addq " ^ emita var src ^ ", " ^ emita var dst
+  | Subq (src, dst) -> "subq " ^ emita var src ^ ", " ^ emita var dst
+  | Movq (src, dst) -> "movq " ^ emita var src ^ ", " ^ emita var dst
   | Retq -> "retq"
-  | Negq arg -> "negq " ^ emita arg var
+  | Negq arg -> "negq " ^ emita var arg
   | Callq label -> "callq " ^ label
   | Jmp label -> "jmp " ^ label
-  | Pushq arg -> "pushq " ^ emita arg var
-  | Popq arg -> "popq " ^ emita arg var
+  | Pushq arg -> "pushq " ^ emita var arg
+  | Popq arg -> "popq " ^ emita var arg
 
-let emitb (b : block) (var : bool) : string = List.fold_left (fun acc instr -> acc ^ emiti instr var ^ "\n") "" b.instrs
+let emitb (var : bool) (b : block) : string = List.fold_left (fun acc instr -> acc ^ emiti var instr ^ "\n") "" b.instrs
 
-let emitp (p : p) (var : bool) : string =
+let emitp (var : bool) (p : p) : string =
   let global = ".globl main" in
-  List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ label ^ ":\n" ^ emitb block var) global p.blks
+  List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ label ^ ":\n" ^ emitb var block) global p.blks

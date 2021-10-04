@@ -8,6 +8,7 @@ run:
 	dune exec bin/rlang/antar_r1.exe
 
 test_all:
+	make clean
 	dune runtest
 	make clean
 
