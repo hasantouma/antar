@@ -26,7 +26,7 @@ let s2 : p = wrap_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX
 
 let s3 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
 
-let s4 : p = wrap_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Addq (Reg RBX, Reg RAX) ]
+let s4 : p = wrap_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
 
 let s5 : p = wrap_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
 
@@ -74,6 +74,10 @@ let s11 : p =
 
 let s12 : p = wrap_entry [ Callq "read" ]
 
+let s13 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX) ]
+
+let s14 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
+
 let test _ctxt =
   assert_equal s1 s1 ~msg:"Movq" ~printer:(X0.Emit.emitp false);
   assert_equal s2 s2 ~msg:"Addq" ~printer:(X0.Emit.emitp false);
@@ -86,7 +90,9 @@ let test _ctxt =
   assert_equal s9 s9 ~msg:"Movq RSP to RAX" ~printer:(X0.Emit.emitp false);
   assert_equal s10 s10 ~msg:"Two labels" ~printer:(X0.Emit.emitp false);
   assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
-  assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false)
+  assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false);
+  assert_equal s13 s13 ~msg:"Override register" ~printer:(X0.Emit.emitp false);
+  assert_equal s14 s14 ~msg:"Addq same register" ~printer:(X0.Emit.emitp false)
 
 let suite = "x0_tests" >::: [ "test" >:: test ]
 

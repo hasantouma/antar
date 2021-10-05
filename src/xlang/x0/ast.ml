@@ -46,3 +46,10 @@ type p =
   { info : bool
   ; blks : (label * block) list
   }
+
+type ms =
+  { regs : (register * int) list
+  ; addrs : (int * int) list
+  ; vars : (var * int) list
+  ; labels : (label * block) list
+  }
