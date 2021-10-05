@@ -1,5 +1,6 @@
 open OUnit2
 open X0.Ast
+open X0.Interp
 
 let make_p (lst : (label * instr list) list) : p =
   let blocks =
@@ -79,10 +80,10 @@ let s13 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX
 let s14 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
 
 let test _ctxt =
-  assert_equal s1 s1 ~msg:"Movq" ~printer:(X0.Emit.emitp false);
-  assert_equal s2 s2 ~msg:"Addq" ~printer:(X0.Emit.emitp false);
-  assert_equal s3 s3 ~msg:"Subq" ~printer:(X0.Emit.emitp false);
-  assert_equal s4 s4 ~msg:"Add Regs" ~printer:(X0.Emit.emitp false);
+  assert_equal 42 (interp s1) ~msg:"Movq" ~printer:string_of_int;
+  assert_equal 14 (interp s2) ~msg:"Addq" ~printer:string_of_int;
+  assert_equal 5 (interp s3) ~msg:"Subq" ~printer:string_of_int;
+  assert_equal (-31) (interp s4) ~msg:"Add Regs" ~printer:string_of_int;
   assert_equal s5 s5 ~msg:"Negq" ~printer:(X0.Emit.emitp false);
   assert_equal s6 s6 ~msg:"Pushq and Popq" ~printer:(X0.Emit.emitp false);
   assert_equal s7 s7 ~msg:"Jmp to label" ~printer:(X0.Emit.emitp false);
@@ -91,8 +92,8 @@ let test _ctxt =
   assert_equal s10 s10 ~msg:"Two labels" ~printer:(X0.Emit.emitp false);
   assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
   assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false);
-  assert_equal s13 s13 ~msg:"Override register" ~printer:(X0.Emit.emitp false);
-  assert_equal s14 s14 ~msg:"Addq same register" ~printer:(X0.Emit.emitp false)
+  assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
+  assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int
 
 let suite = "x0_tests" >::: [ "test" >:: test ]
 
