@@ -51,6 +51,10 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
     let src_val : int = get_val ms src in
     let ms' : ms = update_ms ms dst src_val in
     interp_is ms' ir
+  | Negq arg ->
+    let arg_val : int = get_val ms arg in
+    let ms' : ms = update_ms ms arg (-1 * arg_val) in
+    interp_is ms' ir
   | _ -> interp_is ms ir
 (* This is just for debugging until I implement all the cases *)
 

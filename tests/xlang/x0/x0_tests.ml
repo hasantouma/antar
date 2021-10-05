@@ -84,7 +84,7 @@ let test _ctxt =
   assert_equal 14 (interp s2) ~msg:"Addq" ~printer:string_of_int;
   assert_equal 5 (interp s3) ~msg:"Subq" ~printer:string_of_int;
   assert_equal (-31) (interp s4) ~msg:"Add Regs" ~printer:string_of_int;
-  assert_equal s5 s5 ~msg:"Negq" ~printer:(X0.Emit.emitp false);
+  assert_equal 57 (interp s5) ~msg:"Negq" ~printer:string_of_int;
   assert_equal s6 s6 ~msg:"Pushq and Popq" ~printer:(X0.Emit.emitp false);
   assert_equal s7 s7 ~msg:"Jmp to label" ~printer:(X0.Emit.emitp false);
   assert_equal s8 s8 ~msg:"Two Jmps to label" ~printer:(X0.Emit.emitp false);
