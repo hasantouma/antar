@@ -79,6 +79,18 @@ let s13 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX
 
 let s14 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
 
+let s15 : p =
+  wrap_entry
+    [ Movq (Constant 5, Reg RAX)
+    ; Pushq (Reg RAX)
+    ; Popq (Reg RBX)
+    ; Movq (Constant 6, Reg RAX)
+    ; Pushq (Reg RAX)
+    ; Popq (Reg RCX)
+    ; Addq (Reg RBX, Reg RCX)
+    ; Subq (Reg RCX, Reg RAX)
+    ]
+
 let test _ctxt =
   assert_equal 42 (interp s1) ~msg:"Movq" ~printer:string_of_int;
   assert_equal 14 (interp s2) ~msg:"Addq" ~printer:string_of_int;
@@ -93,7 +105,8 @@ let test _ctxt =
   assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
   assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false);
   assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
-  assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int
+  assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int;
+  assert_equal s15 s15 ~msg:"Pushq Popq Pushq Popq" ~printer:(X0.Emit.emitp false)
 
 let suite = "x0_tests" >::: [ "test" >:: test ]
 
