@@ -58,7 +58,7 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
     interp_is ms' ir
   | Retq ->
     let lst : instr list = [ Addq (Constant 8, Reg RSP) ] in
-    interp_is ms (lst @ ir)
+    interp_is ms lst
   | Negq arg ->
     let arg_val : int = get_val ms arg in
     let ms' : ms = update_ms ms arg (-1 * arg_val) in
