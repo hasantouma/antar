@@ -51,10 +51,14 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
     let src_val : int = get_val ms src in
     let ms' : ms = update_ms ms dst src_val in
     interp_is ms' ir
+  | Retq ->
+    let lst : instr list = [ Addq (Constant 8, Reg RSP) ] in
+    interp_is ms (lst @ ir)
   | Negq arg ->
     let arg_val : int = get_val ms arg in
     let ms' : ms = update_ms ms arg (-1 * arg_val) in
     interp_is ms' ir
+  | Jmp lbl -> interp_b ms lbl
   | Pushq src ->
     let lst : instr list = [ Subq (Constant 8, Reg RSP); Movq (src, Deref (RSP, 0)) ] in
     interp_is ms (lst @ ir)
@@ -71,7 +75,7 @@ and interp_is (ms : ms) (instrs : instr list) : ms =
   | i :: ir -> interp_ii ms i ir
 
 (* Interp block *)
-let interp_b (ms : ms) (label : label) : ms =
+and interp_b (ms : ms) (label : label) : ms =
   let block = List.assoc label ms.labels in
   interp_is ms block.instrs
 

@@ -98,10 +98,10 @@ let test _ctxt =
   assert_equal 31 (interp s4) ~msg:"Subq Regs" ~printer:string_of_int;
   assert_equal 57 (interp s5) ~msg:"Negq" ~printer:string_of_int;
   assert_equal (-15) (interp s6) ~msg:"Pushq and Popq" ~printer:string_of_int;
-  assert_equal s7 s7 ~msg:"Jmp to label" ~printer:(X0.Emit.emitp false);
-  assert_equal s8 s8 ~msg:"Two Jmps to label" ~printer:(X0.Emit.emitp false);
+  assert_equal 43 (interp s7) ~msg:"Jmp to label" ~printer:string_of_int;
+  assert_equal 17 (interp s8) ~msg:"Two Jmps to label" ~printer:string_of_int;
   assert_equal 42 (interp s9) ~msg:"Movq RSP to RAX" ~printer:string_of_int;
-  assert_equal s10 s10 ~msg:"Two labels" ~printer:(X0.Emit.emitp false);
+  assert_equal 42 (interp s10) ~msg:"Two labels" ~printer:string_of_int;
   assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
   assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false);
   assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
