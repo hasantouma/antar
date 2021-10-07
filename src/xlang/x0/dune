@@ -1,2 +1,3 @@
 (library
- (name x0))
+ (name x0)
+ (libraries utils))

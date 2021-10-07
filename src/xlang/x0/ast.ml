@@ -52,4 +52,5 @@ type ms =
   ; addrs : (int * int) list
   ; vars : (var * int) list
   ; labels : (label * block) list
+  ; read_int : unit -> int
   }

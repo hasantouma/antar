@@ -103,7 +103,7 @@ let test _ctxt =
   assert_equal 42 (interp s9) ~msg:"Movq RSP to RAX" ~printer:string_of_int;
   assert_equal 42 (interp s10) ~msg:"Two labels" ~printer:string_of_int;
   assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
-  assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false);
+  assert_equal 52 (interp ~input:[ 52 ] s12) ~msg:"Callq 'read'" ~printer:string_of_int;
   assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
   assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int;
   assert_equal (-5) (interp s15) ~msg:"Pushq Popq Pushq Popq" ~printer:string_of_int
