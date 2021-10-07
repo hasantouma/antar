@@ -36,7 +36,7 @@ let update_ms (ms : ms) (arg : arg) (nn : int) : ms =
 let arith (ms : ms) (op : int -> int -> int) (src : arg) (dst : arg) : ms =
   let src_val : int = get_val ms src in
   let dst_val : int = get_val ms dst in
-  update_ms ms dst (op src_val dst_val)
+  update_ms ms dst (op dst_val src_val)
 
 (* Interp instr *)
 let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =

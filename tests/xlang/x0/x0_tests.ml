@@ -94,8 +94,8 @@ let s15 : p =
 let test _ctxt =
   assert_equal 42 (interp s1) ~msg:"Movq" ~printer:string_of_int;
   assert_equal 14 (interp s2) ~msg:"Addq" ~printer:string_of_int;
-  assert_equal 5 (interp s3) ~msg:"Subq" ~printer:string_of_int;
-  assert_equal (-31) (interp s4) ~msg:"Add Regs" ~printer:string_of_int;
+  assert_equal (-5) (interp s3) ~msg:"Subq" ~printer:string_of_int;
+  assert_equal 31 (interp s4) ~msg:"Subq Regs" ~printer:string_of_int;
   assert_equal 57 (interp s5) ~msg:"Negq" ~printer:string_of_int;
   assert_equal s6 s6 ~msg:"Pushq and Popq" ~printer:(X0.Emit.emitp false);
   assert_equal s7 s7 ~msg:"Jmp to label" ~printer:(X0.Emit.emitp false);
