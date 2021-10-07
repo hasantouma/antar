@@ -55,6 +55,12 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
     let arg_val : int = get_val ms arg in
     let ms' : ms = update_ms ms arg (-1 * arg_val) in
     interp_is ms' ir
+  | Pushq src ->
+    let lst : instr list = [ Subq (Constant 8, Reg RSP); Movq (src, Deref (RSP, 0)) ] in
+    interp_is ms (lst @ ir)
+  | Popq dst ->
+    let lst : instr list = [ Movq (Deref (RSP, 0), dst); Addq (Constant 8, Reg RSP) ] in
+    interp_is ms (lst @ ir)
   | _ -> interp_is ms ir
 (* This is just for debugging until I implement all the cases *)
 

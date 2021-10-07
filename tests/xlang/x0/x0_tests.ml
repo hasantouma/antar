@@ -97,16 +97,16 @@ let test _ctxt =
   assert_equal (-5) (interp s3) ~msg:"Subq" ~printer:string_of_int;
   assert_equal 31 (interp s4) ~msg:"Subq Regs" ~printer:string_of_int;
   assert_equal 57 (interp s5) ~msg:"Negq" ~printer:string_of_int;
-  assert_equal s6 s6 ~msg:"Pushq and Popq" ~printer:(X0.Emit.emitp false);
+  assert_equal (-15) (interp s6) ~msg:"Pushq and Popq" ~printer:string_of_int;
   assert_equal s7 s7 ~msg:"Jmp to label" ~printer:(X0.Emit.emitp false);
   assert_equal s8 s8 ~msg:"Two Jmps to label" ~printer:(X0.Emit.emitp false);
-  assert_equal s9 s9 ~msg:"Movq RSP to RAX" ~printer:(X0.Emit.emitp false);
+  assert_equal 42 (interp s9) ~msg:"Movq RSP to RAX" ~printer:string_of_int;
   assert_equal s10 s10 ~msg:"Two labels" ~printer:(X0.Emit.emitp false);
   assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
   assert_equal s12 s12 ~msg:"Callq 'read'" ~printer:(X0.Emit.emitp false);
   assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
   assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int;
-  assert_equal s15 s15 ~msg:"Pushq Popq Pushq Popq" ~printer:(X0.Emit.emitp false)
+  assert_equal (-5) (interp s15) ~msg:"Pushq Popq Pushq Popq" ~printer:string_of_int
 
 let suite = "x0_tests" >::: [ "test" >:: test ]
 
