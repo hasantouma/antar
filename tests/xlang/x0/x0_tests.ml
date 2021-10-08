@@ -104,7 +104,7 @@ let test _ctxt =
   assert_equal 17 (interp s8) ~msg:"Two Jmps to label" ~printer:string_of_int;
   assert_equal 42 (interp s9) ~msg:"Movq RSP to RAX" ~printer:string_of_int;
   assert_equal 42 (interp s10) ~msg:"Two labels" ~printer:string_of_int;
-  assert_equal s11 s11 ~msg:"Ref var" ~printer:(X0.Emit.emitp true);
+  assert_equal 23 (interp s11) ~msg:"Ref var" ~printer:string_of_int;
   assert_equal 52 (interp ~input:[ 52 ] s12) ~msg:"Callq 'read'" ~printer:string_of_int;
   assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
   assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int;

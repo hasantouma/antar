@@ -67,6 +67,11 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
     let n = ms.read_int () in
     let ms' : ms = update_ms ms (Reg RAX) n in
     interp_is ms' ir
+  | Callq lbl ->
+    let lst : instr list = [ Subq (Constant 8, Reg RSP) ] in
+    let ms' = interp_is ms lst in
+    let ms'' = interp_b ms' lbl in
+    interp_is ms'' ir
   | Jmp lbl -> interp_b ms lbl
   | Pushq src ->
     let lst : instr list = [ Subq (Constant 8, Reg RSP); Movq (src, Deref (RSP, 0)) ] in
@@ -74,8 +79,6 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
   | Popq dst ->
     let lst : instr list = [ Movq (Deref (RSP, 0), dst); Addq (Constant 8, Reg RSP) ] in
     interp_is ms (lst @ ir)
-  | _ -> interp_is ms ir
-(* This is just for debugging until I implement all the cases *)
 
 (* Interp instr list *)
 and interp_is (ms : ms) (instrs : instr list) : ms =
