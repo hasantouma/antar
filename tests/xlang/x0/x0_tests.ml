@@ -19,7 +19,7 @@ let wrap (lst : instr list) : instr list =
 
 let wrap_entry (instrs : instr list) : p =
   let entry = wrap instrs in
-  make_p [ ("entry", entry) ]
+  make_p [ ("_entry", entry) ]
 
 let s1 : p = wrap_entry [ Movq (Constant 42, Reg RAX) ]
 
@@ -45,13 +45,13 @@ let s6 : p =
 let s7 : p =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Movq (Constant 42, Reg RAX); Jmp "foo" ] in
   let foo = [ Addq (Constant 1, Reg RAX); Popq (Reg RBP); Retq ] in
-  make_p [ ("entry", entry); ("foo", foo) ]
+  make_p [ ("_entry", entry); ("foo", foo) ]
 
 let s8 : p =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Pushq (Constant 17); Jmp "foo" ] in
   let foo = [ Popq (Reg RBX); Jmp "bar" ] in
   let bar = [ Movq (Reg RBX, Reg RAX); Popq (Reg RBP); Retq ] in
-  make_p [ ("entry", entry); ("foo", foo); ("bar", bar) ]
+  make_p [ ("_entry", entry); ("foo", foo); ("bar", bar) ]
 
 let s9 : p = wrap_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
 
@@ -66,12 +66,12 @@ let s10 : p =
   in
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Subq (Constant 16, Reg RSP); Jmp "start" ] in
   let finish = [ Addq (Constant 16, Reg RSP); Popq (Reg RBP); Retq ] in
-  make_p [ ("start", start); ("entry", entry); ("finish", finish) ]
+  make_p [ ("start", start); ("_entry", entry); ("finish", finish) ]
 
 let s11 : p =
   let entry = wrap [ Movq (Constant 13, Ref "hi"); Callq "foo" ] in
   let foo = wrap [ Addq (Constant 10, Ref "hi"); Movq (Ref "hi", Reg RAX) ] in
-  make_p [ ("entry", entry); ("foo", foo) ]
+  make_p [ ("_entry", entry); ("foo", foo) ]
 
 let s12 : p = wrap_entry [ Callq "read" ]
 
