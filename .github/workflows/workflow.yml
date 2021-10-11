@@ -28,7 +28,9 @@ jobs:
 
       - run: opam install . --deps-only --with-test
 
-      - run: eval $(opam config env)
+      - run: opam exec -- dune build
 
-      - run: make test_all
+      - run: make runtime/runtime.o
+
+      - run: opam exec -- dune runtest
 
