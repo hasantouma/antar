@@ -12,16 +12,13 @@
 (source (github hasantouma/antar))
 
 (package
-  (name antar)
-  (synopsis "Antar is a subset programming language of Racket")
-  (depends
-    core
-    dune
-    (menhir
-      (>= 2.1))
-    (ocaml
-      (>= 4.02.3))
-    ocamlgraph
-    ounit2))
-
+ (name antar)
+ (synopsis "Antar is a subset programming language of Racket")
+ (depends
+  (core :with-test)
+  dune
+  (menhir (>= 2.1))
+  (ocaml (>= 4.02.3))
+  (ocamlgraph :with-test)
+  (ounit2 :with-test)))
 (using menhir 2.1)

@@ -6,12 +6,12 @@ authors: ["Hasan Touma"]
 homepage: "https://github.com/hasantouma/antar"
 bug-reports: "https://github.com/hasantouma/antar/issues"
 depends: [
-  "core"
+  "core" {with-test}
   "dune" {>= "2.9"}
   "menhir" {>= "2.1"}
   "ocaml" {>= "4.02.3"}
-  "ocamlgraph"
-  "ounit2"
+  "ocamlgraph" {with-test}
+  "ounit2" {with-test}
   "odoc" {with-doc}
 ]
 build: [
