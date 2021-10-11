@@ -15,6 +15,7 @@
   (name antar)
   (synopsis "Antar is a subset programming language of Racket")
   (depends
+    core
     dune
     (menhir
       (>= 2.1))

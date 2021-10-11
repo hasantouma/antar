@@ -7,24 +7,24 @@ build:
 run:
 	dune exec bin/rlang/antar_r1.exe
 
-test_all:
-	make clean
+test_all: runtime/runtime.o
 	dune runtest
 	make clean
 
-.PHONY: clean
+runtime/runtime.o: runtime/runtime.c
 
 clean:
 	rm -f antar
 	rm -f antar-r0
 	rm -f mygraph.dot
 	rm -f mygraph.png
+	rm -f runtime/runtime.o
 	dune clean
 
+.PHONY: build run test_all clean graph
 # You can stick this section in your own project if you wish.
 # 'make graph' produces a image that can be included in 'README.md'.
 #
-.PHONY: graph deps.png
 graph: deps.png
 deps.png:
 	mkdir -p img

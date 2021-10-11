@@ -94,7 +94,7 @@ and interp_b (ms : ms) (label : label) : ms =
 (* Interp program *)
 let interp_p (read_int : unit -> int) (p : p) : ms =
   let ms0 = init_ms p.blks read_int in
-  interp_b ms0 "_entry"
+  interp_b ms0 "entry"
 
 (* Get value from RAX *)
 let interp ?(input = []) (p : p) : int =

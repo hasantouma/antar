@@ -1,6 +1,7 @@
 open OUnit2
 open X0.Ast
 open X0.Interp
+open X0.Assemble
 
 let make_p (lst : (label * instr list) list) : p =
   let blocks =
@@ -19,7 +20,7 @@ let wrap (lst : instr list) : instr list =
 
 let wrap_entry (instrs : instr list) : p =
   let entry = wrap instrs in
-  make_p [ ("_entry", entry) ]
+  make_p [ ("entry", entry) ]
 
 let s1 : p = wrap_entry [ Movq (Constant 42, Reg RAX) ]
 
@@ -45,13 +46,13 @@ let s6 : p =
 let s7 : p =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Movq (Constant 42, Reg RAX); Jmp "foo" ] in
   let foo = [ Addq (Constant 1, Reg RAX); Popq (Reg RBP); Retq ] in
-  make_p [ ("_entry", entry); ("foo", foo) ]
+  make_p [ ("entry", entry); ("foo", foo) ]
 
 let s8 : p =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Pushq (Constant 17); Jmp "foo" ] in
   let foo = [ Popq (Reg RBX); Jmp "bar" ] in
   let bar = [ Movq (Reg RBX, Reg RAX); Popq (Reg RBP); Retq ] in
-  make_p [ ("_entry", entry); ("foo", foo); ("bar", bar) ]
+  make_p [ ("entry", entry); ("foo", foo); ("bar", bar) ]
 
 let s9 : p = wrap_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
 
@@ -66,12 +67,12 @@ let s10 : p =
   in
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Subq (Constant 16, Reg RSP); Jmp "start" ] in
   let finish = [ Addq (Constant 16, Reg RSP); Popq (Reg RBP); Retq ] in
-  make_p [ ("start", start); ("_entry", entry); ("finish", finish) ]
+  make_p [ ("start", start); ("entry", entry); ("finish", finish) ]
 
 let s11 : p =
   let entry = wrap [ Movq (Constant 13, Ref "hi"); Callq "foo" ] in
   let foo = wrap [ Addq (Constant 10, Ref "hi"); Movq (Ref "hi", Reg RAX) ] in
-  make_p [ ("_entry", entry); ("foo", foo) ]
+  make_p [ ("entry", entry); ("foo", foo) ]
 
 let s12 : p = wrap_entry [ Callq "read" ]
 
@@ -91,9 +92,9 @@ let s15 : p =
     ; Subq (Reg RCX, Reg RAX)
     ]
 
-let s16 : p = wrap_entry [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]
+let s16 : p = make_p [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
 
-let test _ctxt =
+let test_interp _ctxt =
   assert_equal 42 (interp s1) ~msg:"Movq" ~printer:string_of_int;
   assert_equal 14 (interp s2) ~msg:"Addq" ~printer:string_of_int;
   assert_equal (-5) (interp s3) ~msg:"Subq" ~printer:string_of_int;
@@ -111,6 +112,23 @@ let test _ctxt =
   assert_equal (-5) (interp s15) ~msg:"Pushq Popq Pushq Popq" ~printer:string_of_int;
   assert_equal 42 (interp s16) ~msg:"Movq after Retq" ~printer:string_of_int
 
-let suite = "x0_tests" >::: [ "test" >:: test ]
+let test_assemble _ctxt =
+  assert_equal "42" (assemble s1) ~msg:"Movq" ~printer:(fun x -> x);
+  assert_equal "14" (assemble s2) ~msg:"Addq";
+  assert_equal "-5" (assemble s3) ~msg:"Subq";
+  assert_equal "31" (assemble s4) ~msg:"Subq Regs";
+  assert_equal "57" (assemble s5) ~msg:"Negq";
+  assert_equal "-15" (assemble s6) ~msg:"Pushq and Popq";
+  assert_equal "43" (assemble s7) ~msg:"Jmp to label";
+  assert_equal "17" (assemble s8) ~msg:"Two Jmps to label";
+  assert_equal "42" (assemble s9) ~msg:"Movq RSP to RAX";
+  assert_equal "42" (assemble s10) ~msg:"Two labels";
+  assert_equal "52" (assemble ~input:[ 52 ] s12);
+  assert_equal "4" (assemble s13) ~msg:"Override register";
+  assert_equal "10" (assemble s14) ~msg:"Addq same register";
+  assert_equal "-5" (assemble s15) ~msg:"Pushq Popq Pushq Popq";
+  assert_equal "42" (assemble s16) ~msg:"Movq after Retq"
+
+let suite = "x0_tests" >::: [ "test_interp" >:: test_interp; "test_assemble" >:: test_assemble ]
 
 let _ = run_test_tt_main suite
