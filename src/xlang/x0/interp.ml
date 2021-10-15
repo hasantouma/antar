@@ -97,7 +97,7 @@ let interp_p (read_int : unit -> int) (p : p) : ms =
   interp_b ms0 "entry"
 
 (* Get value from RAX *)
-let interp ?(input = []) (p : p) : int =
-  let read_int : unit -> int = Utils.Repl.make_read input in
+let interp ?(inputs = []) (p : p) : int =
+  let read_int : unit -> int = Utils.Repl.make_read inputs in
   let ms = interp_p read_int p in
   List.assoc RAX ms.regs
