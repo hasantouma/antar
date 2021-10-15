@@ -94,6 +94,8 @@ let s15 : p =
 
 let s16 : p = make_p [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
 
+let s17 : p = wrap_entry [ Callq "read"; Movq (Reg RAX, Reg RBX); Callq "read"; Subq (Reg RBX, Reg RAX) ]
+
 let test_interp _ctxt =
   assert_equal 42 (interp s1) ~msg:"Movq" ~printer:string_of_int;
   assert_equal 14 (interp s2) ~msg:"Addq" ~printer:string_of_int;
@@ -110,24 +112,26 @@ let test_interp _ctxt =
   assert_equal 4 (interp s13) ~msg:"Override register" ~printer:string_of_int;
   assert_equal 10 (interp s14) ~msg:"Addq same register" ~printer:string_of_int;
   assert_equal (-5) (interp s15) ~msg:"Pushq Popq Pushq Popq" ~printer:string_of_int;
-  assert_equal 42 (interp s16) ~msg:"Movq after Retq" ~printer:string_of_int
+  assert_equal 42 (interp s16) ~msg:"Movq after Retq" ~printer:string_of_int;
+  assert_equal 7 (interp ~input:[ 3; 10 ] s17) ~msg:"Callq 'read' twice" ~printer:string_of_int
 
 let test_assemble _ctxt =
   assert_equal "42" (assemble s1) ~msg:"Movq" ~printer:(fun x -> x);
-  assert_equal "14" (assemble s2) ~msg:"Addq";
-  assert_equal "-5" (assemble s3) ~msg:"Subq";
-  assert_equal "31" (assemble s4) ~msg:"Subq Regs";
-  assert_equal "57" (assemble s5) ~msg:"Negq";
-  assert_equal "-15" (assemble s6) ~msg:"Pushq and Popq";
-  assert_equal "43" (assemble s7) ~msg:"Jmp to label";
-  assert_equal "17" (assemble s8) ~msg:"Two Jmps to label";
-  assert_equal "42" (assemble s9) ~msg:"Movq RSP to RAX";
-  assert_equal "42" (assemble s10) ~msg:"Two labels";
-  assert_equal "52" (assemble ~input:[ 52 ] s12);
-  assert_equal "4" (assemble s13) ~msg:"Override register";
-  assert_equal "10" (assemble s14) ~msg:"Addq same register";
-  assert_equal "-5" (assemble s15) ~msg:"Pushq Popq Pushq Popq";
-  assert_equal "42" (assemble s16) ~msg:"Movq after Retq"
+  assert_equal "14" (assemble s2) ~msg:"Addq" ~printer:(fun x -> x);
+  assert_equal "-5" (assemble s3) ~msg:"Subq" ~printer:(fun x -> x);
+  assert_equal "31" (assemble s4) ~msg:"Subq Regs" ~printer:(fun x -> x);
+  assert_equal "57" (assemble s5) ~msg:"Negq" ~printer:(fun x -> x);
+  assert_equal "-15" (assemble s6) ~msg:"Pushq and Popq" ~printer:(fun x -> x);
+  assert_equal "43" (assemble s7) ~msg:"Jmp to label" ~printer:(fun x -> x);
+  assert_equal "17" (assemble s8) ~msg:"Two Jmps to label" ~printer:(fun x -> x);
+  assert_equal "42" (assemble s9) ~msg:"Movq RSP to RAX" ~printer:(fun x -> x);
+  assert_equal "42" (assemble s10) ~msg:"Two labels" ~printer:(fun x -> x);
+  assert_equal "52" (assemble ~input:[ "52" ] s12) ~msg:"Callq 'read'" ~printer:(fun x -> x);
+  assert_equal "4" (assemble s13) ~msg:"Override register" ~printer:(fun x -> x);
+  assert_equal "10" (assemble s14) ~msg:"Addq same register" ~printer:(fun x -> x);
+  assert_equal "-5" (assemble s15) ~msg:"Pushq Popq Pushq Popq" ~printer:(fun x -> x);
+  assert_equal "42" (assemble s16) ~msg:"Movq after Retq" ~printer:(fun x -> x);
+  assert_equal "7" (assemble ~input:[ "3"; "10" ] s17) ~msg:"Callq 'read' twice" ~printer:(fun x -> x)
 
 let suite = "x0_tests" >::: [ "test_interp" >:: test_interp; "test_assemble" >:: test_assemble ]
 

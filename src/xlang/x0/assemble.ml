@@ -1,3 +1,10 @@
+let handle_status (stat : Unix.process_status) : unit =
+  match stat with
+  | Unix.WEXITED n when n <> 0 -> raise (Failure (Printf.sprintf "exec_command WEXITED Error: %d" n))
+  | Unix.WSIGNALED n -> raise (Failure (Printf.sprintf "exec_command WSIGNALED Error: %d" n))
+  | Unix.WSTOPPED n -> raise (Failure (Printf.sprintf "exec_command WSTOPPED Error: %d" n))
+  | _ -> ()
+
 let chomp s =
   let n = String.length s in
   if n > 0 && s.[n - 1] = '\n' then
@@ -15,19 +22,21 @@ let unwind (protect : 'a -> unit) f x =
     protect x;
     raise e
 
-let exec_command (command : string) : string * Unix.process_status =
-  let chan = Unix.open_process_in command in
-  let res = Core.In_channel.input_all chan in
-  let stat = Unix.close_process_in chan in
-  match stat with
-  | Unix.WEXITED n when n <> 0 -> raise (Failure (Printf.sprintf "exec_command WEXITED Error: %d" n))
-  | Unix.WSIGNALED n -> raise (Failure (Printf.sprintf "exec_command WSIGNALED Error: %d" n))
-  | Unix.WSTOPPED n -> raise (Failure (Printf.sprintf "exec_command WSTOPPED Error: %d" n))
-  | _ -> (res, stat)
+let input_to_out_channel (out_chan : out_channel) (input : string list) : unit =
+  List.iter
+    (fun i ->
+      output_string out_chan (i ^ "\n");
+      flush out_chan)
+    input
 
-(* Get value from RAX *)
+let exec_command ?(input = []) (command : string) : string =
+  let (in_chan, out_chan) : in_channel * out_channel = Unix.open_process command in
+  input_to_out_channel out_chan input;
+  let res = Core.In_channel.input_all in_chan in
+  handle_status (Unix.close_process (in_chan, out_chan));
+  res
+
 let assemble ?(input = []) (p : Ast.p) : string =
-  let _read_int : unit -> int = Utils.Repl.make_read input in
   let str : string = Emit.emitp true p in
   let file, out = Filename.open_temp_file "" ".s" in
   output_string out str;
@@ -36,6 +45,6 @@ let assemble ?(input = []) (p : Ast.p) : string =
     (fun name ->
       let _ = exec_command (Printf.sprintf "as -o %s.o %s" name name) in
       let _ = exec_command (Printf.sprintf "cc -o runtime_exec ../../../../../runtime/runtime.o %s.o" name) in
-      let res, _ = exec_command "echo 52 | ./runtime_exec" in
+      let res = exec_command ~input "./runtime_exec" in
       chomp res)
     file
