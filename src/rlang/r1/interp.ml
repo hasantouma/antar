@@ -7,7 +7,8 @@ let interp_open f env read_int expr =
     f env' read_int eb
   | #R0.Ast.expr_open as expr -> R0.Interp.interp_open f env read_int expr
 
-let interp ?(env = []) ?input:(read_int = Utils.Repl.make_read []) expr =
+let interp ?(env = []) ?(inputs = []) expr =
+  let read_int : unit -> int = Utils.Repl.make_read inputs in
   let rec interp env read_int expr = interp_open interp env read_int expr in
   interp env read_int expr
 

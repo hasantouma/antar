@@ -12,7 +12,8 @@ let interp_open f env read_int expr =
     let v = vl + vr in
     v
 
-let interp ?(env = []) ?input:(read_int = Utils.Repl.make_read []) expr =
+let interp ?(env = []) ?(inputs = []) expr =
+  let read_int : unit -> int = Utils.Repl.make_read inputs in
   let rec interp env read_int expr = interp_open interp env read_int expr in
   interp env read_int expr
 
