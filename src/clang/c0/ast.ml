@@ -22,3 +22,8 @@ type p =
   { info : bool
   ; blks : (label * tail) list
   }
+
+type env =
+  { assoc : (string * int) list
+  ; read_int : unit -> int
+  }
