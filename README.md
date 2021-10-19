@@ -1,5 +1,5 @@
 
-# Compiler course
+# Compiler Course
 
 [![Antar workflow](https://github.com/hasantouma/antar/actions/workflows/workflow.yml/badge.svg?branch=main)](https://github.com/hasantouma/antar/actions/workflows/workflow.yml)
 
