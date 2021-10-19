@@ -55,5 +55,5 @@ let emiti (var : bool) (instr : instr) : string =
 let emitb (var : bool) (b : block) : string = List.fold_left (fun acc instr -> acc ^ emiti var instr ^ "\n") "" b.instrs
 
 let emitp (var : bool) (p : p) : string =
-  let global = ".globl _entry" in
+  let global = ".globl " ^ get_label "entry" in
   List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ get_label label ^ ":\n" ^ emitb var block) global p.blks
