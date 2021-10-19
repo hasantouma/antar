@@ -6,6 +6,7 @@ authors: ["Hasan Touma"]
 homepage: "https://github.com/hasantouma/antar"
 bug-reports: "https://github.com/hasantouma/antar/issues"
 depends: [
+  "ppx_deriving"
   "core"
   "dune" {>= "2.9"}
   "menhir" {>= "2.1"}

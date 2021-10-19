@@ -31,12 +31,3 @@ let test_optimize (t : test) =
     ~msg:("optimize vs. non-optimize: " ^ t.message)
     ~printer:string_of_int;
   assert_equal p_opt_opt p_expr_opt ~msg:("opt-optimize vs. optimize: " ^ t.message) ~printer:R1.Pp.pp
-
-let pp_list (lst : int list) : string =
-  let s = List.fold_left (fun acc h -> acc ^ string_of_int h ^ "; ") "" lst in
-  let len = String.length s in
-  if len > 1 then
-    let s' = String.sub s 0 (len - 2) in
-    "[" ^ s' ^ "]"
-  else
-    "[]"

@@ -1,5 +1,7 @@
 (tests
  (names r0_tests)
+ (preprocess
+  (pps ppx_deriving.show))
  (libraries ounit2 r0 repl utils))
 
 (env
