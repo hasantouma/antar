@@ -1,5 +1,13 @@
 open Ast
 
+let get_label label =
+  let os_name = Core__Core_unix.Utsname.sysname (Core__Core_unix.uname ()) in
+  let os_name = String.lowercase_ascii os_name in
+  if os_name = "darwin" then
+    "_" ^ label
+  else
+    label
+
 let emitr (reg : register) : string =
   "%"
   ^
@@ -39,8 +47,8 @@ let emiti (var : bool) (instr : instr) : string =
   | Movq (src, dst) -> "movq " ^ emita var src ^ ", " ^ emita var dst
   | Retq -> "retq"
   | Negq arg -> "negq " ^ emita var arg
-  | Callq label -> "callq " ^ "_" ^ label
-  | Jmp label -> "jmp " ^ "_" ^ label
+  | Callq label -> "callq " ^ get_label label
+  | Jmp label -> "jmp " ^ get_label label
   | Pushq arg -> "pushq " ^ emita var arg
   | Popq arg -> "popq " ^ emita var arg
 
@@ -48,4 +56,4 @@ let emitb (var : bool) (b : block) : string = List.fold_left (fun acc instr -> a
 
 let emitp (var : bool) (p : p) : string =
   let global = ".globl _entry" in
-  List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ "_" ^ label ^ ":\n" ^ emitb var block) global p.blks
+  List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ get_label label ^ ":\n" ^ emitb var block) global p.blks
