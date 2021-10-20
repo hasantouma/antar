@@ -13,7 +13,10 @@ type test =
 let test_interp (t : test) =
   let lexbuf = Lexing.from_string t.expr in
   let p = make_prog lexbuf in
-  assert_equal t.interp (interp p.e ~inputs:t.inputs) ~msg:("interp: " ^ t.message) ~printer:string_of_int
+  assert_equal t.interp (interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
+  assert_equal t.interp
+    (interp ~inputs:t.inputs (Passes.Uniquify.uniquify p.e))
+    ~msg:("uniquify: " ^ t.message) ~printer:string_of_int
 
 let test_optimize (t : test) =
   (* non-optimized expr string *)
@@ -25,9 +28,13 @@ let test_optimize (t : test) =
   (* program with optimized expr string *)
   let p_opt = make_prog lexbuf_opt in
   (* optimized expr *)
-  let p_expr_opt : R1.Ast.expr = optimize p_expr.e in
-  let p_opt_opt : R1.Ast.expr = optimize p_opt.e in
-  assert_equal (interp p_opt.e ~inputs:t.inputs) (interp p_expr.e ~inputs:t.inputs)
+  let p_expr_ast : R1.Ast.expr = optimize p_expr.e in
+  let p_opt_ast : R1.Ast.expr = optimize p_opt.e in
+  assert_equal (interp ~inputs:t.inputs p_opt.e) (interp ~inputs:t.inputs p_expr.e)
     ~msg:("optimize vs. non-optimize: " ^ t.message)
     ~printer:string_of_int;
-  assert_equal p_opt_opt p_expr_opt ~msg:("opt-optimize vs. optimize: " ^ t.message) ~printer:R1.Pp.pp
+  assert_equal p_opt_ast p_expr_ast ~msg:("optimize AST vs. expr optimize AST: " ^ t.message) ~printer:R1.Pp.pp;
+  assert_equal (interp ~inputs:t.inputs p_opt.e)
+    (interp ~inputs:t.inputs (Passes.Uniquify.uniquify p_expr.e))
+    ~msg:("uniquify: optimize vs. non-optimize: " ^ t.message)
+    ~printer:string_of_int

@@ -2,7 +2,7 @@
  (names r1_tests)
  (preprocess
   (pps ppx_deriving.show))
- (libraries ounit2 r1 parser repl utils))
+ (libraries ounit2 r1 parser passes repl utils))
 
 (env
  (dev
