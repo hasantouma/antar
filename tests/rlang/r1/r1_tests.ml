@@ -16,7 +16,7 @@ let test_let _ctxt =
 
 let test_randp _ctxt =
   for _ = 1 to 100 do
-    let n = Utils.Generator.depth () in
+    let n = R_utils.Generator.depth () in
     let randp = randp n in
     test_interp randp;
     test_optimize randp
