@@ -1,0 +1,8 @@
+(tests
+ (names uniquify_tests)
+ (libraries ounit2 passes))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
