@@ -11,13 +11,6 @@ let num_of_reads_open f expr =
 
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
-let fresh_var =
-  let counter = ref 0 in
-  fun () ->
-    let x = "x" ^ string_of_int !counter in
-    counter := !counter + 1;
-    x
-
 let choice func vars =
   match vars with
   | [] -> R0.Generator.randp_open func vars 0
@@ -33,7 +26,7 @@ let choose_vars vars =
   if List.length vars > 0 && next_float () < 0.5 then
     vars
   else
-    let x = fresh_var () in
+    let x = Utils.Fresh.fresh_var () in
     x :: vars
 
 let randp_open func vars n =
