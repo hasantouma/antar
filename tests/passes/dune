@@ -1,5 +1,5 @@
 (tests
- (names uniquify_tests)
+ (names resolve_complex_tests uniquify_tests)
  (libraries ounit2 passes))
 
 (env
