@@ -5,7 +5,7 @@ open R1.Interp
 type test =
   { expr : string
   ; optimized : string
-  ; interp : int
+  ; value : int
   ; inputs : int list
   ; message : string
   }
@@ -13,11 +13,11 @@ type test =
 let test_interp (t : test) =
   let lexbuf = Lexing.from_string t.expr in
   let p = make_prog lexbuf in
-  assert_equal t.interp (interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
-  assert_equal t.interp
+  assert_equal t.value (interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
+  assert_equal t.value
     (interp ~inputs:t.inputs (Passes.Uniquify.uniquify p.e))
     ~msg:("uniquify: " ^ t.message) ~printer:string_of_int;
-  assert_equal t.interp
+  assert_equal t.value
     (interp ~inputs:t.inputs (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex))
     ~msg:("uniquify |> resolve_complex: " ^ t.message)
     ~printer:string_of_int
