@@ -16,7 +16,11 @@ let test_interp (t : test) =
   assert_equal t.interp (interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
   assert_equal t.interp
     (interp ~inputs:t.inputs (Passes.Uniquify.uniquify p.e))
-    ~msg:("uniquify: " ^ t.message) ~printer:string_of_int
+    ~msg:("uniquify: " ^ t.message) ~printer:string_of_int;
+  assert_equal t.interp
+    (interp ~inputs:t.inputs (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex))
+    ~msg:("uniquify |> resolve_complex: " ^ t.message)
+    ~printer:string_of_int
 
 let test_optimize (t : test) =
   (* non-optimized expr string *)
@@ -37,4 +41,8 @@ let test_optimize (t : test) =
   assert_equal (interp ~inputs:t.inputs p_opt.e)
     (interp ~inputs:t.inputs (Passes.Uniquify.uniquify p_expr.e))
     ~msg:("uniquify: optimize vs. non-optimize: " ^ t.message)
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:t.inputs p_opt.e)
+    (interp ~inputs:t.inputs (p_expr.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex))
+    ~msg:("uniquify |> resolve_complex: optimize vs. non-optimize: " ^ t.message)
     ~printer:string_of_int
