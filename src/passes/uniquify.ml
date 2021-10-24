@@ -1,5 +1,31 @@
 open R1.Ast
 
+(* helper *)
+let rec dup_exist lst =
+  match lst with
+  | [] -> false
+  | hd :: tl -> List.exists (( = ) hd) tl || dup_exist tl
+
+let is_uniquify (expr : expr) : bool =
+  let rec is_uniquify expr : string list =
+    match expr with
+    | `EInt _
+    | `ERead ->
+      []
+    | `ENegate e -> is_uniquify e
+    | `EAdd (l, r) ->
+      let l' = is_uniquify l in
+      let r' = is_uniquify r in
+      l' @ r'
+    | `EVar _ -> [] (* Only variables at declaration should be counted *)
+    | `ELet (x, xe, be) ->
+      let xe' = is_uniquify xe in
+      let be' = is_uniquify be in
+      [ x ] @ xe' @ be'
+  in
+  let var_list = is_uniquify expr in
+  var_list |> dup_exist |> not
+
 let uniquify (expr : expr) : expr =
   let rec uniquify rho expr =
     match expr with

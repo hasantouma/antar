@@ -17,6 +17,9 @@ let test_interp (t : test) =
   assert_equal t.value
     (interp ~inputs:t.inputs (Passes.Uniquify.uniquify p.e))
     ~msg:("uniquify: " ^ t.message) ~printer:string_of_int;
+  assert_equal true
+    (p.e |> Passes.Uniquify.uniquify |> Passes.Uniquify.is_uniquify)
+    ~msg:("is_uniquify: " ^ t.message) ~printer:string_of_bool;
   assert_equal t.value
     (interp ~inputs:t.inputs (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex))
     ~msg:("uniquify |> resolve_complex: " ^ t.message)
