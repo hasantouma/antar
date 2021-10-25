@@ -36,3 +36,18 @@ let rec resolve_complex (expr : expr) : expr =
     let xe' = resolve_complex xe in
     let be' = resolve_complex be in
     `ELet (x, xe', be')
+
+let rec is_resolve_complex (expr : expr) : bool =
+  match expr with
+  | `EInt _
+  | `EVar _
+  | `ERead ->
+    true
+  | `ENegate e when atom e -> true
+  | `ENegate _ -> false
+  | `EAdd (l, r) when atom l && atom r -> true
+  | `EAdd _ -> false
+  | `ELet (_, xe, be) ->
+    let xe' = is_resolve_complex xe in
+    let be' = is_resolve_complex be in
+    xe' && be'

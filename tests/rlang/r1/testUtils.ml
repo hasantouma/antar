@@ -23,7 +23,11 @@ let test_interp (t : test) =
   assert_equal t.value
     (interp ~inputs:t.inputs (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex))
     ~msg:("uniquify |> resolve_complex: " ^ t.message)
-    ~printer:string_of_int
+    ~printer:string_of_int;
+  assert_equal true
+    (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
+   |> Passes.Resolve_complex.is_resolve_complex)
+    ~msg:("is_resolve_complex: " ^ t.message) ~printer:string_of_bool
 
 let test_optimize (t : test) =
   (* non-optimized expr string *)
