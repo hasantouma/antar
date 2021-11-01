@@ -24,10 +24,10 @@ let u4' =
     , `ELet ("x1", `EInt 8, `ELet ("x2", `EAdd (`EInt 1, `EVar "x1"), `EAdd (`EVar "x2", `EVar "x2"))) )
 
 let test_uniquify _ctxt =
-  assert_equal u1' (uniquify u1) ~cmp:TestUtils.alpha_equiv ~msg:"u1" ~printer:R1.Pp.pp;
-  assert_equal u2' (uniquify u2) ~cmp:TestUtils.alpha_equiv ~msg:"u2" ~printer:R1.Pp.pp;
-  assert_equal u3' (uniquify u3) ~cmp:TestUtils.alpha_equiv ~msg:"u3" ~printer:R1.Pp.pp;
-  assert_equal u4' (uniquify u4) ~cmp:TestUtils.alpha_equiv ~msg:"u4" ~printer:R1.Pp.pp
+  assert_equal u1' (uniquify u1) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"u1" ~printer:R1.Pp.pp;
+  assert_equal u2' (uniquify u2) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"u2" ~printer:R1.Pp.pp;
+  assert_equal u3' (uniquify u3) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"u3" ~printer:R1.Pp.pp;
+  assert_equal u4' (uniquify u4) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"u4" ~printer:R1.Pp.pp
 
 let suite = "passes_tests" >::: [ "uniquify" >:: test_uniquify ]
 

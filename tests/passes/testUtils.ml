@@ -1,4 +1,4 @@
-let alpha_equiv e1 e2 : bool =
+let rlang_alpha_equiv e1 e2 : bool =
   let rec go env e1 e2 =
     match (e1, e2) with
     | `EInt n, `EInt m -> n = m
