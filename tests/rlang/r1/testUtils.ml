@@ -27,7 +27,13 @@ let test_interp (t : test) =
   assert_equal true
     (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
    |> Passes.Resolve_complex.is_resolve_complex)
-    ~msg:("is_resolve_complex: " ^ t.message) ~printer:string_of_bool
+    ~msg:("is_resolve_complex: " ^ t.message) ~printer:string_of_bool;
+  assert_equal t.value
+    (C0.Interp.interp ~inputs:t.inputs
+       (p.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
+      |> Passes.Explicate_control.explicate_control))
+    ~msg:("uniquify |> resolve_complex |> explicate_control: " ^ t.message)
+    ~printer:string_of_int
 
 let test_optimize (t : test) =
   (* non-optimized expr string *)
@@ -52,4 +58,10 @@ let test_optimize (t : test) =
   assert_equal (interp ~inputs:t.inputs p_opt.e)
     (interp ~inputs:t.inputs (p_expr.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex))
     ~msg:("uniquify |> resolve_complex: optimize vs. non-optimize: " ^ t.message)
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:t.inputs p_opt.e)
+    (C0.Interp.interp ~inputs:t.inputs
+       (p_expr.e |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
+      |> Passes.Explicate_control.explicate_control))
+    ~msg:("uniquify |> resolve_complex |> explicate_control: optimize vs. non-optimize: " ^ t.message)
     ~printer:string_of_int
