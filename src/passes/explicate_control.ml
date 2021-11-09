@@ -39,19 +39,10 @@ let wrap_ret_arg (expr : expr) : tail =
   match expr with
   | `EInt n -> Return (Number n)
   | `EVar x -> Return (Var x)
-  | `ERead ->
+  | _ ->
+    let exp = rlang_to_clang expr in
     let x = Utils.Fresh.fresh_var () in
-    Seq (Set (x, Read), Return (Var x))
-  | `ENegate e ->
-    let x = Utils.Fresh.fresh_var () in
-    let e' = rlang_to_clang e |> exp_to_arg in
-    Seq (Set (x, Negate e'), Return (Var x))
-  | `EAdd (l, r) ->
-    let x = Utils.Fresh.fresh_var () in
-    let l' = rlang_to_clang l |> exp_to_arg in
-    let r' = rlang_to_clang r |> exp_to_arg in
-    Seq (Set (x, Add (l', r')), Return (Var x))
-  | _ -> raise (Failure "explicate_control: Invalid wrap_ret_arg")
+    Seq (Set (x, exp), Return (Var x))
 
 let make_clang ((lst, expr) : (var * expr) list * expr) : (label * tail) list =
   let ret_arg = wrap_ret_arg expr in
