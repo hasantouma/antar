@@ -1,0 +1,3 @@
+(library
+ (name r_test_utils)
+ (libraries parser))

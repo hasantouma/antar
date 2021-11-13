@@ -1,4 +1,4 @@
-open TestUtils
+open R_test_utils
 
 let var_1 = { expr = "(let ([x 1]) x)"; optimized = "1"; value = 1; inputs = []; message = "var (1)" }
 
@@ -36,7 +36,7 @@ let let_number_read =
 
 let let_no_opt =
   { expr = "(let ([x0 (let ([x1 (+ (read) 504)]) (- x1))]) (let ([x2 (- x0)]) (+ x0 x2)))"
-  ; optimized = "(let ([x0 (let ([x1 (+ (read) 504)]) (- x1))]) (let ([x2 (- x0)]) (+ x0 x2)))"
+  ; optimized = "(let ([x0 (let ([x1 (+ 504 (read))]) (- x1))]) (let ([x2 (- x0)]) (+ x0 x2)))"
   ; value = 0
   ; inputs = [ 1 ]
   ; message = "let (3)"
