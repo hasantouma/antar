@@ -1,5 +1,6 @@
 open Ast
 open Parser.Main
+module V = Viz.Make_viz (R1.Viz)
 
 let lex_parse (lexbuf : Lexing.lexbuf) : program option =
   try Some (make_prog lexbuf) with
@@ -56,7 +57,8 @@ let visualize (file_name : string) : unit =
   if Sys.file_exists file_name then (
     let p : program option = parse_file file_name in
     handle_display p;
-    Viz.write_expr_to_graphviz p
+    let p = Option.get p in
+    V.write_expr_to_graphviz p.e
   ) else
     interp_stdin file_name
 
@@ -65,6 +67,6 @@ let randp (viz : bool) (n : int) : unit =
   let p = { info = false; e = r } in
   handle_display (Some p);
   if viz then
-    Viz.write_expr_to_graphviz (Some p)
+    V.write_expr_to_graphviz p.e
   else
     ()

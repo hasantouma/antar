@@ -1,0 +1,4 @@
+(library
+ (name rlang)
+ (libraries ocamlgraph)
+ (modules_without_implementation rlang))
