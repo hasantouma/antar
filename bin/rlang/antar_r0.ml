@@ -1,14 +1,11 @@
-let interp_randp (n : int) : unit =
-  let r = R0.Generator.randp n in
-  print_endline (R0.Pp.pp r);
-  let p = R0.Interp.interp r in
-  let s = string_of_int p in
-  print_endline s
+module Repl = Repl.Make_repl (R0.Lang)
 
 let parse_cmd_line_args () =
   let speclist =
     [ ("-f", Arg.String Repl.interp_file, "<file_path> Parsing file")
-    ; ("-g", Arg.Int interp_randp, "<int> Generate random program of size n")
+    ; ("-g", Arg.Int (Repl.randp false), "<int> Generate random program of size n")
+    ; ("-gv", Arg.Int (Repl.randp true), "<int> Generate, and visualize, random program of size n")
+    ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
     ]
   in
   let usage_msg = "'Antar R0' programming language" in

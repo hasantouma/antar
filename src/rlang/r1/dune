@@ -1,3 +1,9 @@
 (library
  (name r1)
  (libraries r0))
+
+(ocamllex
+ (modules lex))
+
+(menhir
+ (modules parse))

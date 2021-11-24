@@ -1,8 +1,4 @@
-(* R1 viz *)
-
-type expr = Ast.expr
-
-type vertex = int * expr
+type vertex = int * Ast.expr
 
 type edge = vertex * vertex
 
@@ -37,7 +33,7 @@ let style_of_expr_type expr lst =
     `Style `Filled :: lst
   | _ -> lst
 
-let node_style_of_expr (expr : expr) : Graph.Graphviz.DotAttributes.vertex list =
+let node_style_of_expr (expr : Ast.expr) : Graph.Graphviz.DotAttributes.vertex list =
   label_of_expr_type expr [] |> shape_of_expr_type expr |> style_of_expr_type expr
 
 let fresh =
@@ -46,7 +42,7 @@ let fresh =
     counter := !counter + 1;
     !counter
 
-let[@warning "-8"] rec graph_of_expr (expr : expr) : vertex list * edge list =
+let[@warning "-8"] rec graph_of_expr (expr : Ast.expr) : vertex list * edge list =
   let id = fresh () in
   match expr with
   | `EInt _

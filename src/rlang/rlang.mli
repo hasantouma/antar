@@ -1,6 +1,21 @@
 module type Rlang = sig
   type expr
 
+  type program =
+    { info : bool
+    ; e : expr
+    }
+
+  val make_prog : expr -> program
+
+  val interp : ?env:(string * int) list -> ?inputs:int list -> expr -> int
+
+  val pp : expr -> string
+
+  val parse : Lexing.lexbuf -> program
+
+  val randp : ?vars:string list -> int -> expr
+
   type vertex = int * expr
 
   type edge = vertex * vertex

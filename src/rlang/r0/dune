@@ -1,3 +1,9 @@
 (library
  (name r0)
- (libraries ocamlgraph r_utils utils))
+ (libraries exceptions ocamlgraph r_utils utils))
+
+(ocamllex
+ (modules lex))
+
+(menhir
+ (modules parse))

@@ -1,3 +1,5 @@
+module Repl = Repl.Make_repl (R1.Lang)
+
 let parse_cmd_line_args () =
   let speclist =
     [ ("-f", Arg.String Repl.interp_file, "<file_path> Parsing file")
@@ -6,7 +8,7 @@ let parse_cmd_line_args () =
     ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
     ]
   in
-  let usage_msg = "'Antar' programming language" in
+  let usage_msg = "'Antar R1' programming language" in
   Arg.parse speclist print_endline usage_msg
 
 let () =
@@ -14,6 +16,6 @@ let () =
   if args_len > 1 then
     parse_cmd_line_args ()
   else (
-    print_endline "Welcome to the 'Antar' REPL";
+    print_endline "Welcome to the 'Antar R1' REPL";
     Repl.repl ()
   )
