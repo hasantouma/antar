@@ -14,4 +14,4 @@ let test_optimize (t : rtest) =
   assert_equal (interp ~inputs:t.inputs p_opt.e) (interp ~inputs:t.inputs p_expr.e)
     ~msg:("optimize vs. non-optimize: " ^ t.message)
     ~printer:string_of_int;
-  assert_equal p_opt.e (optimize p_expr.e) ~msg:("opt-optimize vs. optimize: " ^ t.message) ~printer:R1.Pp.pp
+  assert_equal p_opt.e (optimize p_expr.e) ~msg:("opt-optimize vs. optimize: " ^ t.message) ~printer:R0.Pp.pp
