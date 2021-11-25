@@ -68,5 +68,5 @@ let[@warning "-8"] rec graph_of_expr (expr : Ast.expr) : vertex list * edge list
     let bv :: bvs, bes = graph_of_expr eb in
     let from = (id, expr) in
     let vertices = (from :: vv :: xv :: bv :: xvs) @ bvs in
-    let edges = ((from, vv) :: (from, xv) :: (from, bv) :: xes) @ bes in
+    let edges = ((from, vv) :: (vv, xv) :: (from, bv) :: xes) @ bes in
     (vertices, edges)
