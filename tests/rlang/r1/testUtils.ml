@@ -2,6 +2,8 @@ open OUnit2
 open R1.Interp
 open R_test_utils
 
+let make_prog (e : string) = e |> Lexing.from_string |> R1.Lang.parse
+
 (* *** Testing without optimized pass *** *)
 
 (* uniquify pass *)

@@ -1,3 +1,2 @@
 (library
- (name r_test_utils)
- (libraries parser))
+ (name r_test_utils))

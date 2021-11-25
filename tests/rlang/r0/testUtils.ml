@@ -1,6 +1,8 @@
 open OUnit2
-open R1.Interp
+open R0.Interp
 open R_test_utils
+
+let make_prog (e : string) = e |> Lexing.from_string |> R0.Lang.parse
 
 let test_interp (t : rtest) =
   let p = make_prog t.expr in
