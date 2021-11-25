@@ -2,10 +2,10 @@
  (name antar_r1)
  (modules antar_r1)
  (promote (until-clean))
- (libraries r0 r1 repl))
+ (libraries r0 r1 command))
 
 (executable
  (name antar_r0)
  (modules antar_r0)
  (promote (until-clean))
- (libraries r0 repl))
+ (libraries r0 command))

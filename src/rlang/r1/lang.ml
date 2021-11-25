@@ -5,6 +5,8 @@ type program =
   ; e : expr
   }
 
+let name = "R1"
+
 let make_prog (expr : expr) : program = { info = false; e = expr }
 
 let randp = Generator.randp

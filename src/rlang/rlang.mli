@@ -6,6 +6,8 @@ module type Rlang = sig
     ; e : expr
     }
 
+  val name : string
+
   val make_prog : expr -> program
 
   val interp : ?env:(string * int) list -> ?inputs:int list -> expr -> int
