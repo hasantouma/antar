@@ -1,6 +1,13 @@
 open OUnit2
 open R1.Interp
-open R_test_utils
+
+type rtest =
+  { expr : string
+  ; optimized : string
+  ; value : int
+  ; inputs : int list
+  ; message : string
+  }
 
 let make_prog (e : string) = e |> Lexing.from_string |> R1.Lang.parse
 

@@ -9,7 +9,7 @@ let make_read (readings : int list) : unit -> int =
     let box = ref readings in
     fun () ->
       match !box with
-      | [] -> raise Exceptions.TooManyReads
+      | [] -> raise (Failure "Too Many Reads")
       | head :: tail ->
         box := tail;
         head)

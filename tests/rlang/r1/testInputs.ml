@@ -1,5 +1,6 @@
-open R_test_utils
+open TestUtils
 
+(* var *)
 let var_1 = { expr = "(let ([x 1]) x)"; optimized = "1"; value = 1; inputs = []; message = "var (1)" }
 
 let var_shadow =
@@ -18,6 +19,7 @@ let var_name =
 
 let var_list = [ var_1; var_shadow; body_shadow; var_name ]
 
+(* let *)
 let let_read_order =
   { expr = "(let ([x (read)]) (+ x (- (read))))"
   ; optimized = "(let ([x (read)]) (+ x (- (read))))"
