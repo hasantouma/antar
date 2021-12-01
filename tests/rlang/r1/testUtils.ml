@@ -9,7 +9,7 @@ type rtest =
   ; message : string
   }
 
-let make_prog (e : string) = e |> Lexing.from_string |> R1.Lang.parse
+let make_prog (e : string) : R1.Ast.program = e |> Lexing.from_string |> R1.Lang.parse
 
 (* *** Testing without optimized pass *** *)
 

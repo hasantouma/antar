@@ -1,9 +1,6 @@
 type expr = Ast.expr
 
-type program =
-  { info : bool
-  ; e : expr
-  }
+type program = Ast.program
 
 let name = "R1"
 

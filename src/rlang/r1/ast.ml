@@ -7,3 +7,8 @@ type 'a expr_open =
   ]
 
 type expr = expr expr_open
+
+type program =
+  { info : bool
+  ; e : expr
+  }
