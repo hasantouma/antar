@@ -9,7 +9,7 @@ type rtest =
   ; message : string
   }
 
-let make_prog (e : string) : R0.Ast.program = e |> Lexing.from_string |> R0.Lang.parse
+let make_prog (e : string) : R0.Lang.program = e |> Lexing.from_string |> R0.Lang.parse
 
 let test_interp (t : rtest) =
   let p = make_prog t.expr in

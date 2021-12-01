@@ -8,7 +8,7 @@ type rtest =
   ; message : string
   }
 
-let make_prog (e : string) : R1.Ast.program = e |> Lexing.from_string |> R1.Lang.parse
+let make_prog (e : string) : R1.Lang.program = e |> Lexing.from_string |> R1.Lang.parse
 
 let passes_pipe (expr : R1.Ast.expr) : C0.Ast.p =
   expr |> R1.Interp.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
