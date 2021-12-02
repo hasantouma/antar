@@ -1,20 +1,20 @@
 module type Rlang = sig
   type expr
 
-  type program =
+  type rprogram =
     { info : bool
     ; e : expr
     }
 
   val name : string
 
-  val make_prog : expr -> program
+  val make_prog : expr -> rprogram
 
   val interp : ?env:(string * int) list -> ?inputs:int list -> expr -> int
 
   val pp : expr -> string
 
-  val parse : Lexing.lexbuf -> program
+  val parse : Lexing.lexbuf -> rprogram
 
   val randp : ?vars:string list -> int -> expr
 

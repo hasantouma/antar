@@ -36,7 +36,7 @@ let exec_command ?(inputs = []) (command : string) : string =
   handle_status (Unix.close_process (in_chan, out_chan));
   res
 
-let assemble ?(inputs = []) (p : Ast.p) : string =
+let assemble ?(inputs = []) (p : Ast.xprogram) : string =
   let str : string = Emit.emitp true p in
   let file, out = Filename.open_temp_file "" ".s" in
   output_string out str;

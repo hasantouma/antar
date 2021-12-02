@@ -50,6 +50,6 @@ let make_clang ((lst, expr) : (var * expr) list * expr) : (label * tail) list =
   let tail = List.fold_right (fun (v, exp) acc -> Seq (Set (v, exp), acc)) lst' ret_arg in
   [ ("entry", tail) ]
 
-let explicate_control (expr : expr) : p =
+let explicate_control (expr : expr) : cprogram =
   let blocks = lift expr |> make_clang in
   { info = []; blks = blocks }

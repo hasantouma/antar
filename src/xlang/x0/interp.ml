@@ -92,12 +92,12 @@ and interp_b (ms : ms) (label : label) : ms =
   interp_is ms block.instrs
 
 (* Interp program *)
-let interp_p (read_int : unit -> int) (p : p) : ms =
+let interp_p (read_int : unit -> int) (p : xprogram) : ms =
   let ms0 = init_ms p.blks read_int in
   interp_b ms0 "entry"
 
 (* Get value from RAX *)
-let interp ?(inputs = []) (p : p) : int =
+let interp ?(inputs = []) (p : xprogram) : int =
   let read_int : unit -> int = Utils.Repl.make_read inputs in
   let ms = interp_p read_int p in
   List.assoc RAX ms.regs

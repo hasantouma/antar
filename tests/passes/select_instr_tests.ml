@@ -2,22 +2,22 @@ open OUnit2
 open C0.Ast
 open Passes.Select_instr
 
-let make_p (tail : tail) : p = { info = []; blks = [ ("entry", tail) ] }
+let make_cprog (tail : tail) : cprogram = { info = []; blks = [ ("entry", tail) ] }
 
-let ul1 = make_p (Return (Number 5))
+let ul1 = make_cprog (Return (Number 5))
 
 let ul1' = { ul1 with info = [] }
 
-let ul2 = make_p (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
+let ul2 = make_cprog (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
 
 let ul2' = { ul2 with info = [ "x0" ] }
 
-let ul3 = make_p (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
+let ul3 = make_cprog (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
 
 let ul3' = { ul3 with info = [ "x0"; "x" ] }
 
 let ul4 =
-  make_p
+  make_cprog
     (Seq
        ( Set ("a", Arg (Number 42))
        , Seq
@@ -26,12 +26,12 @@ let ul4 =
 
 let ul4' = { ul4 with info = [ "x0"; "y"; "x"; "a" ] }
 
-let ul5 = make_p (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
+let ul5 = make_cprog (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
 
 let ul5' = { ul5 with info = [ "y"; "x" ] }
 
 let ul6 =
-  make_p
+  make_cprog
     (Seq
        ( Set ("y", Read)
        , Seq
@@ -41,7 +41,7 @@ let ul6 =
 let ul6' = { ul6 with info = [ "x0"; "x"; "z"; "y" ] }
 
 let ul7 =
-  make_p
+  make_cprog
     (Seq
        ( Set ("y", Negate (Number 10))
        , Seq (Set ("x", Add (Number 42, Var "y")), Seq (Set ("x1", Add (Var "x", Number 10)), Return (Var "x1"))) ))

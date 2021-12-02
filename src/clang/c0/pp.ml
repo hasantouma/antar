@@ -23,7 +23,7 @@ let rec pp_t indent tail : string =
   | Return a -> spaces ^ "(return " ^ pp_a a ^ ")\n"
   | Seq (s, t) -> pp_s indent s ^ pp_t indent t
 
-let pp (p : p) : string =
+let pp (p : cprogram) : string =
   let prog = "(program " ^ [%show: string list] p.info ^ "\n" in
   let indent = 2 in
   let spaces = String.make indent ' ' in

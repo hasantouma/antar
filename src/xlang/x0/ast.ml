@@ -42,7 +42,7 @@ type block =
   ; instrs : instr list
   }
 
-type p =
+type xprogram =
   { info : bool
   ; blks : (label * block) list
   }

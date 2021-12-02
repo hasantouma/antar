@@ -2,20 +2,20 @@ open OUnit2
 open C0.Ast
 open C0.Interp
 
-let make_p (lst : (label * tail) list) : p = { info = []; blks = lst }
+let make_cprog (lst : (label * tail) list) : cprogram = { info = []; blks = lst }
 
-let c1 = make_p [ ("entry", Return (Number 5)) ]
+let c1 = make_cprog [ ("entry", Return (Number 5)) ]
 
-let c2 = make_p [ ("entry", Seq (Set ("x", Arg (Number 42)), Return (Var "x"))) ]
+let c2 = make_cprog [ ("entry", Seq (Set ("x", Arg (Number 42)), Return (Var "x"))) ]
 
-let c3 = make_p [ ("entry", Seq (Set ("x", Arg (Number 42)), Seq (Set ("y", Arg (Var "x")), Return (Var "y")))) ]
+let c3 = make_cprog [ ("entry", Seq (Set ("x", Arg (Number 42)), Seq (Set ("y", Arg (Var "x")), Return (Var "y")))) ]
 
-let c4 = make_p [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y")))) ]
+let c4 = make_cprog [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y")))) ]
 
-let c5 = make_p [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Add (Number (-5), Var "x")), Return (Var "y")))) ]
+let c5 = make_cprog [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Add (Number (-5), Var "x")), Return (Var "y")))) ]
 
 let c6 =
-  make_p
+  make_cprog
     [ ( "entry"
       , Seq
           ( Set ("x", Read)
@@ -23,14 +23,14 @@ let c6 =
     ]
 
 let c7 =
-  make_p
+  make_cprog
     [ ("foo", Seq (Set ("x", Arg (Number 42)), Return (Var "x")))
     ; ("entry", Seq (Set ("x", Arg (Number 12)), Return (Var "x")))
     ; ("bar", Seq (Set ("x", Arg (Number 52)), Return (Var "x")))
     ]
 
 let c8 =
-  make_p
+  make_cprog
     [ ( "entry"
       , Seq
           ( Set ("x", Read)
@@ -38,18 +38,18 @@ let c8 =
     ]
 
 let c9 =
-  make_p
+  make_cprog
     [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Read), Seq (Set ("x", Add (Var "y", Var "x")), Return (Var "x")))))
     ]
 
 let c10 =
-  make_p
+  make_cprog
     [ ( "entry"
       , Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Seq (Set ("z", Negate (Var "y")), Return (Var "z")))) )
     ]
 
 let c11 =
-  make_p
+  make_cprog
     [ ( "entry"
       , Seq
           ( Set ("x", Read)
@@ -59,7 +59,7 @@ let c11 =
     ]
 
 let c12 =
-  make_p
+  make_cprog
     [ ( "entry"
       , Seq
           ( Set ("x", Read)

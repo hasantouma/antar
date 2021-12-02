@@ -25,7 +25,7 @@ let rec interp_t env tail : int =
     let env' = interp_s env s in
     interp_t env' t
 
-let interp ?(inputs = []) (p : p) : int =
+let interp ?(inputs = []) (p : cprogram) : int =
   let read_int : unit -> int = Utils.Repl.make_read inputs in
   let env : env = { assoc = []; read_int } in
   let main_tail : tail = List.assoc "entry" p.blks in

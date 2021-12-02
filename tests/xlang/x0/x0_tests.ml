@@ -3,7 +3,7 @@ open X0.Ast
 open X0.Interp
 open X0.Assemble
 
-let make_p (lst : (label * instr list) list) : p =
+let make_xprog (lst : (label * instr list) list) : xprogram =
   let blocks =
     List.map
       (fun (label, instrs) ->
@@ -18,21 +18,21 @@ let wrap (lst : instr list) : instr list =
   let epilogue = [ Popq (Reg RBP); Retq ] in
   List.append (List.append prologue lst) epilogue
 
-let wrap_entry (instrs : instr list) : p =
+let wrap_entry (instrs : instr list) : xprogram =
   let entry = wrap instrs in
-  make_p [ ("entry", entry) ]
+  make_xprog [ ("entry", entry) ]
 
-let s1 : p = wrap_entry [ Movq (Constant 42, Reg RAX) ]
+let s1 : xprogram = wrap_entry [ Movq (Constant 42, Reg RAX) ]
 
-let s2 : p = wrap_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]
+let s2 : xprogram = wrap_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]
 
-let s3 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
+let s3 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
 
-let s4 : p = wrap_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
+let s4 : xprogram = wrap_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
 
-let s5 : p = wrap_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
+let s5 : xprogram = wrap_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
 
-let s6 : p =
+let s6 : xprogram =
   wrap_entry
     [ Movq (Constant 23, Reg RAX)
     ; Pushq (Reg RAX)
@@ -43,20 +43,20 @@ let s6 : p =
     ; Subq (Reg RBX, Reg RAX)
     ]
 
-let s7 : p =
+let s7 : xprogram =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Movq (Constant 42, Reg RAX); Jmp "foo" ] in
   let foo = [ Addq (Constant 1, Reg RAX); Popq (Reg RBP); Retq ] in
-  make_p [ ("entry", entry); ("foo", foo) ]
+  make_xprog [ ("entry", entry); ("foo", foo) ]
 
-let s8 : p =
+let s8 : xprogram =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Pushq (Constant 17); Jmp "foo" ] in
   let foo = [ Popq (Reg RBX); Jmp "bar" ] in
   let bar = [ Movq (Reg RBX, Reg RAX); Popq (Reg RBP); Retq ] in
-  make_p [ ("entry", entry); ("foo", foo); ("bar", bar) ]
+  make_xprog [ ("entry", entry); ("foo", foo); ("bar", bar) ]
 
-let s9 : p = wrap_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
+let s9 : xprogram = wrap_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
 
-let s10 : p =
+let s10 : xprogram =
   let start =
     [ Movq (Constant 10, Deref (RBP, -8))
     ; Negq (Deref (RBP, -8))
@@ -67,20 +67,20 @@ let s10 : p =
   in
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Subq (Constant 16, Reg RSP); Jmp "start" ] in
   let finish = [ Addq (Constant 16, Reg RSP); Popq (Reg RBP); Retq ] in
-  make_p [ ("start", start); ("entry", entry); ("finish", finish) ]
+  make_xprog [ ("start", start); ("entry", entry); ("finish", finish) ]
 
-let s11 : p =
+let s11 : xprogram =
   let entry = wrap [ Movq (Constant 13, Ref "hi"); Callq "foo" ] in
   let foo = wrap [ Addq (Constant 10, Ref "hi"); Movq (Ref "hi", Reg RAX) ] in
-  make_p [ ("entry", entry); ("foo", foo) ]
+  make_xprog [ ("entry", entry); ("foo", foo) ]
 
-let s12 : p = wrap_entry [ Callq "read" ]
+let s12 : xprogram = wrap_entry [ Callq "read" ]
 
-let s13 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX) ]
+let s13 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX) ]
 
-let s14 : p = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
+let s14 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
 
-let s15 : p =
+let s15 : xprogram =
   wrap_entry
     [ Movq (Constant 5, Reg RAX)
     ; Pushq (Reg RAX)
@@ -92,9 +92,9 @@ let s15 : p =
     ; Subq (Reg RCX, Reg RAX)
     ]
 
-let s16 : p = make_p [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
+let s16 : xprogram = make_xprog [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
 
-let s17 : p = wrap_entry [ Callq "read"; Movq (Reg RAX, Reg RBX); Callq "read"; Subq (Reg RBX, Reg RAX) ]
+let s17 : xprogram = wrap_entry [ Callq "read"; Movq (Reg RAX, Reg RBX); Callq "read"; Subq (Reg RBX, Reg RAX) ]
 
 let test_interp _ctxt =
   assert_equal 42 (interp s1) ~msg:"Movq" ~printer:string_of_int;

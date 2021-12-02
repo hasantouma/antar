@@ -1,13 +1,13 @@
 type expr = Ast.expr
 
-type program =
+type rprogram =
   { info : bool
   ; e : expr
   }
 
 let name = "R0"
 
-let make_prog (expr : expr) : program = { info = false; e = expr }
+let make_prog (expr : expr) : rprogram = { info = false; e = expr }
 
 let randp = Generator.randp
 
@@ -15,7 +15,7 @@ let interp = Interp.interp
 
 let pp = Pp.pp
 
-let parse (lexbuf : Lexing.lexbuf) : program = make_prog (Parse.main Lex.token lexbuf)
+let parse (lexbuf : Lexing.lexbuf) : rprogram = make_prog (Parse.main Lex.token lexbuf)
 
 type vertex = Viz.vertex
 

@@ -1,24 +1,24 @@
 module Make_repl (L : Rlang.Rlang) = struct
   module V = Viz.Make_viz (L)
 
-  let lex_parse (lexbuf : Lexing.lexbuf) : L.program option =
+  let lex_parse (lexbuf : Lexing.lexbuf) : L.rprogram option =
     try Some (L.parse lexbuf) with
     | Exceptions.BadInput s ->
       print_endline ("Exception! Bad Input: " ^ s);
       None
 
-  let parse_file (name : string) : L.program option =
+  let parse_file (name : string) : L.rprogram option =
     let chan = open_in name in
     let lexbuf = Lexing.from_channel chan in
-    let p : L.program option = lex_parse lexbuf in
+    let p : L.rprogram option = lex_parse lexbuf in
     close_in chan;
     p
 
   let handle_exit repl_in = if repl_in = "#quit" then exit 0
 
-  let handle_display (p : L.program option) : unit =
+  let handle_display (p : L.rprogram option) : unit =
     match p with
-    | None -> print_endline "Invalid program"
+    | None -> print_endline "Invalid rprogram"
     | Some p -> (
       try
         let n = L.interp p.e in
@@ -33,13 +33,13 @@ module Make_repl (L : Rlang.Rlang) = struct
     let repl_in = input_line stdin in
     handle_exit repl_in;
     let lexbuf = Lexing.from_string repl_in in
-    let p : L.program option = lex_parse lexbuf in
+    let p : L.rprogram option = lex_parse lexbuf in
     handle_display p;
     repl ()
 
   let interp_file (file_name : string) : unit =
     if Sys.file_exists file_name then
-      let p : L.program option = parse_file file_name in
+      let p : L.rprogram option = parse_file file_name in
       handle_display p
     else (
       print_endline "File does not exist!";
@@ -49,12 +49,12 @@ module Make_repl (L : Rlang.Rlang) = struct
   (* TODO: This feature is not connected to the repl right now *)
   let interp_stdin (s : string) : unit =
     let lexbuf = Lexing.from_string s in
-    let p : L.program option = lex_parse lexbuf in
+    let p : L.rprogram option = lex_parse lexbuf in
     handle_display p
 
   let visualize (file_name : string) : unit =
     if Sys.file_exists file_name then (
-      let p : L.program option = parse_file file_name in
+      let p : L.rprogram option = parse_file file_name in
       handle_display p;
       let p = Option.get p in
       V.write_expr_to_graphviz p.e

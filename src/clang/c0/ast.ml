@@ -18,7 +18,7 @@ type tail =
   | Return of arg
   | Seq of stmt * tail
 
-type p =
+type cprogram =
   { info : var list
   ; blks : (label * tail) list
   }

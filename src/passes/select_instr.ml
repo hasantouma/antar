@@ -11,7 +11,7 @@ let rec get_vars (acc : var list) (tail : tail) : var list =
     let x = var_of_stmt s in
     get_vars (x :: acc) t
 
-let uncover_locals (p : C0.Ast.p) : C0.Ast.p =
+let uncover_locals (p : C0.Ast.cprogram) : C0.Ast.cprogram =
   let tail = List.assoc "entry" p.blks in
   let info' = get_vars [] tail in
   { p with info = info' }
