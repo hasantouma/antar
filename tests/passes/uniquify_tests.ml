@@ -1,5 +1,6 @@
 open OUnit2
 open Passes.Uniquify
+open R1.Interp
 
 let u1 = `ELet ("a", `ERead, `EVar "a")
 
@@ -35,6 +36,14 @@ let test_is_uniquify _ctxt =
   assert_equal true (is_uniquify u3') ~msg:"is_uniquify: u3" ~printer:string_of_bool;
   assert_equal true (is_uniquify u4') ~msg:"is_uniquify: u4" ~printer:string_of_bool
 
-let suite = "passes_tests" >::: [ "uniquify" >:: test_uniquify; "is_uniquify" >:: test_is_uniquify ]
+let test_interp_uniquify _ctxt =
+  assert_equal (interp ~inputs:[ 1 ] u1') (interp ~inputs:[ 1 ] u1) ~msg:"interp_uniquify: u1" ~printer:string_of_int;
+  assert_equal (interp u2') (interp u2) ~msg:"interp_uniquify: u2" ~printer:string_of_int;
+  assert_equal (interp u3') (interp u3) ~msg:"interp_uniquify: u3" ~printer:string_of_int;
+  assert_equal (interp u4') (interp u4) ~msg:"interp_uniquify: u4" ~printer:string_of_int
+
+let suite =
+  "passes_tests"
+  >::: [ "uniquify" >:: test_uniquify; "is_uniquify" >:: test_is_uniquify; "interp_uniquify" >:: test_interp_uniquify ]
 
 let _ = run_test_tt_main suite
