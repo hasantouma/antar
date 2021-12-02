@@ -19,9 +19,12 @@ let ul3' = { ul3 with info = [ "x0"; "x" ] }
 let ul4 =
   make_p
     (Seq
-       (Set ("x", Negate (Var "a")), Seq (Set ("y", Read), Seq (Set ("x0", Add (Var "x", Var "y")), Return (Var "x0")))))
+       ( Set ("a", Arg (Number 42))
+       , Seq
+           ( Set ("x", Negate (Var "a"))
+           , Seq (Set ("y", Read), Seq (Set ("x0", Add (Var "x", Var "y")), Return (Var "x0"))) ) ))
 
-let ul4' = { ul4 with info = [ "x0"; "y"; "x" ] }
+let ul4' = { ul4 with info = [ "x0"; "y"; "x"; "a" ] }
 
 let ul5 = make_p (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
 
