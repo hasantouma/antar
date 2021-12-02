@@ -2,7 +2,7 @@ open OUnit2
 open C0.Ast
 open Passes.Explicate_control
 
-let make_p (tail : tail) : p = { info = false; blks = [ ("entry", tail) ] }
+let make_p (tail : tail) : p = { info = []; blks = [ ("entry", tail) ] }
 
 let econ1 = `EInt 5
 

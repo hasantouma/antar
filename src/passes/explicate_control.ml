@@ -52,4 +52,4 @@ let make_clang ((lst, expr) : (var * expr) list * expr) : (label * tail) list =
 
 let explicate_control (expr : expr) : p =
   let blocks = lift expr |> make_clang in
-  { info = false; blks = blocks }
+  { info = []; blks = blocks }

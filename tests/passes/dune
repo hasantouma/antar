@@ -1,5 +1,9 @@
 (tests
- (names explicate_control_tests resolve_complex_tests uniquify_tests)
+ (names
+  explicate_control_tests
+  resolve_complex_tests
+  select_instr
+  uniquify_tests)
  (libraries ounit2 passes))
 
 (env

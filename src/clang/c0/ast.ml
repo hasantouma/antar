@@ -19,7 +19,7 @@ type tail =
   | Seq of stmt * tail
 
 type p =
-  { info : bool
+  { info : var list
   ; blks : (label * tail) list
   }
 

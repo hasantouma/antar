@@ -2,7 +2,7 @@ open OUnit2
 open C0.Ast
 open C0.Interp
 
-let make_p (lst : (label * tail) list) : p = { info = false; blks = lst }
+let make_p (lst : (label * tail) list) : p = { info = []; blks = lst }
 
 let c1 = make_p [ ("entry", Return (Number 5)) ]
 
