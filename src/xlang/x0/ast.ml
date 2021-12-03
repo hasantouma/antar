@@ -38,12 +38,12 @@ type instr =
   | Popq of arg
 
 type block =
-  { info : bool
+  { info : var list
   ; instrs : instr list
   }
 
 type xprogram =
-  { info : bool
+  { info : var list
   ; blks : (label * block) list
   }
 

@@ -7,11 +7,11 @@ let make_xprog (lst : (label * instr list) list) : xprogram =
   let blocks =
     List.map
       (fun (label, instrs) ->
-        let block = { info = false; instrs } in
+        let block = { info = []; instrs } in
         (label, block))
       lst
   in
-  { info = false; blks = blocks }
+  { info = []; blks = blocks }
 
 let wrap (lst : instr list) : instr list =
   let prologue = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP) ] in
