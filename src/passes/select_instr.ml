@@ -15,3 +15,5 @@ let uncover_locals (p : C0.Ast.cprogram) : C0.Ast.cprogram =
   let tail = List.assoc "entry" p.blks in
   let info' = get_vars [] tail in
   { p with info = info' }
+
+let select_instr (_p : C0.Ast.cprogram) : X0.Ast.xprogram = { info = false; blks = [] }
