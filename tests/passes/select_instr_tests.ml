@@ -140,6 +140,32 @@ let test_select_instr _ctxt =
   assert_equal si6 (select_instr ul6') ~msg:"select_instr: si6" ~printer:(X0.Emit.emitp true);
   assert_equal si7 (select_instr ul7') ~msg:"select_instr: si7" ~printer:(X0.Emit.emitp true)
 
-let suite = "select_instr_tests" >::: [ "uncover_locals" >:: test_uncover_locals; "select_instr" >:: test_select_instr ]
+let test_interp_select_instr _ctxt =
+  assert_equal (X0.Interp.interp si1) (C0.Interp.interp ul1') ~msg:"interp_select_instr: si1" ~printer:string_of_int;
+  assert_equal (X0.Interp.interp si2) (C0.Interp.interp ul2') ~msg:"interp_select_instr: si2" ~printer:string_of_int;
+  assert_equal
+    (X0.Interp.interp ~inputs:[ 3 ] si3)
+    (C0.Interp.interp ~inputs:[ 3 ] ul3')
+    ~msg:"interp_select_instr: si3" ~printer:string_of_int;
+  assert_equal
+    (X0.Interp.interp ~inputs:[ 4 ] si4)
+    (C0.Interp.interp ~inputs:[ 4 ] ul4')
+    ~msg:"interp_select_instr: si4" ~printer:string_of_int;
+  assert_equal
+    (X0.Interp.interp ~inputs:[ 5 ] si5)
+    (C0.Interp.interp ~inputs:[ 5 ] ul5')
+    ~msg:"interp_select_instr: si5" ~printer:string_of_int;
+  assert_equal
+    (X0.Interp.interp ~inputs:[ 6 ] si6)
+    (C0.Interp.interp ~inputs:[ 6 ] ul6')
+    ~msg:"interp_select_instr: si6" ~printer:string_of_int;
+  assert_equal (X0.Interp.interp si7) (C0.Interp.interp ul7') ~msg:"interp_select_instr: si7" ~printer:string_of_int
+
+let suite =
+  "select_instr_tests"
+  >::: [ "uncover_locals" >:: test_uncover_locals
+       ; "select_instr" >:: test_select_instr
+       ; "interp_select_instr" >:: test_interp_select_instr
+       ]
 
 let _ = run_test_tt_main suite
