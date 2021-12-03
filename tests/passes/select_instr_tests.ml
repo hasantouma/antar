@@ -5,7 +5,7 @@ open Passes.Select_instr
 
 let make_cprog (tail : tail) : cprogram = { info = []; blks = [ ("entry", tail) ] }
 
-let make_xprog (lst : (label * instr list) list) : xprogram =
+let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
   let blocks =
     List.map
       (fun (label, instrs) ->
@@ -13,16 +13,16 @@ let make_xprog (lst : (label * instr list) list) : xprogram =
         (label, block))
       lst
   in
-  { info = []; blks = blocks }
+  { info = pinfo; blks = blocks }
 
 let wrap (lst : instr list) : instr list =
   let prologue = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP) ] in
   let epilogue = [ Popq (Reg RBP); Retq ] in
   List.append (List.append prologue lst) epilogue
 
-let wrap_entry (instrs : instr list) : xprogram =
+let wrap_entry ?(pinfo = []) (instrs : instr list) : xprogram =
   let entry = wrap instrs in
-  make_xprog [ ("entry", entry) ]
+  make_xprog ~pinfo [ ("entry", entry) ]
 
 let ul1 = make_cprog (Return (Number 5))
 
@@ -34,14 +34,15 @@ let ul2 = make_cprog (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
 
 let ul2' = { ul2 with info = [ "x0" ] }
 
-let si2 : xprogram = wrap_entry [ Movq (Constant 6, Ref "x0"); Negq (Ref "x0"); Movq (Ref "x0", Reg RAX) ]
+let si2 : xprogram =
+  wrap_entry ~pinfo:ul2'.info [ Movq (Constant 6, Ref "x0"); Negq (Ref "x0"); Movq (Ref "x0", Reg RAX) ]
 
 let ul3 = make_cprog (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
 
 let ul3' = { ul3 with info = [ "x0"; "x" ] }
 
 let si3 : xprogram =
-  wrap_entry
+  wrap_entry ~pinfo:ul3'.info
     [ Callq "read"
     ; Movq (Reg RAX, Ref "x")
     ; Movq (Ref "x", Ref "x0")
@@ -60,7 +61,7 @@ let ul4 =
 let ul4' = { ul4 with info = [ "x0"; "y"; "x"; "a" ] }
 
 let si4 : xprogram =
-  wrap_entry
+  wrap_entry ~pinfo:ul4'.info
     [ Movq (Constant 42, Ref "a")
     ; Movq (Ref "a", Ref "x")
     ; Negq (Ref "x")
@@ -76,7 +77,8 @@ let ul5 = make_cprog (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Re
 let ul5' = { ul5 with info = [ "y"; "x" ] }
 
 let si5 : xprogram =
-  wrap_entry [ Callq "read"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
+  wrap_entry ~pinfo:ul5'.info
+    [ Callq "read"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
 
 let ul6 =
   make_cprog
@@ -89,7 +91,7 @@ let ul6 =
 let ul6' = { ul6 with info = [ "x0"; "x"; "z"; "y" ] }
 
 let si6 : xprogram =
-  wrap_entry
+  wrap_entry ~pinfo:ul6'.info
     [ Callq "read"
     ; Movq (Reg RAX, Ref "y")
     ; Movq (Constant 42, Ref "z")
@@ -110,7 +112,7 @@ let ul7 =
 let ul7' = { ul7 with info = [ "x1"; "x"; "y" ] }
 
 let si7 : xprogram =
-  wrap_entry
+  wrap_entry ~pinfo:ul7'.info
     [ Movq (Constant 10, Ref "y")
     ; Negq (Ref "y")
     ; Movq (Ref "y", Ref "x")
