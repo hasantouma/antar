@@ -62,9 +62,10 @@ let rec select_tail (tail : C0.Ast.tail) : X0.Ast.instr list =
   | Seq (stmt, tail) -> select_stmt stmt @ select_tail tail
 
 let select_instr (p : C0.Ast.cprogram) : X0.Ast.xprogram =
-  let entry_tail : C0.Ast.tail = List.assoc "entry" p.blks in
+  let p_with_locals = uncover_locals p in
+  let entry_tail : C0.Ast.tail = List.assoc "entry" p_with_locals.blks in
   let instrs = select_tail entry_tail in
-  let vars_length = stack_space p.info in
+  let vars_length = stack_space p_with_locals.info in
   let instrs' = wrap vars_length instrs in
   let block = { info = []; instrs = instrs' } in
-  { info = p.info; blks = [ ("entry", block) ] }
+  { info = p_with_locals.info; blks = [ ("entry", block) ] }

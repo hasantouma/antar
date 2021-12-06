@@ -53,3 +53,37 @@ let assign_homes (p : xprogram) : xprogram =
   let var_reg_lst = List.mapi var_reg_map p.info in
   let blks' = List.map (assign_homes_blks var_reg_lst) p.blks in
   { p with blks = blks' }
+
+let is_assign_homes_arg (arg : arg) : bool =
+  match arg with
+  | Constant _
+  | Reg _
+  | Deref _ ->
+    true
+  | Ref _ -> false
+
+let is_assign_homes_instr (b : bool) (instr : instr) : bool =
+  let res =
+    match instr with
+    | Addq (al, ar)
+    | Subq (al, ar)
+    | Movq (al, ar) ->
+      is_assign_homes_arg al && is_assign_homes_arg ar
+    | Retq -> true
+    | Negq a
+    | Pushq a
+    | Popq a ->
+      is_assign_homes_arg a
+    | Callq _
+    | Jmp _ ->
+      true
+  in
+  b && res
+
+let is_assign_homes_instrs (b : bool) (instrs : instr list) : bool = List.fold_left is_assign_homes_instr b instrs
+
+let is_assign_homes_block (b : bool) (block : block) : bool = is_assign_homes_instrs b block.instrs
+
+let is_assign_homes_blks (b : bool) ((_, block) : label * block) : bool = is_assign_homes_block b block
+
+let is_assign_homes (p : xprogram) : bool = List.fold_left is_assign_homes_blks true p.blks

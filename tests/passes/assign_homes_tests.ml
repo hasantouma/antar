@@ -1,5 +1,6 @@
 open OUnit2
 open X0.Ast
+open X0.Interp
 open Passes.Assign_homes
 
 let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
@@ -152,6 +153,41 @@ let test_assign_homes _ctxt =
   assert_equal ah6' (assign_homes ah6) ~msg:"assign_homes: ah6" ~printer:(X0.Emit.emitp true);
   assert_equal ah7' (assign_homes ah7) ~msg:"assign_homes: ah7" ~printer:(X0.Emit.emitp true)
 
-let suite = "assign_homes_tests" >::: [ "assign_homes" >:: test_assign_homes ]
+let test_is_assign_homes _ctxt =
+  assert_equal true (is_assign_homes ah1') ~msg:"is_assign_homes: ah1" ~printer:string_of_bool;
+  assert_equal true (is_assign_homes ah2') ~msg:"is_assign_homes: ah2" ~printer:string_of_bool;
+  assert_equal true (is_assign_homes ah3') ~msg:"is_assign_homes: ah3" ~printer:string_of_bool;
+  assert_equal true (is_assign_homes ah4') ~msg:"is_assign_homes: ah4" ~printer:string_of_bool;
+  assert_equal true (is_assign_homes ah5') ~msg:"is_assign_homes: ah5" ~printer:string_of_bool;
+  assert_equal true (is_assign_homes ah6') ~msg:"is_assign_homes: ah6" ~printer:string_of_bool;
+  assert_equal true (is_assign_homes ah7') ~msg:"is_assign_homes: ah7" ~printer:string_of_bool
+
+let test_interp_assign_homes _ctxt =
+  assert_equal (interp ah1') (interp ah1) ~msg:"interp_assign_homes: ah1" ~printer:string_of_int;
+  assert_equal (interp ah2') (interp ah2) ~msg:"interp_assign_homes: ah2" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 3 ] ah3')
+    (interp ~inputs:[ 3 ] ah3)
+    ~msg:"interp_assign_homes: ah3" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 4 ] ah4')
+    (interp ~inputs:[ 4 ] ah4)
+    ~msg:"interp_assign_homes: ah4" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 5 ] ah5')
+    (interp ~inputs:[ 5 ] ah5)
+    ~msg:"interp_assign_homes: ah5" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 6 ] ah6')
+    (interp ~inputs:[ 6 ] ah6)
+    ~msg:"interp_assign_homes: ah6" ~printer:string_of_int;
+  assert_equal (interp ah7') (interp ah7) ~msg:"interp_assign_homes: ah7" ~printer:string_of_int
+
+let suite =
+  "assign_homes_tests"
+  >::: [ "assign_homes" >:: test_assign_homes
+       ; "is_assign_homes" >:: test_is_assign_homes
+       ; "interp_assign_homes" >:: test_interp_assign_homes
+       ]
 
 let _ = run_test_tt_main suite

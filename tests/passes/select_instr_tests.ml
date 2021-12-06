@@ -130,6 +130,7 @@ let si7 : xprogram =
     ; Movq (Ref "x1", Reg RAX)
     ]
 
+(* Testing helper function. 'uncover_locals' gets called as a part of 'select_instr' *)
 let test_uncover_locals _ctxt =
   assert_equal ul1' (uncover_locals ul1) ~msg:"uncover_locals: ul1" ~printer:C0.Pp.pp;
   assert_equal ul2' (uncover_locals ul2) ~msg:"uncover_locals: ul2" ~printer:C0.Pp.pp;
@@ -140,13 +141,13 @@ let test_uncover_locals _ctxt =
   assert_equal ul7' (uncover_locals ul7) ~msg:"uncover_locals: ul7" ~printer:C0.Pp.pp
 
 let test_select_instr _ctxt =
-  assert_equal si1 (select_instr ul1') ~msg:"select_instr: si1" ~printer:(X0.Emit.emitp true);
-  assert_equal si2 (select_instr ul2') ~msg:"select_instr: si2" ~printer:(X0.Emit.emitp true);
-  assert_equal si3 (select_instr ul3') ~msg:"select_instr: si3" ~printer:(X0.Emit.emitp true);
-  assert_equal si4 (select_instr ul4') ~msg:"select_instr: si4" ~printer:(X0.Emit.emitp true);
-  assert_equal si5 (select_instr ul5') ~msg:"select_instr: si5" ~printer:(X0.Emit.emitp true);
-  assert_equal si6 (select_instr ul6') ~msg:"select_instr: si6" ~printer:(X0.Emit.emitp true);
-  assert_equal si7 (select_instr ul7') ~msg:"select_instr: si7" ~printer:(X0.Emit.emitp true)
+  assert_equal si1 (select_instr ul1) ~msg:"select_instr: si1" ~printer:(X0.Emit.emitp true);
+  assert_equal si2 (select_instr ul2) ~msg:"select_instr: si2" ~printer:(X0.Emit.emitp true);
+  assert_equal si3 (select_instr ul3) ~msg:"select_instr: si3" ~printer:(X0.Emit.emitp true);
+  assert_equal si4 (select_instr ul4) ~msg:"select_instr: si4" ~printer:(X0.Emit.emitp true);
+  assert_equal si5 (select_instr ul5) ~msg:"select_instr: si5" ~printer:(X0.Emit.emitp true);
+  assert_equal si6 (select_instr ul6) ~msg:"select_instr: si6" ~printer:(X0.Emit.emitp true);
+  assert_equal si7 (select_instr ul7) ~msg:"select_instr: si7" ~printer:(X0.Emit.emitp true)
 
 let test_interp_select_instr _ctxt =
   assert_equal (X0.Interp.interp si1) (C0.Interp.interp ul1') ~msg:"interp_select_instr: si1" ~printer:string_of_int;
