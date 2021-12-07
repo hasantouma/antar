@@ -51,7 +51,7 @@ let ul3' = { ul3 with info = [ "x0"; "x" ] }
 
 let si3 : xprogram =
   wrap_entry ~pinfo:ul3'.info
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Ref "x")
     ; Movq (Ref "x", Ref "x0")
     ; Addq (Constant 2, Ref "x0")
@@ -73,7 +73,7 @@ let si4 : xprogram =
     [ Movq (Constant 42, Ref "a")
     ; Movq (Ref "a", Ref "x")
     ; Negq (Ref "x")
-    ; Callq "read"
+    ; Callq "read_int"
     ; Movq (Reg RAX, Ref "y")
     ; Movq (Ref "y", Ref "x0")
     ; Addq (Ref "x", Ref "x0")
@@ -86,7 +86,7 @@ let ul5' = { ul5 with info = [ "y"; "x" ] }
 
 let si5 : xprogram =
   wrap_entry ~pinfo:ul5'.info
-    [ Callq "read"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
+    [ Callq "read_int"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
 
 let ul6 =
   make_cprog
@@ -100,7 +100,7 @@ let ul6' = { ul6 with info = [ "x0"; "x"; "z"; "y" ] }
 
 let si6 : xprogram =
   wrap_entry ~pinfo:ul6'.info
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Ref "y")
     ; Movq (Constant 42, Ref "z")
     ; Negq (Ref "z")

@@ -43,7 +43,7 @@ let ah2' : xprogram =
 
 let ah3 : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Ref "x")
     ; Movq (Ref "x", Ref "x0")
     ; Addq (Constant 2, Ref "x0")
@@ -52,7 +52,7 @@ let ah3 : xprogram =
 
 let ah3' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
     ; Addq (Constant 2, Deref (RSP, -8))
@@ -64,7 +64,7 @@ let ah4 : xprogram =
     [ Movq (Constant 42, Ref "a")
     ; Movq (Ref "a", Ref "x")
     ; Negq (Ref "x")
-    ; Callq "read"
+    ; Callq "read_int"
     ; Movq (Reg RAX, Ref "y")
     ; Movq (Ref "y", Ref "x0")
     ; Addq (Ref "x", Ref "x0")
@@ -76,7 +76,7 @@ let ah4' : xprogram =
     [ Movq (Constant 42, Deref (RSP, -32))
     ; Movq (Deref (RSP, -32), Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
-    ; Callq "read"
+    ; Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
     ; Addq (Deref (RSP, -24), Deref (RSP, -8))
@@ -85,11 +85,11 @@ let ah4' : xprogram =
 
 let ah5 : xprogram =
   wrap_entry ~pinfo:[ "y"; "x" ]
-    [ Callq "read"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
+    [ Callq "read_int"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
 
 let ah5' : xprogram =
   wrap_entry ~pinfo:[ "y"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
     ; Negq (Deref (RSP, -8))
@@ -98,7 +98,7 @@ let ah5' : xprogram =
 
 let ah6 : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Ref "y")
     ; Movq (Constant 42, Ref "z")
     ; Negq (Ref "z")
@@ -111,7 +111,7 @@ let ah6 : xprogram =
 
 let ah6' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -32))
     ; Movq (Constant 42, Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))

@@ -39,7 +39,7 @@ let select_exp (dst : X0.Ast.arg) (exp : C0.Ast.exp) : X0.Ast.instr list =
   | Arg arg ->
     let arg' = select_arg arg in
     [ Movq (arg', dst) ]
-  | Read -> [ Callq "read"; Movq (Reg RAX, dst) ]
+  | Read -> [ Callq "read_int"; Movq (Reg RAX, dst) ]
   | Negate arg ->
     let arg' = select_arg arg in
     [ Movq (arg', dst); Negq dst ]

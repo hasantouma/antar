@@ -42,7 +42,7 @@ let pi2' = pi2
 
 let pi3 : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
     ; Addq (Constant 2, Deref (RSP, -8))
@@ -51,7 +51,7 @@ let pi3 : xprogram =
 
 let pi3' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Reg RAX)
     ; Movq (Reg RAX, Deref (RSP, -8))
@@ -64,7 +64,7 @@ let pi4 : xprogram =
     [ Movq (Constant 42, Deref (RSP, -32))
     ; Movq (Deref (RSP, -32), Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
-    ; Callq "read"
+    ; Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
     ; Addq (Deref (RSP, -24), Deref (RSP, -8))
@@ -77,7 +77,7 @@ let pi4' : xprogram =
     ; Movq (Deref (RSP, -32), Reg RAX)
     ; Movq (Reg RAX, Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
-    ; Callq "read"
+    ; Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Reg RAX)
     ; Movq (Reg RAX, Deref (RSP, -8))
@@ -88,7 +88,7 @@ let pi4' : xprogram =
 
 let pi5 : xprogram =
   wrap_entry ~pinfo:[ "y"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
     ; Negq (Deref (RSP, -8))
@@ -97,7 +97,7 @@ let pi5 : xprogram =
 
 let pi5' : xprogram =
   wrap_entry ~pinfo:[ "y"; "x" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Reg RAX)
     ; Movq (Reg RAX, Deref (RSP, -8))
@@ -107,7 +107,7 @@ let pi5' : xprogram =
 
 let pi6 : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -32))
     ; Movq (Constant 42, Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
@@ -120,7 +120,7 @@ let pi6 : xprogram =
 
 let pi6' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
-    [ Callq "read"
+    [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -32))
     ; Movq (Constant 42, Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))

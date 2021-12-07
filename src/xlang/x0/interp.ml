@@ -63,7 +63,7 @@ let rec interp_ii (ms : ms) (i : instr) (ir : instr list) : ms =
     let arg_val : int = get_val ms arg in
     let ms' : ms = update_ms ms arg (-1 * arg_val) in
     interp_is ms' ir
-  | Callq "read" ->
+  | Callq "read_int" ->
     let n = ms.read_int () in
     let ms' : ms = update_ms ms (Reg RAX) n in
     interp_is ms' ir
