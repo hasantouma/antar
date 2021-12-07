@@ -37,6 +37,7 @@ let rec resolve_complex (expr : expr) : expr =
     let be' = resolve_complex be in
     `ELet (x, xe', be')
 
+(* is_resolve_complex *)
 let rec is_resolve_complex (expr : expr) : bool =
   match expr with
   | `EInt _

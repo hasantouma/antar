@@ -31,6 +31,7 @@ let uniquify (expr : expr) : expr =
   in
   uniquify [] expr
 
+(* is_uniquify *)
 let is_uniquify (expr : expr) : bool =
   let rec is_uniquify expr : string list =
     match expr with

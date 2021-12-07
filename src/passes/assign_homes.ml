@@ -54,6 +54,7 @@ let assign_homes (p : xprogram) : xprogram =
   let blks' = List.map (assign_homes_blks var_reg_lst) p.blks in
   { p with blks = blks' }
 
+(* is_assign_homes *)
 let is_assign_homes_arg (arg : arg) : bool =
   match arg with
   | Constant _
