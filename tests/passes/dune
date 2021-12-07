@@ -4,7 +4,8 @@
   resolve_complex_tests
   explicate_control_tests
   select_instr_tests
-  assign_homes_tests)
+  assign_homes_tests
+  patch_instructions_tests)
  (libraries ounit2 passes))
 
 (env
