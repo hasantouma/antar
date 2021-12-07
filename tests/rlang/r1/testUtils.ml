@@ -13,6 +13,7 @@ let make_rprog (e : string) : R1.Lang.rprogram = e |> Lexing.from_string |> R1.L
 let passes_pipe (expr : R1.Ast.expr) : X0.Ast.xprogram =
   expr |> R1.Interp.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
   |> Passes.Explicate_control.explicate_control |> Passes.Select_instr.select_instr |> Passes.Assign_homes.assign_homes
+  |> Passes.Patch_instructions.patch_instructions
 
 (* *** Testing without optimized pass *** *)
 

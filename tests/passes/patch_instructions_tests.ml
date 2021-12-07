@@ -1,5 +1,6 @@
 open OUnit2
 open X0.Ast
+open X0.Interp
 open Passes.Patch_instructions
 
 let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
@@ -166,6 +167,41 @@ let test_patch_instructions _ctxt =
   assert_equal pi6' (patch_instructions pi6) ~msg:"patch_instructions: pi6" ~printer:(X0.Emit.emitp false);
   assert_equal pi7' (patch_instructions pi7) ~msg:"patch_instructions: pi7" ~printer:(X0.Emit.emitp false)
 
-let suite = "patch_instructions_tests" >::: [ "patch_instructions" >:: test_patch_instructions ]
+let test_is_patch_instructions _ctxt =
+  assert_equal true (is_patch_instructions pi1') ~msg:"is_patch_instructions: pi1" ~printer:string_of_bool;
+  assert_equal true (is_patch_instructions pi2') ~msg:"is_patch_instructions: pi2" ~printer:string_of_bool;
+  assert_equal true (is_patch_instructions pi3') ~msg:"is_patch_instructions: pi3" ~printer:string_of_bool;
+  assert_equal true (is_patch_instructions pi4') ~msg:"is_patch_instructions: pi4" ~printer:string_of_bool;
+  assert_equal true (is_patch_instructions pi5') ~msg:"is_patch_instructions: pi5" ~printer:string_of_bool;
+  assert_equal true (is_patch_instructions pi6') ~msg:"is_patch_instructions: pi6" ~printer:string_of_bool;
+  assert_equal true (is_patch_instructions pi7') ~msg:"is_patch_instructions: pi7" ~printer:string_of_bool
+
+let test_interp_patch_instructions _ctxt =
+  assert_equal (interp pi1') (interp pi1) ~msg:"interp_patch_instructions: pi1" ~printer:string_of_int;
+  assert_equal (interp pi2') (interp pi2) ~msg:"interp_patch_instructions: pi2" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 3 ] pi3')
+    (interp ~inputs:[ 3 ] pi3)
+    ~msg:"interp_patch_instructions: pi3" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 4 ] pi4')
+    (interp ~inputs:[ 4 ] pi4)
+    ~msg:"interp_patch_instructions: pi4" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 5 ] pi5')
+    (interp ~inputs:[ 5 ] pi5)
+    ~msg:"interp_patch_instructions: pi5" ~printer:string_of_int;
+  assert_equal
+    (interp ~inputs:[ 6 ] pi6')
+    (interp ~inputs:[ 6 ] pi6)
+    ~msg:"interp_patch_instructions: pi6" ~printer:string_of_int;
+  assert_equal (interp pi7') (interp pi7) ~msg:"interp_patch_instructions: pi7" ~printer:string_of_int
+
+let suite =
+  "patch_instructions_tests"
+  >::: [ "patch_instructions" >:: test_patch_instructions
+       ; "is_patch_instructions" >:: test_is_patch_instructions
+       ; "interp_patch_instructions" >:: test_interp_patch_instructions
+       ]
 
 let _ = run_test_tt_main suite
