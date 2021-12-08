@@ -39,7 +39,7 @@ let ah2 : xprogram =
 
 let ah2' : xprogram =
   wrap_entry ~pinfo:[ "x0" ]
-    [ Movq (Constant 6, Deref (RSP, -8)); Negq (Deref (RSP, -8)); Movq (Deref (RSP, -8), Reg RAX) ]
+    [ Movq (Constant 6, Deref (RBP, -8)); Negq (Deref (RBP, -8)); Movq (Deref (RBP, -8), Reg RAX) ]
 
 let ah3 : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x" ]
@@ -53,10 +53,10 @@ let ah3 : xprogram =
 let ah3' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x" ]
     [ Callq "read_int"
-    ; Movq (Reg RAX, Deref (RSP, -16))
-    ; Movq (Deref (RSP, -16), Deref (RSP, -8))
-    ; Addq (Constant 2, Deref (RSP, -8))
-    ; Movq (Deref (RSP, -8), Reg RAX)
+    ; Movq (Reg RAX, Deref (RBP, -16))
+    ; Movq (Deref (RBP, -16), Deref (RBP, -8))
+    ; Addq (Constant 2, Deref (RBP, -8))
+    ; Movq (Deref (RBP, -8), Reg RAX)
     ]
 
 let ah4 : xprogram =
@@ -73,14 +73,14 @@ let ah4 : xprogram =
 
 let ah4' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
-    [ Movq (Constant 42, Deref (RSP, -32))
-    ; Movq (Deref (RSP, -32), Deref (RSP, -24))
-    ; Negq (Deref (RSP, -24))
+    [ Movq (Constant 42, Deref (RBP, -32))
+    ; Movq (Deref (RBP, -32), Deref (RBP, -24))
+    ; Negq (Deref (RBP, -24))
     ; Callq "read_int"
-    ; Movq (Reg RAX, Deref (RSP, -16))
-    ; Movq (Deref (RSP, -16), Deref (RSP, -8))
-    ; Addq (Deref (RSP, -24), Deref (RSP, -8))
-    ; Movq (Deref (RSP, -8), Reg RAX)
+    ; Movq (Reg RAX, Deref (RBP, -16))
+    ; Movq (Deref (RBP, -16), Deref (RBP, -8))
+    ; Addq (Deref (RBP, -24), Deref (RBP, -8))
+    ; Movq (Deref (RBP, -8), Reg RAX)
     ]
 
 let ah5 : xprogram =
@@ -90,10 +90,10 @@ let ah5 : xprogram =
 let ah5' : xprogram =
   wrap_entry ~pinfo:[ "y"; "x" ]
     [ Callq "read_int"
-    ; Movq (Reg RAX, Deref (RSP, -16))
-    ; Movq (Deref (RSP, -16), Deref (RSP, -8))
-    ; Negq (Deref (RSP, -8))
-    ; Movq (Deref (RSP, -8), Reg RAX)
+    ; Movq (Reg RAX, Deref (RBP, -16))
+    ; Movq (Deref (RBP, -16), Deref (RBP, -8))
+    ; Negq (Deref (RBP, -8))
+    ; Movq (Deref (RBP, -8), Reg RAX)
     ]
 
 let ah6 : xprogram =
@@ -112,14 +112,14 @@ let ah6 : xprogram =
 let ah6' : xprogram =
   wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
     [ Callq "read_int"
-    ; Movq (Reg RAX, Deref (RSP, -32))
-    ; Movq (Constant 42, Deref (RSP, -24))
-    ; Negq (Deref (RSP, -24))
-    ; Movq (Deref (RSP, -24), Deref (RSP, -16))
-    ; Addq (Deref (RSP, -32), Deref (RSP, -16))
-    ; Movq (Deref (RSP, -16), Deref (RSP, -8))
-    ; Negq (Deref (RSP, -8))
-    ; Movq (Deref (RSP, -8), Reg RAX)
+    ; Movq (Reg RAX, Deref (RBP, -32))
+    ; Movq (Constant 42, Deref (RBP, -24))
+    ; Negq (Deref (RBP, -24))
+    ; Movq (Deref (RBP, -24), Deref (RBP, -16))
+    ; Addq (Deref (RBP, -32), Deref (RBP, -16))
+    ; Movq (Deref (RBP, -16), Deref (RBP, -8))
+    ; Negq (Deref (RBP, -8))
+    ; Movq (Deref (RBP, -8), Reg RAX)
     ]
 
 let ah7 : xprogram =
@@ -135,13 +135,13 @@ let ah7 : xprogram =
 
 let ah7' : xprogram =
   wrap_entry ~pinfo:[ "x1"; "x"; "y" ]
-    [ Movq (Constant 10, Deref (RSP, -24))
-    ; Negq (Deref (RSP, -24))
-    ; Movq (Deref (RSP, -24), Deref (RSP, -16))
-    ; Addq (Constant 42, Deref (RSP, -16))
-    ; Movq (Constant 10, Deref (RSP, -8))
-    ; Addq (Deref (RSP, -16), Deref (RSP, -8))
-    ; Movq (Deref (RSP, -8), Reg RAX)
+    [ Movq (Constant 10, Deref (RBP, -24))
+    ; Negq (Deref (RBP, -24))
+    ; Movq (Deref (RBP, -24), Deref (RBP, -16))
+    ; Addq (Constant 42, Deref (RBP, -16))
+    ; Movq (Constant 10, Deref (RBP, -8))
+    ; Addq (Deref (RBP, -16), Deref (RBP, -8))
+    ; Movq (Deref (RBP, -8), Reg RAX)
     ]
 
 let test_assign_homes _ctxt =

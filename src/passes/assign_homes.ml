@@ -2,7 +2,7 @@ open X0.Ast
 
 let var_reg_map (index : int) (var : var) : var * arg =
   let offset = -1 * 8 * (index + 1) in
-  (var, Deref (RSP, offset))
+  (var, Deref (RBP, offset))
 
 let assign_homes_arg (lst : (var * arg) list) (arg : arg) : arg =
   match arg with

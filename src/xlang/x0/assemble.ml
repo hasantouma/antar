@@ -39,12 +39,13 @@ let exec_command ?(inputs = []) (command : string) : string =
 let assemble ?(inputs = []) (p : Ast.xprogram) : string =
   let str : string = Emit.emitp true p in
   let file, out = Filename.open_temp_file "" ".s" in
+  let bin = Filename.temp_file "" ".out" in
   output_string out str;
   close_out out;
   unwind Sys.remove
     (fun name ->
       let _ = exec_command (Printf.sprintf "as -o %s.o %s" name name) in
-      let _ = exec_command (Printf.sprintf "cc -o runtime_exec ../../../../../runtime/runtime.o %s.o" name) in
-      let res = exec_command ~inputs "./runtime_exec" in
+      let _ = exec_command (Printf.sprintf "cc -o %s -O0 ../../../../../runtime/runtime.o %s.o" bin name) in
+      let res = exec_command ~inputs bin in
       chomp res)
     file

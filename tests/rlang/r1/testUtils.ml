@@ -10,7 +10,7 @@ type rtest =
 
 let make_rprog (e : string) : R1.Lang.rprogram = e |> Lexing.from_string |> R1.Lang.parse
 
-let passes_pipe (expr : R1.Ast.expr) : X0.Ast.xprogram =
+let compiler (expr : R1.Ast.expr) : X0.Ast.xprogram =
   expr |> R1.Interp.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
   |> Passes.Explicate_control.explicate_control |> Passes.Select_instr.select_instr |> Passes.Assign_homes.assign_homes
   |> Passes.Patch_instructions.patch_instructions
@@ -21,8 +21,16 @@ let test_interp (t : rtest) =
   let p = make_rprog t.expr in
   assert_equal t.value (R1.Interp.interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
   assert_equal t.value
-    (X0.Interp.interp ~inputs:t.inputs (passes_pipe p.e))
-    ~msg:("passes_pipe: " ^ t.message) ~printer:string_of_int
+    (X0.Interp.interp ~inputs:t.inputs (compiler p.e))
+    ~msg:("compiler: " ^ t.message) ~printer:string_of_int
+
+let test_compiler (t : rtest) =
+  let p = make_rprog t.expr in
+  let inputs = List.map string_of_int t.inputs in
+  assert_equal (string_of_int t.value)
+    (X0.Assemble.assemble ~inputs (compiler p.e))
+    ~msg:("compiler: " ^ t.message)
+    ~printer:(fun x -> x)
 
 (* *** Testing with optimized pass *** *)
 
