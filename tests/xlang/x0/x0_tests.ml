@@ -9,14 +9,14 @@ let print_debugger ?(inputs = []) (p : xprogram) (msg : string) : string =
   let pp = X0.Emit.emitp true p in
   Printf.sprintf "Input: %s\nTitle: %s:\n%s" input msg pp
 
-let s1 : xprogram = wrap_entry [ Movq (Constant 42, Reg RAX) ]
-let s2 : xprogram = wrap_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]
-let s3 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
-let s4 : xprogram = wrap_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
-let s5 : xprogram = wrap_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
+let s1 : xprogram = wrap_x_entry [ Movq (Constant 42, Reg RAX) ]
+let s2 : xprogram = wrap_x_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]
+let s3 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
+let s4 : xprogram = wrap_x_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
+let s5 : xprogram = wrap_x_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
 
 let s6 : xprogram =
-  wrap_entry
+  wrap_x_entry
     [ Movq (Constant 23, Reg RAX)
     ; Pushq (Reg RAX)
     ; Movq (Constant 8, Reg RBX)
@@ -37,7 +37,7 @@ let s8 : xprogram =
   let bar = [ Movq (Reg RBX, Reg RAX); Popq (Reg RBP); Retq ] in
   make_xprog [ ("entry", entry); ("foo", foo); ("bar", bar) ]
 
-let s9 : xprogram = wrap_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
+let s9 : xprogram = wrap_x_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
 
 let s10 : xprogram =
   let start =
@@ -58,12 +58,12 @@ let s11 : xprogram =
   let foo = wrap [ Addq (Constant 10, Ref "hi"); Movq (Ref "hi", Reg RAX) ] in
   make_xprog [ ("entry", entry); ("foo", foo) ]
 
-let s12 : xprogram = wrap_entry [ Callq "read_int" ]
-let s13 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX) ]
-let s14 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
+let s12 : xprogram = wrap_x_entry [ Callq "read_int" ]
+let s13 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX) ]
+let s14 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
 
 let s15 : xprogram =
-  wrap_entry
+  wrap_x_entry
     [ Movq (Constant 5, Reg RAX)
     ; Pushq (Reg RAX)
     ; Popq (Reg RBX)
@@ -75,7 +75,9 @@ let s15 : xprogram =
     ]
 
 let s16 : xprogram = make_xprog [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
-let s17 : xprogram = wrap_entry [ Callq "read_int"; Movq (Reg RAX, Reg RBX); Callq "read_int"; Subq (Reg RBX, Reg RAX) ]
+
+let s17 : xprogram =
+  wrap_x_entry [ Callq "read_int"; Movq (Reg RAX, Reg RBX); Callq "read_int"; Subq (Reg RBX, Reg RAX) ]
 
 let s18 : xprogram =
   make_xprog

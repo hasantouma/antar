@@ -4,18 +4,18 @@ open X0.Interp
 open X0.Lang
 open Passes.Assign_homes
 
-let ah1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
+let ah1 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX) ]
 let ah1' = ah1
 
 let ah2 : xprogram =
-  wrap_entry ~pinfo:[ "x0" ] [ Movq (Constant 6, Ref "x0"); Negq (Ref "x0"); Movq (Ref "x0", Reg RAX) ]
+  wrap_x_entry ~pinfo:[ "x0" ] [ Movq (Constant 6, Ref "x0"); Negq (Ref "x0"); Movq (Ref "x0", Reg RAX) ]
 
 let ah2' : xprogram =
-  wrap_entry ~pinfo:[ "x0" ]
+  wrap_x_entry ~pinfo:[ "x0" ]
     [ Movq (Constant 6, Deref (RBP, -8)); Negq (Deref (RBP, -8)); Movq (Deref (RBP, -8), Reg RAX) ]
 
 let ah3 : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Ref "x")
     ; Movq (Ref "x", Ref "x0")
@@ -24,7 +24,7 @@ let ah3 : xprogram =
     ]
 
 let ah3' : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RBP, -16))
     ; Movq (Deref (RBP, -16), Deref (RBP, -8))
@@ -33,7 +33,7 @@ let ah3' : xprogram =
     ]
 
 let ah4 : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
+  wrap_x_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
     [ Movq (Constant 42, Ref "a")
     ; Movq (Ref "a", Ref "x")
     ; Negq (Ref "x")
@@ -45,7 +45,7 @@ let ah4 : xprogram =
     ]
 
 let ah4' : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
+  wrap_x_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
     [ Movq (Constant 42, Deref (RBP, -32))
     ; Movq (Deref (RBP, -32), Deref (RBP, -24))
     ; Negq (Deref (RBP, -24))
@@ -57,11 +57,11 @@ let ah4' : xprogram =
     ]
 
 let ah5 : xprogram =
-  wrap_entry ~pinfo:[ "y"; "x" ]
+  wrap_x_entry ~pinfo:[ "y"; "x" ]
     [ Callq "read_int"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
 
 let ah5' : xprogram =
-  wrap_entry ~pinfo:[ "y"; "x" ]
+  wrap_x_entry ~pinfo:[ "y"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RBP, -16))
     ; Movq (Deref (RBP, -16), Deref (RBP, -8))
@@ -70,7 +70,7 @@ let ah5' : xprogram =
     ]
 
 let ah6 : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Ref "y")
     ; Movq (Constant 42, Ref "z")
@@ -83,7 +83,7 @@ let ah6 : xprogram =
     ]
 
 let ah6' : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RBP, -32))
     ; Movq (Constant 42, Deref (RBP, -24))
@@ -96,7 +96,7 @@ let ah6' : xprogram =
     ]
 
 let ah7 : xprogram =
-  wrap_entry ~pinfo:[ "x1"; "x"; "y" ]
+  wrap_x_entry ~pinfo:[ "x1"; "x"; "y" ]
     [ Movq (Constant 10, Ref "y")
     ; Negq (Ref "y")
     ; Movq (Ref "y", Ref "x")
@@ -107,7 +107,7 @@ let ah7 : xprogram =
     ]
 
 let ah7' : xprogram =
-  wrap_entry ~pinfo:[ "x1"; "x"; "y" ]
+  wrap_x_entry ~pinfo:[ "x1"; "x"; "y" ]
     [ Movq (Constant 10, Deref (RBP, -24))
     ; Negq (Deref (RBP, -24))
     ; Movq (Deref (RBP, -24), Deref (RBP, -16))

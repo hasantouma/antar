@@ -26,7 +26,7 @@ let wrap ?(vars_length = 0) (lst : instr list) : instr list =
     let epilogue' = add @ epilogue in
     List.append (List.append prologue' lst) epilogue'
 
-let wrap_entry ?(pinfo = []) (instrs : instr list) : xprogram =
+let wrap_x_entry ?(pinfo = []) (instrs : instr list) : xprogram =
   let vars_length = stack_space pinfo in
   let entry = wrap ~vars_length instrs in
   make_xprog ~pinfo [ ("entry", entry) ]

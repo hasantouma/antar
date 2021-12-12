@@ -4,17 +4,17 @@ open X0.Interp
 open X0.Lang
 open Passes.Patch_instructions
 
-let pi1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
+let pi1 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX) ]
 let pi1' = pi1
 
 let pi2 : xprogram =
-  wrap_entry ~pinfo:[ "x0" ]
+  wrap_x_entry ~pinfo:[ "x0" ]
     [ Movq (Constant 6, Deref (RSP, -8)); Negq (Deref (RSP, -8)); Movq (Deref (RSP, -8), Reg RAX) ]
 
 let pi2' = pi2
 
 let pi3 : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
@@ -23,7 +23,7 @@ let pi3 : xprogram =
     ]
 
 let pi3' : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Reg RAX)
@@ -33,7 +33,7 @@ let pi3' : xprogram =
     ]
 
 let pi4 : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
+  wrap_x_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
     [ Movq (Constant 42, Deref (RSP, -32))
     ; Movq (Deref (RSP, -32), Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
@@ -45,7 +45,7 @@ let pi4 : xprogram =
     ]
 
 let pi4' : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
+  wrap_x_entry ~pinfo:[ "x0"; "y"; "x"; "a" ]
     [ Movq (Constant 42, Deref (RSP, -32))
     ; Movq (Deref (RSP, -32), Reg RAX)
     ; Movq (Reg RAX, Deref (RSP, -24))
@@ -60,7 +60,7 @@ let pi4' : xprogram =
     ]
 
 let pi5 : xprogram =
-  wrap_entry ~pinfo:[ "y"; "x" ]
+  wrap_x_entry ~pinfo:[ "y"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Deref (RSP, -8))
@@ -69,7 +69,7 @@ let pi5 : xprogram =
     ]
 
 let pi5' : xprogram =
-  wrap_entry ~pinfo:[ "y"; "x" ]
+  wrap_x_entry ~pinfo:[ "y"; "x" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -16))
     ; Movq (Deref (RSP, -16), Reg RAX)
@@ -79,7 +79,7 @@ let pi5' : xprogram =
     ]
 
 let pi6 : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -32))
     ; Movq (Constant 42, Deref (RSP, -24))
@@ -92,7 +92,7 @@ let pi6 : xprogram =
     ]
 
 let pi6' : xprogram =
-  wrap_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
+  wrap_x_entry ~pinfo:[ "x0"; "x"; "z"; "y" ]
     [ Callq "read_int"
     ; Movq (Reg RAX, Deref (RSP, -32))
     ; Movq (Constant 42, Deref (RSP, -24))
@@ -108,7 +108,7 @@ let pi6' : xprogram =
     ]
 
 let pi7 : xprogram =
-  wrap_entry ~pinfo:[ "x1"; "x"; "y" ]
+  wrap_x_entry ~pinfo:[ "x1"; "x"; "y" ]
     [ Movq (Constant 10, Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
     ; Movq (Deref (RSP, -24), Deref (RSP, -16))
@@ -119,7 +119,7 @@ let pi7 : xprogram =
     ]
 
 let pi7' : xprogram =
-  wrap_entry ~pinfo:[ "x1"; "x"; "y" ]
+  wrap_x_entry ~pinfo:[ "x1"; "x"; "y" ]
     [ Movq (Constant 10, Deref (RSP, -24))
     ; Negq (Deref (RSP, -24))
     ; Movq (Deref (RSP, -24), Reg RAX)
