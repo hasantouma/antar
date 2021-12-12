@@ -2,30 +2,12 @@ open OUnit2
 open X0.Ast
 open X0.Interp
 open X0.Assemble
+open X0.Lang
 
 let print_debugger ?(inputs = []) (p : xprogram) (msg : string) : string =
   let input = [%show: string list] inputs in
   let pp = X0.Emit.emitp true p in
   Printf.sprintf "Input: %s\nTitle: %s:\n%s" input msg pp
-
-let make_xprog (lst : (label * instr list) list) : xprogram =
-  let blocks =
-    List.map
-      (fun (label, instrs) ->
-        let block = { info = []; instrs } in
-        (label, block))
-      lst
-  in
-  { info = []; blks = blocks }
-
-let wrap (lst : instr list) : instr list =
-  let prologue = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP) ] in
-  let epilogue = [ Popq (Reg RBP); Retq ] in
-  List.append (List.append prologue lst) epilogue
-
-let wrap_entry (instrs : instr list) : xprogram =
-  let entry = wrap instrs in
-  make_xprog [ ("entry", entry) ]
 
 let s1 : xprogram = wrap_entry [ Movq (Constant 42, Reg RAX) ]
 let s2 : xprogram = wrap_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]

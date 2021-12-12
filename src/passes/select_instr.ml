@@ -52,7 +52,7 @@ let select_instr (p : C0.Ast.cprogram) : X0.Ast.xprogram =
   let p_with_locals = uncover_locals p in
   let entry_tail : C0.Ast.tail = List.assoc "entry" p_with_locals.blks in
   let instrs = select_tail entry_tail in
-  let vars_length = Pass_utils.stack_space p_with_locals.info in
-  let instrs' = Pass_utils.wrap vars_length instrs in
+  let vars_length = X0.Lang.stack_space p_with_locals.info in
+  let instrs' = X0.Lang.wrap ~vars_length instrs in
   let block = { info = []; instrs = instrs' } in
   { info = p_with_locals.info; blks = [ ("entry", block) ] }

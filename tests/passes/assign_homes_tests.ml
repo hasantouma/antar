@@ -1,31 +1,8 @@
 open OUnit2
 open X0.Ast
 open X0.Interp
+open X0.Lang
 open Passes.Assign_homes
-
-let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
-  let blocks =
-    List.map
-      (fun (label, instrs) ->
-        let block = { info = []; instrs } in
-        (label, block))
-      lst
-  in
-  { info = pinfo; blks = blocks }
-
-let stack_space (lst : C0.Ast.var list) : int =
-  let n = List.length lst in
-  if n mod 2 = 0 then 8 * n else 8 * (n + 1)
-
-let wrap (vars_length : int) (lst : instr list) : instr list =
-  let prologue = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Subq (Constant vars_length, Reg RSP) ] in
-  let epilogue = [ Addq (Constant vars_length, Reg RSP); Popq (Reg RBP); Retq ] in
-  List.append (List.append prologue lst) epilogue
-
-let wrap_entry ?(pinfo = []) (instrs : instr list) : xprogram =
-  let vars_length = stack_space pinfo in
-  let entry = wrap vars_length instrs in
-  make_xprog ~pinfo [ ("entry", entry) ]
 
 let ah1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
 let ah1' = ah1

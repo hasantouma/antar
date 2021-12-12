@@ -1,25 +1,10 @@
 open OUnit2
 open X0.Ast
+open X0.Lang
 open C0.Ast
 open Passes.Select_instr
 
 let make_cprog (tail : tail) : cprogram = { info = []; blks = [ ("entry", tail) ] }
-
-let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
-  let blocks =
-    List.map
-      (fun (label, instrs) ->
-        let block = { info = []; instrs } in
-        (label, block))
-      lst
-  in
-  { info = pinfo; blks = blocks }
-
-let wrap_entry ?(pinfo = []) (instrs : instr list) : xprogram =
-  let vars_length = Passes.Pass_utils.stack_space pinfo in
-  let entry = Passes.Pass_utils.wrap vars_length instrs in
-  make_xprog ~pinfo [ ("entry", entry) ]
-
 let ul1 = make_cprog (Return (Number 5))
 let ul1' = { ul1 with info = [] }
 let si1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
