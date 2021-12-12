@@ -2,19 +2,19 @@ open OUnit2
 open X0.Ast
 open X0.Lang
 open C0.Ast
+open C0.Lang
 open Passes.Select_instr
 
-let make_cprog (tail : tail) : cprogram = { info = []; blks = [ ("entry", tail) ] }
-let ul1 = make_cprog (Return (Number 5))
+let ul1 = wrap_c_entry (Return (Number 5))
 let ul1' = { ul1 with info = [] }
 let si1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
-let ul2 = make_cprog (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
+let ul2 = wrap_c_entry (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
 let ul2' = { ul2 with info = [ "x0" ] }
 
 let si2 : xprogram =
   wrap_entry ~pinfo:ul2'.info [ Movq (Constant 6, Ref "x0"); Negq (Ref "x0"); Movq (Ref "x0", Reg RAX) ]
 
-let ul3 = make_cprog (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
+let ul3 = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
 let ul3' = { ul3 with info = [ "x0"; "x" ] }
 
 let si3 : xprogram =
@@ -27,7 +27,7 @@ let si3 : xprogram =
     ]
 
 let ul4 =
-  make_cprog
+  wrap_c_entry
     (Seq
        ( Set ("a", Arg (Number 42))
        , Seq
@@ -48,7 +48,7 @@ let si4 : xprogram =
     ; Movq (Ref "x0", Reg RAX)
     ]
 
-let ul5 = make_cprog (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
+let ul5 = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
 let ul5' = { ul5 with info = [ "y"; "x" ] }
 
 let si5 : xprogram =
@@ -56,7 +56,7 @@ let si5 : xprogram =
     [ Callq "read_int"; Movq (Reg RAX, Ref "x"); Movq (Ref "x", Ref "y"); Negq (Ref "y"); Movq (Ref "y", Reg RAX) ]
 
 let ul6 =
-  make_cprog
+  wrap_c_entry
     (Seq
        ( Set ("y", Read)
        , Seq
@@ -79,7 +79,7 @@ let si6 : xprogram =
     ]
 
 let ul7 =
-  make_cprog
+  wrap_c_entry
     (Seq
        ( Set ("y", Negate (Number 10))
        , Seq (Set ("x", Add (Number 42, Var "y")), Seq (Set ("x1", Add (Var "x", Number 10)), Return (Var "x1"))) ))

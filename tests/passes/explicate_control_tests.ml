@@ -1,18 +1,18 @@
 open OUnit2
 open C0.Ast
+open C0.Lang
 open Passes.Explicate_control
 
-let make_cprog (tail : tail) : cprogram = { info = []; blks = [ ("entry", tail) ] }
 let econ1 = `EInt 5
-let econ1' = make_cprog (Return (Number 5))
+let econ1' = wrap_c_entry (Return (Number 5))
 let econ2 = `ENegate (`EInt 6)
-let econ2' = make_cprog (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
+let econ2' = wrap_c_entry (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
 let econ3 = `ELet ("x", `ERead, `EAdd (`EInt 2, `EVar "x"))
-let econ3' = make_cprog (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
+let econ3' = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
 let econ4 = `ELet ("a", `EInt 42, `ELet ("x", `ENegate (`EVar "a"), `ELet ("y", `ERead, `EAdd (`EVar "x", `EVar "y"))))
 
 let econ4' =
-  make_cprog
+  wrap_c_entry
     (Seq
        ( Set ("a", Arg (Number 42))
        , Seq
@@ -20,13 +20,13 @@ let econ4' =
            , Seq (Set ("y", Read), Seq (Set ("x0", Add (Var "x", Var "y")), Return (Var "x0"))) ) ))
 
 let econ5 = `ELet ("x", `ERead, `ENegate (`EVar "x"))
-let econ5' = make_cprog (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
+let econ5' = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
 
 let econ6 =
   `ELet ("x", `ELet ("y", `ERead, `ELet ("z", `ENegate (`EInt 42), `EAdd (`EVar "y", `EVar "z"))), `ENegate (`EVar "x"))
 
 let econ6' =
-  make_cprog
+  wrap_c_entry
     (Seq
        ( Set ("y", Read)
        , Seq
@@ -36,7 +36,7 @@ let econ6' =
 let econ7 = `ELet ("x", `ELet ("y", `ENegate (`EInt 10), `EAdd (`EInt 42, `EVar "y")), `EAdd (`EVar "x", `EInt 10))
 
 let econ7' =
-  make_cprog
+  wrap_c_entry
     (Seq
        ( Set ("y", Negate (Number 10))
        , Seq (Set ("x", Add (Number 42, Var "y")), Seq (Set ("x1", Add (Var "x", Number 10)), Return (Var "x1"))) ))

@@ -1,21 +1,19 @@
 open OUnit2
 open C0.Ast
 open C0.Interp
+open C0.Lang
 
-let make_cprog (lst : (label * tail) list) : cprogram = { info = []; blks = lst }
-let c1 = make_cprog [ ("entry", Return (Number 5)) ]
-let c2 = make_cprog [ ("entry", Seq (Set ("x", Arg (Number 42)), Return (Var "x"))) ]
-let c3 = make_cprog [ ("entry", Seq (Set ("x", Arg (Number 42)), Seq (Set ("y", Arg (Var "x")), Return (Var "y")))) ]
-let c4 = make_cprog [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y")))) ]
-let c5 = make_cprog [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Add (Number (-5), Var "x")), Return (Var "y")))) ]
+let c1 = wrap_c_entry (Return (Number 5))
+let c2 = wrap_c_entry (Seq (Set ("x", Arg (Number 42)), Return (Var "x")))
+let c3 = wrap_c_entry (Seq (Set ("x", Arg (Number 42)), Seq (Set ("y", Arg (Var "x")), Return (Var "y"))))
+let c4 = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
+let c5 = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("y", Add (Number (-5), Var "x")), Return (Var "y"))))
 
 let c6 =
-  make_cprog
-    [ ( "entry"
-      , Seq
-          ( Set ("x", Read)
-          , Seq (Set ("y", Add (Number (-5), Var "x")), Seq (Set ("z", Negate (Var "y")), Return (Var "z"))) ) )
-    ]
+  wrap_c_entry
+    (Seq
+       ( Set ("x", Read)
+       , Seq (Set ("y", Add (Number (-5), Var "x")), Seq (Set ("z", Negate (Var "y")), Return (Var "z"))) ))
 
 let c7 =
   make_cprog
@@ -25,46 +23,35 @@ let c7 =
     ]
 
 let c8 =
-  make_cprog
-    [ ( "entry"
-      , Seq
-          ( Set ("x", Read)
-          , Seq (Set ("x", Add (Number (-5), Var "x")), Seq (Set ("z", Negate (Var "x")), Return (Var "z"))) ) )
-    ]
+  wrap_c_entry
+    (Seq
+       ( Set ("x", Read)
+       , Seq (Set ("x", Add (Number (-5), Var "x")), Seq (Set ("z", Negate (Var "x")), Return (Var "z"))) ))
 
 let c9 =
-  make_cprog
-    [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Read), Seq (Set ("x", Add (Var "y", Var "x")), Return (Var "x")))))
-    ]
+  wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("y", Read), Seq (Set ("x", Add (Var "y", Var "x")), Return (Var "x")))))
 
 let c10 =
-  make_cprog
-    [ ( "entry"
-      , Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Seq (Set ("z", Negate (Var "y")), Return (Var "z")))) )
-    ]
+  wrap_c_entry
+    (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Seq (Set ("z", Negate (Var "y")), Return (Var "z")))))
 
 let c11 =
-  make_cprog
-    [ ( "entry"
-      , Seq
-          ( Set ("x", Read)
-          , Seq
-              ( Set ("y", Read)
-              , Seq (Set ("y", Negate (Var "y")), Seq (Set ("z", Add (Var "x", Var "y")), Return (Var "z"))) ) ) )
-    ]
+  wrap_c_entry
+    (Seq
+       ( Set ("x", Read)
+       , Seq
+           ( Set ("y", Read)
+           , Seq (Set ("y", Negate (Var "y")), Seq (Set ("z", Add (Var "x", Var "y")), Return (Var "z"))) ) ))
 
 let c12 =
-  make_cprog
-    [ ( "entry"
-      , Seq
-          ( Set ("x", Read)
-          , Seq
-              ( Set ("y", Read)
-              , Seq
-                  ( Set ("w", Read)
-                  , Seq (Set ("y", Negate (Var "y")), Seq (Set ("z", Add (Var "x", Var "y")), Return (Var "z"))) ) ) )
-      )
-    ]
+  wrap_c_entry
+    (Seq
+       ( Set ("x", Read)
+       , Seq
+           ( Set ("y", Read)
+           , Seq
+               ( Set ("w", Read)
+               , Seq (Set ("y", Negate (Var "y")), Seq (Set ("z", Add (Var "x", Var "y")), Return (Var "z"))) ) ) ))
 
 let test_interp _ctxt =
   assert_equal 5 (interp c1) ~msg:"c1" ~printer:string_of_int;
