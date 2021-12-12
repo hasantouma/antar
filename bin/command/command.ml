@@ -2,9 +2,7 @@ module Make_command (L : Rlang.Rlang) = struct
   module Repl = Repl.Make_repl (L)
 
   let lang_name = Printf.sprintf "Antar %s" L.name
-
   let usage_msg = Printf.sprintf "'%s' programming language" lang_name
-
   let greetings = Printf.sprintf "Welcome to the '%s' REPL" lang_name
 
   let parse_cmd_line_args () =
@@ -19,10 +17,9 @@ module Make_command (L : Rlang.Rlang) = struct
 
   let run () =
     let args_len = Array.length Sys.argv in
-    if args_len > 1 then
-      parse_cmd_line_args ()
+    if args_len > 1
+    then parse_cmd_line_args ()
     else (
       print_endline greetings;
-      Repl.repl ()
-    )
+      Repl.repl ())
 end

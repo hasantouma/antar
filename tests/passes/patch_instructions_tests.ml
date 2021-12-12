@@ -15,10 +15,7 @@ let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
 
 let stack_space (lst : C0.Ast.var list) : int =
   let n = List.length lst in
-  if n mod 2 = 0 then
-    8 * n
-  else
-    8 * (n + 1)
+  if n mod 2 = 0 then 8 * n else 8 * (n + 1)
 
 let wrap (vars_length : int) (lst : instr list) : instr list =
   let prologue = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Subq (Constant vars_length, Reg RSP) ] in
@@ -31,7 +28,6 @@ let wrap_entry ?(pinfo = []) (instrs : instr list) : xprogram =
   make_xprog ~pinfo [ ("entry", entry) ]
 
 let pi1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
-
 let pi1' = pi1
 
 let pi2 : xprogram =

@@ -23,15 +23,15 @@ let choice func vars =
       `EVar v)
 
 let choose_vars vars =
-  if List.length vars > 0 && next_float () < 0.5 then
-    vars
+  if List.length vars > 0 && next_float () < 0.5
+  then vars
   else
     let x = Utils.Fresh.fresh_var () in
     x :: vars
 
 let randp_open func vars n =
-  if n = 0 then
-    choice func vars
+  if n = 0
+  then choice func vars
   else
     match next_float () with
     | f when f < 0.66 -> R0.Generator.randp_open func vars n

@@ -3,19 +3,12 @@ open C0.Ast
 open Passes.Explicate_control
 
 let make_cprog (tail : tail) : cprogram = { info = []; blks = [ ("entry", tail) ] }
-
 let econ1 = `EInt 5
-
 let econ1' = make_cprog (Return (Number 5))
-
 let econ2 = `ENegate (`EInt 6)
-
 let econ2' = make_cprog (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
-
 let econ3 = `ELet ("x", `ERead, `EAdd (`EInt 2, `EVar "x"))
-
 let econ3' = make_cprog (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
-
 let econ4 = `ELet ("a", `EInt 42, `ELet ("x", `ENegate (`EVar "a"), `ELet ("y", `ERead, `EAdd (`EVar "x", `EVar "y"))))
 
 let econ4' =
@@ -27,7 +20,6 @@ let econ4' =
            , Seq (Set ("y", Read), Seq (Set ("x0", Add (Var "x", Var "y")), Return (Var "x0"))) ) ))
 
 let econ5 = `ELet ("x", `ERead, `ENegate (`EVar "x"))
-
 let econ5' = make_cprog (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
 
 let econ6 =

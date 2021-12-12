@@ -2,9 +2,7 @@ open R1.Ast
 
 let atom (expr : expr) : bool =
   match expr with
-  | `EInt _
-  | `EVar _ ->
-    true
+  | `EInt _ | `EVar _ -> true
   | _ -> false
 
 let rec resolve_complex (expr : expr) : expr =
@@ -40,10 +38,7 @@ let rec resolve_complex (expr : expr) : expr =
 (* is_resolve_complex *)
 let rec is_resolve_complex (expr : expr) : bool =
   match expr with
-  | `EInt _
-  | `EVar _
-  | `ERead ->
-    true
+  | `EInt _ | `EVar _ | `ERead -> true
   | `ENegate e when atom e -> true
   | `ENegate _ -> false
   | `EAdd (l, r) when atom l && atom r -> true

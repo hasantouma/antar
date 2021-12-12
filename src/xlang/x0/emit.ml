@@ -3,10 +3,7 @@ open Ast
 let get_label label =
   let os_name = Core__Core_unix.Utsname.sysname (Core__Core_unix.uname ()) in
   let os_name = String.lowercase_ascii os_name in
-  if os_name = "darwin" then
-    "_" ^ label
-  else
-    label
+  if os_name = "darwin" then "_" ^ label else label
 
 let emitr (reg : register) : string =
   "%"
@@ -34,11 +31,7 @@ let emita (var : bool) (arg : arg) : string =
   | Constant n -> "$" ^ string_of_int n
   | Reg reg -> emitr reg
   | Deref (reg, n) -> string_of_int n ^ "(" ^ emitr reg ^ ")"
-  | Ref v ->
-    if var then
-      v
-    else
-      raise (Failure "var is false")
+  | Ref v -> if var then v else raise (Failure "var is false")
 
 let emiti (var : bool) (instr : instr) : string =
   match instr with

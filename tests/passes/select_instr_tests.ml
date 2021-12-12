@@ -21,20 +21,15 @@ let wrap_entry ?(pinfo = []) (instrs : instr list) : xprogram =
   make_xprog ~pinfo [ ("entry", entry) ]
 
 let ul1 = make_cprog (Return (Number 5))
-
 let ul1' = { ul1 with info = [] }
-
 let si1 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX) ]
-
 let ul2 = make_cprog (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
-
 let ul2' = { ul2 with info = [ "x0" ] }
 
 let si2 : xprogram =
   wrap_entry ~pinfo:ul2'.info [ Movq (Constant 6, Ref "x0"); Negq (Ref "x0"); Movq (Ref "x0", Reg RAX) ]
 
 let ul3 = make_cprog (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
-
 let ul3' = { ul3 with info = [ "x0"; "x" ] }
 
 let si3 : xprogram =
@@ -69,7 +64,6 @@ let si4 : xprogram =
     ]
 
 let ul5 = make_cprog (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
-
 let ul5' = { ul5 with info = [ "y"; "x" ] }
 
 let si5 : xprogram =

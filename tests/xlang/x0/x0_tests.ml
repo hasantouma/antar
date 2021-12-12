@@ -23,13 +23,9 @@ let wrap_entry (instrs : instr list) : xprogram =
   make_xprog [ ("entry", entry) ]
 
 let s1 : xprogram = wrap_entry [ Movq (Constant 42, Reg RAX) ]
-
 let s2 : xprogram = wrap_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]
-
 let s3 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
-
 let s4 : xprogram = wrap_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
-
 let s5 : xprogram = wrap_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
 
 let s6 : xprogram =
@@ -75,9 +71,7 @@ let s11 : xprogram =
   make_xprog [ ("entry", entry); ("foo", foo) ]
 
 let s12 : xprogram = wrap_entry [ Callq "read_int" ]
-
 let s13 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Movq (Constant 4, Reg RAX) ]
-
 let s14 : xprogram = wrap_entry [ Movq (Constant 5, Reg RAX); Addq (Reg RAX, Reg RAX) ]
 
 let s15 : xprogram =
@@ -93,7 +87,6 @@ let s15 : xprogram =
     ]
 
 let s16 : xprogram = make_xprog [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
-
 let s17 : xprogram = wrap_entry [ Callq "read_int"; Movq (Reg RAX, Reg RBX); Callq "read_int"; Subq (Reg RBX, Reg RAX) ]
 
 let test_interp _ctxt =
@@ -134,5 +127,4 @@ let test_assemble _ctxt =
   assert_equal "7" (assemble ~inputs:[ "3"; "10" ] s17) ~msg:"Callq 'read_int' twice" ~printer:(fun x -> x)
 
 let suite = "x0_tests" >::: [ "test_interp" >:: test_interp; "test_assemble" >:: test_assemble ]
-
 let _ = run_test_tt_main suite

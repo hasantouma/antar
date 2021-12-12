@@ -1,5 +1,4 @@
 type var = string
-
 type label = string
 
 type arg =

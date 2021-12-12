@@ -26,10 +26,7 @@ let patch_instructions (p : xprogram) : xprogram =
 let is_patch_instructions_instr (b : bool) (instr : instr) : bool =
   let res =
     match instr with
-    | Addq (Deref _, Deref _)
-    | Subq (Deref _, Deref _)
-    | Movq (Deref _, Deref _) ->
-      false
+    | Addq (Deref _, Deref _) | Subq (Deref _, Deref _) | Movq (Deref _, Deref _) -> false
     | _ -> true
   in
   b && res
@@ -38,7 +35,5 @@ let is_patch_instructions_instrs (b : bool) (instrs : instr list) : bool =
   List.fold_left is_patch_instructions_instr b instrs
 
 let is_patch_instructions_block (b : bool) (block : block) : bool = is_patch_instructions_instrs b block.instrs
-
 let is_patch_instructions_blks (b : bool) ((_, block) : label * block) : bool = is_patch_instructions_block b block
-
 let is_patch_instructions (p : xprogram) : bool = List.fold_left is_patch_instructions_blks true p.blks

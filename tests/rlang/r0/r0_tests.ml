@@ -3,7 +3,6 @@ open TestUtils
 open TestInputs
 
 let interp_iter = List.iter test_interp
-
 let optimize_iter = List.iter test_optimize
 
 let test_int _ctxt =

@@ -1,5 +1,4 @@
 type vertex = int * Ast.expr
-
 type edge = vertex * vertex
 
 let label_of_expr_type expr lst =
@@ -17,20 +16,14 @@ let label_of_expr_type expr lst =
 let shape_of_expr_type expr lst =
   let shape =
     match expr with
-    | `EInt _
-    | `ERead
-    | `EVar _ ->
-      `Box
+    | `EInt _ | `ERead | `EVar _ -> `Box
     | _ -> `Oval
   in
   `Shape shape :: lst
 
 let style_of_expr_type expr lst =
   match expr with
-  | `EInt _
-  | `ERead
-  | `EVar _ ->
-    `Style `Filled :: lst
+  | `EInt _ | `ERead | `EVar _ -> `Style `Filled :: lst
   | _ -> lst
 
 let node_style_of_expr (expr : Ast.expr) : Graph.Graphviz.DotAttributes.vertex list =
@@ -45,10 +38,7 @@ let fresh =
 let[@warning "-8"] rec graph_of_expr (expr : Ast.expr) : vertex list * edge list =
   let id = fresh () in
   match expr with
-  | `EInt _
-  | `ERead
-  | `EVar _ ->
-    ([ (id, expr) ], [])
+  | `EInt _ | `ERead | `EVar _ -> ([ (id, expr) ], [])
   | `ENegate e ->
     let v :: vs, es = graph_of_expr e in
     let from = (id, expr) in

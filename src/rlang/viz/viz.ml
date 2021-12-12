@@ -4,9 +4,7 @@ module Make_viz (L : Rlang.Rlang) = struct
 
     (* This will preserve the order of nodes, which will preserve the order of operation in the graph *)
     let compare (id1, _) (id2, _) = compare id1 id2
-
     let hash = Hashtbl.hash
-
     let equal = ( = )
   end
 
@@ -14,9 +12,7 @@ module Make_viz (L : Rlang.Rlang) = struct
     type t = string
 
     let compare = compare
-
     let equal = ( = )
-
     let default = ""
   end
 
@@ -27,17 +23,11 @@ module Make_viz (L : Rlang.Rlang) = struct
     include G (* use the graph module from above *)
 
     let edge_attributes (_, e, _) = [ `Label e; `Color 4711 ]
-
     let default_edge_attributes _ = []
-
     let get_subgraph _ = None
-
     let vertex_attributes (_, e) = L.node_style_of_expr e
-
     let vertex_name (id, _) = string_of_int id
-
     let default_vertex_attributes _ = []
-
     let graph_attributes _ = []
   end)
 

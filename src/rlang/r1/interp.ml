@@ -14,9 +14,7 @@ let interp ?(env = []) ?(inputs = []) expr =
 
 let simple expr : bool =
   match expr with
-  | `EInt _
-  | `EVar _ ->
-    true
+  | `EInt _ | `EVar _ -> true
   | _ -> false
 
 let optimize_open func env expr =
@@ -24,7 +22,8 @@ let optimize_open func env expr =
   | `EVar v -> List.assoc v env
   | `ELet (x, ex, eb) ->
     let ex' = func env ex in
-    if simple ex' then
+    if simple ex'
+    then
       let env' = (x, ex') :: env in
       func env' eb
     else

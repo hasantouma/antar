@@ -7,18 +7,14 @@ let handle_status (stat : Unix.process_status) : unit =
 
 let chomp s =
   let n = String.length s in
-  if n > 0 && s.[n - 1] = '\n' then
-    String.sub s 0 (n - 1)
-  else
-    s
+  if n > 0 && s.[n - 1] = '\n' then String.sub s 0 (n - 1) else s
 
 let unwind (protect : 'a -> unit) f x =
   try
     let y = f x in
     protect x;
     y
-  with
-  | e ->
+  with e ->
     protect x;
     raise e
 

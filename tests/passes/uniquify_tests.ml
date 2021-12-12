@@ -3,15 +3,10 @@ open Passes.Uniquify
 open R1.Interp
 
 let u1 = `ELet ("a", `ERead, `EVar "a")
-
 let u1' = `ELet ("x0", `ERead, `EVar "x0")
-
 let u2 = `ELet ("a", `ELet ("a", `ENegate (`EInt 3), `EAdd (`EVar "a", `EVar "a")), `EVar "a")
-
 let u2' = `ELet ("x0", `ELet ("x1", `ENegate (`EInt 3), `EAdd (`EVar "x1", `EVar "x1")), `EVar "x0")
-
 let u3 = `ELet ("a", `EInt 4, `ELet ("a", `ENegate (`EInt 3), `EAdd (`EVar "a", `EVar "a")))
-
 let u3' = `ELet ("x0", `EInt 4, `ELet ("x1", `ENegate (`EInt 3), `EAdd (`EVar "x1", `EVar "x1")))
 
 let u4 =

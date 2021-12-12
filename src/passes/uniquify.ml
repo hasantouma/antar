@@ -9,9 +9,7 @@ let rec dup_exist lst =
 let uniquify (expr : expr) : expr =
   let rec uniquify rho expr =
     match expr with
-    | `EInt _
-    | `ERead ->
-      expr
+    | `EInt _ | `ERead -> expr
     | `ENegate e ->
       let e' = uniquify rho e in
       `ENegate e'
@@ -35,9 +33,7 @@ let uniquify (expr : expr) : expr =
 let is_uniquify (expr : expr) : bool =
   let rec is_uniquify expr : string list =
     match expr with
-    | `EInt _
-    | `ERead ->
-      []
+    | `EInt _ | `ERead -> []
     | `ENegate e -> is_uniquify e
     | `EAdd (l, r) ->
       let l' = is_uniquify l in

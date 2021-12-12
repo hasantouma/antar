@@ -3,15 +3,10 @@ open C0.Ast
 open C0.Interp
 
 let make_cprog (lst : (label * tail) list) : cprogram = { info = []; blks = lst }
-
 let c1 = make_cprog [ ("entry", Return (Number 5)) ]
-
 let c2 = make_cprog [ ("entry", Seq (Set ("x", Arg (Number 42)), Return (Var "x"))) ]
-
 let c3 = make_cprog [ ("entry", Seq (Set ("x", Arg (Number 42)), Seq (Set ("y", Arg (Var "x")), Return (Var "y")))) ]
-
 let c4 = make_cprog [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y")))) ]
-
 let c5 = make_cprog [ ("entry", Seq (Set ("x", Read), Seq (Set ("y", Add (Number (-5), Var "x")), Return (Var "y")))) ]
 
 let c6 =
@@ -86,5 +81,4 @@ let test_interp _ctxt =
   assert_equal (-1) (interp ~inputs:[ 2; 3; 4 ] c12) ~msg:"c12" ~printer:string_of_int
 
 let suite = "c0_tests" >::: [ "test_interp" >:: test_interp ]
-
 let _ = run_test_tt_main suite

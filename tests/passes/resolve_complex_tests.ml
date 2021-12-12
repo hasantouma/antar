@@ -3,25 +3,15 @@ open Passes.Resolve_complex
 open R1.Interp
 
 let rco1 = `EInt 5
-
 let rco1' = `EInt 5
-
 let rco2 = `ENegate (`EInt 6)
-
 let rco2' = `ENegate (`EInt 6)
-
 let rco3 = `EAdd (`EInt 2, `ERead)
-
 let rco3' = `ELet ("x0", `ERead, `EAdd (`EInt 2, `EVar "x0"))
-
 let rco4 = `EAdd (`ENegate (`EInt 42), `ERead)
-
 let rco4' = `ELet ("x0", `ENegate (`EInt 42), `ELet ("x1", `ERead, `EAdd (`EVar "x0", `EVar "x1")))
-
 let rco5 = `ENegate `ERead
-
 let rco5' = `ELet ("x1", `ERead, `ENegate (`EVar "x1"))
-
 let rco6 = `ENegate (`EAdd (`ERead, `ENegate (`EInt 42)))
 
 let rco6' =
@@ -31,7 +21,6 @@ let rco6' =
     , `ENegate (`EVar "x0") )
 
 let rco7 = `ELet ("x", `EAdd (`EInt 42, `ENegate (`EInt 10)), `EAdd (`EVar "x", `EInt 10))
-
 let rco7' = `ELet ("x", `ELet ("x0", `ENegate (`EInt 10), `EAdd (`EInt 42, `EVar "x0")), `EAdd (`EVar "x", `EInt 10))
 
 let test_resolve_complex _ctxt =

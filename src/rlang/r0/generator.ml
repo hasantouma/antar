@@ -17,13 +17,9 @@ let num_of_reads_open f expr =
 let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
 let randp_open func vars n =
-  if n = 0 then
-    let sign =
-      if next_float () < 0.5 then
-        1
-      else
-        -1
-    in
+  if n = 0
+  then
+    let sign = if next_float () < 0.5 then 1 else -1 in
     let random_int = sign * next_int () in
     match next_float () with
     | f when f < 0.5 -> `ERead

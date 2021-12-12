@@ -2,14 +2,11 @@ open TestUtils
 
 (* int *)
 let one = { expr = "1"; optimized = "1"; value = 1; inputs = []; message = "int (1)" }
-
 let forty_two = { expr = "42"; optimized = "42"; value = 42; inputs = []; message = "int (2)" }
-
 let int_list = [ one; forty_two ]
 
 (* read *)
 let read = { expr = "(read)"; optimized = "(read)"; value = 23; inputs = [ 23 ]; message = "read (1)" }
-
 let read_list = [ read ]
 
 (* add *)
@@ -36,9 +33,7 @@ let add_read_and_negate_72 =
   { expr = "(+ (read) (- 72))"; optimized = "(+ -72 (read))"; value = -72; inputs = [ 0 ]; message = "negate (3)" }
 
 let negate_add_99_50 = { expr = "(- (+ 99 50))"; optimized = "-149"; value = -149; inputs = []; message = "negate (4)" }
-
 let negate_negate_5 = { expr = "(- (- 5))"; optimized = "5"; value = 5; inputs = []; message = "negate (5)" }
-
 let negate_list = [ negate_1; negate_read; add_read_and_negate_72; negate_add_99_50; negate_negate_5 ]
 
 (* random *)
