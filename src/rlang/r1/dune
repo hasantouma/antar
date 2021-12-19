@@ -1,6 +1,6 @@
 (library
  (name r1)
- (libraries r0))
+ (libraries exceptions ocamlgraph utils))
 
 (ocamllex
  (modules lex))
