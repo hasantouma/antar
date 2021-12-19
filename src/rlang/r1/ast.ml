@@ -1,12 +1,10 @@
 type var = string
 
-type 'a expr_open =
+type expr =
   [ `EInt of int
   | `ERead
-  | `ENegate of 'a
-  | `EAdd of 'a * 'a
+  | `ENegate of expr
+  | `EAdd of expr * expr
   | `EVar of var
-  | `ELet of var * 'a * 'a
+  | `ELet of var * expr * expr
   ]
-
-type expr = expr expr_open

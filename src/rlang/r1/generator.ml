@@ -7,19 +7,17 @@ let rec exp2 (n : int) : Ast.expr =
     let result = exp2 (n - 1) in
     `EAdd (result, result)
 
-let num_of_reads_open f expr =
+let rec num_of_reads expr =
   match expr with
   | `EInt _ -> 0
   | `ERead -> 1
-  | `ENegate e -> f e
-  | `EAdd (l, r) -> f l + f r
+  | `ENegate e -> num_of_reads e
+  | `EAdd (l, r) -> num_of_reads l + num_of_reads r
   | `EVar _ -> 0
   | `ELet (_, ex, eb) ->
-    let vx = f ex in
-    let vb = f eb in
+    let vx = num_of_reads ex in
+    let vb = num_of_reads eb in
     vx + vb
-
-let rec num_of_reads expr = num_of_reads_open num_of_reads expr
 
 let base_case func vars n : Ast.expr =
   if n = 0
@@ -55,21 +53,20 @@ let choose_vars vars =
     let x = Utils.Fresh.fresh_var () in
     x :: vars
 
-let randp_open func vars n =
-  if n = 0
-  then choice func vars
-  else
-    match next_float () with
-    | f when f < 0.66 -> base_case func vars n
-    | _ ->
-      let vars' = choose_vars vars in
-      let x = List.hd vars' in
-      let ex = func vars (n - 1) in
-      let eb = func vars' (n - 1) in
-      `ELet (x, ex, eb)
-
 let randp ?(vars = []) n =
-  let rec randp vars n = randp_open randp vars n in
+  let rec randp vars n =
+    if n = 0
+    then choice randp vars
+    else
+      match next_float () with
+      | f when f < 0.66 -> base_case randp vars n
+      | _ ->
+        let vars' = choose_vars vars in
+        let x = List.hd vars' in
+        let ex = randp vars (n - 1) in
+        let eb = randp vars' (n - 1) in
+        `ELet (x, ex, eb)
+  in
   randp vars n
 
 let generate_input_for_randp expr : int list =
