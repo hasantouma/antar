@@ -1,15 +1,16 @@
 open OUnit2
+open R1.Ast
 open C0.Ast
 open C0.Lang
 open Passes.Explicate_control
 
-let econ1 = `EInt 5
+let econ1 = EInt 5
 let econ1' = wrap_c_entry (Return (Number 5))
-let econ2 = `ENegate (`EInt 6)
+let econ2 = ENegate (EInt 6)
 let econ2' = wrap_c_entry (Seq (Set ("x0", Negate (Number 6)), Return (Var "x0")))
-let econ3 = `ELet ("x", `ERead, `EAdd (`EInt 2, `EVar "x"))
+let econ3 = ELet ("x", ERead, EAdd (EInt 2, EVar "x"))
 let econ3' = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("x0", Add (Number 2, Var "x")), Return (Var "x0"))))
-let econ4 = `ELet ("a", `EInt 42, `ELet ("x", `ENegate (`EVar "a"), `ELet ("y", `ERead, `EAdd (`EVar "x", `EVar "y"))))
+let econ4 = ELet ("a", EInt 42, ELet ("x", ENegate (EVar "a"), ELet ("y", ERead, EAdd (EVar "x", EVar "y"))))
 
 let econ4' =
   wrap_c_entry
@@ -19,11 +20,9 @@ let econ4' =
            ( Set ("x", Negate (Var "a"))
            , Seq (Set ("y", Read), Seq (Set ("x0", Add (Var "x", Var "y")), Return (Var "x0"))) ) ))
 
-let econ5 = `ELet ("x", `ERead, `ENegate (`EVar "x"))
+let econ5 = ELet ("x", ERead, ENegate (EVar "x"))
 let econ5' = wrap_c_entry (Seq (Set ("x", Read), Seq (Set ("y", Negate (Var "x")), Return (Var "y"))))
-
-let econ6 =
-  `ELet ("x", `ELet ("y", `ERead, `ELet ("z", `ENegate (`EInt 42), `EAdd (`EVar "y", `EVar "z"))), `ENegate (`EVar "x"))
+let econ6 = ELet ("x", ELet ("y", ERead, ELet ("z", ENegate (EInt 42), EAdd (EVar "y", EVar "z"))), ENegate (EVar "x"))
 
 let econ6' =
   wrap_c_entry
@@ -33,7 +32,7 @@ let econ6' =
            ( Set ("z", Negate (Number 42))
            , Seq (Set ("x", Add (Var "y", Var "z")), Seq (Set ("x0", Negate (Var "x")), Return (Var "x0"))) ) ))
 
-let econ7 = `ELet ("x", `ELet ("y", `ENegate (`EInt 10), `EAdd (`EInt 42, `EVar "y")), `EAdd (`EVar "x", `EInt 10))
+let econ7 = ELet ("x", ELet ("y", ENegate (EInt 10), EAdd (EInt 42, EVar "y")), EAdd (EVar "x", EInt 10))
 
 let econ7' =
   wrap_c_entry
