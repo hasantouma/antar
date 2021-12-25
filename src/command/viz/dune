@@ -1,3 +1,3 @@
 (library
  (name viz)
- (libraries ocamlgraph rlang))
+ (libraries ocamlgraph r1))
