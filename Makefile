@@ -1,9 +1,9 @@
 build:
-	dune build bin/antar_r1.exe
-	ln -sf _build/default/bin/antar_r1.exe antar-r1
+	dune build bin/antar.exe
+	ln -sf _build/default/bin/antar.exe antar
 
 run:
-	dune exec bin/antar_r1.exe
+	dune exec bin/antar.exe
 
 test_all: runtime/runtime.o
 	dune runtest
@@ -12,7 +12,7 @@ test_all: runtime/runtime.o
 runtime/runtime.o: runtime/runtime.c
 
 clean:
-	rm -f antar-r1
+	rm -f antar
 	rm -f mygraph.dot
 	rm -f mygraph.png
 	rm -f runtime/runtime.o
