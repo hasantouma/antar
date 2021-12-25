@@ -1,9 +1,9 @@
 build:
-	dune build bin/rlang/antar_r1.exe
-	ln -sf _build/default/bin/rlang/antar_r1.exe antar-r1
+	dune build bin/antar_r1.exe
+	ln -sf _build/default/bin/antar_r1.exe antar-r1
 
 run:
-	dune exec bin/rlang/antar_r1.exe
+	dune exec bin/antar_r1.exe
 
 test_all: runtime/runtime.o
 	dune runtest
