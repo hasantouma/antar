@@ -1,9 +1,4 @@
-type expr = Ast.expr
-
-type rprogram =
-  { info : bool
-  ; e : expr
-  }
+open Ast
 
 let name = "R1"
 let make_prog (expr : expr) : rprogram = { info = false; e = expr }

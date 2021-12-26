@@ -8,10 +8,10 @@ type rtest =
   ; message : string
   }
 
-let make_rprog (e : string) : R1.Lang.rprogram = e |> Lexing.from_string |> R1.Lang.parse
+let make_rprog (e : string) : Rlang.Ast.rprogram = e |> Lexing.from_string |> Rlang.Lang.parse
 
-let compiler (expr : R1.Ast.expr) : X0.Ast.xprogram =
-  expr |> R1.Interp.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
+let compiler (expr : Rlang.Ast.expr) : X0.Ast.xprogram =
+  expr |> Rlang.Interp.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
   |> Passes.Explicate_control.explicate_control |> Passes.Select_instr.select_instr |> Passes.Assign_homes.assign_homes
   |> Passes.Patch_instructions.patch_instructions
 
@@ -19,7 +19,7 @@ let compiler (expr : R1.Ast.expr) : X0.Ast.xprogram =
 
 let test_interp (t : rtest) =
   let p = make_rprog t.expr in
-  assert_equal t.value (R1.Interp.interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
+  assert_equal t.value (Rlang.Interp.interp ~inputs:t.inputs p.e) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
   assert_equal t.value
     (X0.Interp.interp ~inputs:t.inputs (compiler p.e))
     ~msg:("compiler: " ^ t.message) ~printer:string_of_int
@@ -38,10 +38,10 @@ let test_optimize (t : rtest) =
   let p_expr = make_rprog t.expr in
   let p_optimized = make_rprog t.optimized in
   assert_equal
-    (R1.Interp.interp ~inputs:t.inputs p_optimized.e)
-    (R1.Interp.interp ~inputs:t.inputs p_expr.e)
+    (Rlang.Interp.interp ~inputs:t.inputs p_optimized.e)
+    (Rlang.Interp.interp ~inputs:t.inputs p_expr.e)
     ~msg:("optimize vs. non-optimize: " ^ t.message)
     ~printer:string_of_int;
-  assert_equal p_optimized.e (R1.Interp.optimize p_expr.e)
+  assert_equal p_optimized.e (Rlang.Interp.optimize p_expr.e)
     ~msg:("optimize AST vs. expr optimize AST: " ^ t.message)
-    ~printer:R1.Pp.pp
+    ~printer:Rlang.Pp.pp

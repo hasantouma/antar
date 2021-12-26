@@ -1,4 +1,9 @@
 (library
  (name rlang)
- (libraries ocamlgraph)
- (modules_without_implementation rlang))
+ (libraries exceptions ocamlgraph utils))
+
+(ocamllex
+ (modules lex))
+
+(menhir
+ (modules parse))

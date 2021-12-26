@@ -1,7 +1,7 @@
 open OUnit2
 open Passes.Resolve_complex
-open R1.Ast
-open R1.Interp
+open Rlang.Ast
+open Rlang.Lang
 
 let rco1 = EInt 5
 let rco1' = EInt 5
@@ -23,19 +23,19 @@ let rco7' = ELet ("x", ELet ("x0", ENegate (EInt 10), EAdd (EInt 42, EVar "x0"))
 
 let test_resolve_complex _ctxt =
   assert_equal rco1' (resolve_complex rco1) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco1"
-    ~printer:R1.Pp.pp;
+    ~printer:Rlang.Lang.pp;
   assert_equal rco2' (resolve_complex rco2) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco2"
-    ~printer:R1.Pp.pp;
+    ~printer:Rlang.Lang.pp;
   assert_equal rco3' (resolve_complex rco3) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco3"
-    ~printer:R1.Pp.pp;
+    ~printer:Rlang.Lang.pp;
   assert_equal rco4' (resolve_complex rco4) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco4"
-    ~printer:R1.Pp.pp;
+    ~printer:Rlang.Lang.pp;
   assert_equal rco5' (resolve_complex rco5) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco5"
-    ~printer:R1.Pp.pp;
+    ~printer:Rlang.Lang.pp;
   assert_equal rco6' (resolve_complex rco6) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco6"
-    ~printer:R1.Pp.pp;
+    ~printer:Rlang.Lang.pp;
   assert_equal rco7' (resolve_complex rco7) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco7"
-    ~printer:R1.Pp.pp
+    ~printer:Rlang.Lang.pp
 
 let test_is_uniquify _ctxt =
   assert_equal true (Passes.Uniquify.is_uniquify rco1) ~msg:"resolve_complex: is_uniquify: rco1" ~printer:string_of_bool;

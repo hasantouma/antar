@@ -1,5 +1,5 @@
 open OUnit2
-open R1.Ast
+open Rlang.Ast
 open C0.Ast
 open C0.Lang
 open Passes.Explicate_control
@@ -73,27 +73,27 @@ let test_is_resolve_complex _ctxt =
     ~msg:"is_resolve_complex: econ7" ~printer:string_of_bool
 
 let test_interp_explicate_control _ctxt =
-  assert_equal (C0.Interp.interp econ1') (R1.Interp.interp econ1) ~msg:"interp_explicate_control: econ1"
+  assert_equal (C0.Interp.interp econ1') (Rlang.Lang.interp econ1) ~msg:"interp_explicate_control: econ1"
     ~printer:string_of_int;
-  assert_equal (C0.Interp.interp econ2') (R1.Interp.interp econ2) ~msg:"interp_explicate_control: econ2"
+  assert_equal (C0.Interp.interp econ2') (Rlang.Lang.interp econ2) ~msg:"interp_explicate_control: econ2"
     ~printer:string_of_int;
   assert_equal
     (C0.Interp.interp ~inputs:[ 42 ] econ3')
-    (R1.Interp.interp ~inputs:[ 42 ] econ3)
+    (Rlang.Lang.interp ~inputs:[ 42 ] econ3)
     ~msg:"interp_explicate_control: econ3" ~printer:string_of_int;
   assert_equal
     (C0.Interp.interp ~inputs:[ 42 ] econ4')
-    (R1.Interp.interp ~inputs:[ 42 ] econ4)
+    (Rlang.Lang.interp ~inputs:[ 42 ] econ4)
     ~msg:"interp_explicate_control: econ4" ~printer:string_of_int;
   assert_equal
     (C0.Interp.interp ~inputs:[ 42 ] econ5')
-    (R1.Interp.interp ~inputs:[ 42 ] econ5)
+    (Rlang.Lang.interp ~inputs:[ 42 ] econ5)
     ~msg:"interp_explicate_control: econ5" ~printer:string_of_int;
   assert_equal
     (C0.Interp.interp ~inputs:[ 42 ] econ6')
-    (R1.Interp.interp ~inputs:[ 42 ] econ6)
+    (Rlang.Lang.interp ~inputs:[ 42 ] econ6)
     ~msg:"interp_explicate_control: econ6" ~printer:string_of_int;
-  assert_equal (C0.Interp.interp econ7') (R1.Interp.interp econ7) ~msg:"interp_explicate_control: econ7"
+  assert_equal (C0.Interp.interp econ7') (Rlang.Lang.interp econ7) ~msg:"interp_explicate_control: econ7"
     ~printer:string_of_int
 
 let suite =

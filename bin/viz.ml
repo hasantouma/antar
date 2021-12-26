@@ -1,5 +1,7 @@
+open Rlang
+
 module Node = struct
-  type t = int * R1.Lang.expr
+  type t = int * Ast.expr
 
   (* This will preserve the order of nodes, which will preserve the order of operation in the graph *)
   let compare (id1, _) (id2, _) = compare id1 id2
@@ -24,7 +26,7 @@ module Dot = Graph.Graphviz.Dot (struct
   let edge_attributes (_, e, _) = [ `Label e; `Color 4711 ]
   let default_edge_attributes _ = []
   let get_subgraph _ = None
-  let vertex_attributes (_, e) = R1.Lang.node_style_of_expr e
+  let vertex_attributes (_, e) = Lang.node_style_of_expr e
   let vertex_name (id, _) = string_of_int id
   let default_vertex_attributes _ = []
   let graph_attributes _ = []
@@ -32,14 +34,14 @@ end)
 
 let generate_graph expr =
   let g = G.empty in
-  let vs, es = R1.Lang.graph_of_expr expr in
+  let vs, es = Lang.graph_of_expr expr in
   let ns = List.map (fun v -> (v, G.V.create v)) vs in
   let get e = List.assoc e ns in
   let g = List.fold_left G.add_vertex g (List.map snd ns) in
   let g = List.fold_left (fun acc (v1, v2) -> G.add_edge acc (get v1) (get v2)) g es in
   g
 
-let write_expr_to_graphviz (expr : R1.Lang.expr) : unit =
+let write_expr_to_graphviz (expr : Ast.expr) : unit =
   let name = "mygraph.dot" in
   let g = generate_graph expr in
   let file = open_out_bin name in

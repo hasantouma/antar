@@ -1,5 +1,5 @@
 (* rlang alpha equiv *)
-open R1.Ast
+open Rlang.Ast
 
 let rlang_alpha_equiv e1 e2 : bool =
   let rec go env e1 e2 =

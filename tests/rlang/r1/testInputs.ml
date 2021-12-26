@@ -117,10 +117,10 @@ let let_list =
 
 (* random *)
 let randp n =
-  let ast = R1.Generator.randp n in
-  let expr = R1.Pp.pp ast in
-  let optimized = R1.Pp.pp (R1.Interp.optimize ast) in
-  let inputs = R1.Generator.generate_input_for_randp ast in
-  let value = R1.Interp.interp ast ~inputs in
+  let ast = Rlang.Lang.randp n in
+  let expr = Rlang.Lang.pp ast in
+  let optimized = Rlang.Lang.pp (Rlang.Interp.optimize ast) in
+  let inputs = Rlang.Generator.generate_input_for_randp ast in
+  let value = Rlang.Lang.interp ast ~inputs in
   let message = "randp" ^ string_of_int n ^ ":\nInput: " ^ [%show: int list] inputs ^ "\nExpr:" ^ expr in
   { expr; optimized; value; inputs; message }

@@ -1,9 +1,0 @@
-(library
- (name r1)
- (libraries exceptions ocamlgraph utils))
-
-(ocamllex
- (modules lex))
-
-(menhir
- (modules parse))

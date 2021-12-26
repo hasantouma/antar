@@ -1,8 +1,8 @@
 (tests
- (names r1_tests)
+ (names rlang_tests)
  (preprocess
   (pps ppx_deriving.show))
- (libraries ounit2 passes r1 utils))
+ (libraries ounit2 passes rlang utils))
 
 (env
  (dev

@@ -46,7 +46,7 @@ let test_randp _ctxt =
   done
 
 let suite =
-  "r1_tests"
+  "rlang_tests"
   >::: [ "int" >:: test_int
        ; "read" >:: test_read
        ; "add" >:: test_add

@@ -1,4 +1,4 @@
-let lang_name = Printf.sprintf "Antar %s" R1.Lang.name
+let lang_name = Printf.sprintf "Antar %s" Rlang.Lang.name
 let usage_msg = Printf.sprintf "'%s' programming language" lang_name
 let greetings = Printf.sprintf "Welcome to the '%s' REPL" lang_name
 
