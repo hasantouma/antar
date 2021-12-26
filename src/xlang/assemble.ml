@@ -41,7 +41,7 @@ let assemble ?(inputs = []) (p : Ast.xprogram) : string =
   unwind Sys.remove
     (fun name ->
       let _ = exec_command (Printf.sprintf "as -o %s.o %s" name name) in
-      let _ = exec_command (Printf.sprintf "cc -o %s -O0 ../../../../../runtime/runtime.o %s.o" bin name) in
+      let _ = exec_command (Printf.sprintf "cc -o %s -O0 ../../../../runtime/runtime.o %s.o" bin name) in
       let res = exec_command ~inputs bin in
       chomp res)
     file

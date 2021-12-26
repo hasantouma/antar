@@ -1,3 +1,3 @@
 (library
  (name passes)
- (libraries clang rlang utils x0))
+ (libraries clang rlang utils xlang))

@@ -1,12 +1,12 @@
 open OUnit2
-open X0.Ast
-open X0.Interp
-open X0.Assemble
-open X0.Lang
+open Xlang.Ast
+open Xlang.Interp
+open Xlang.Assemble
+open Xlang.Lang
 
 let print_debugger ?(inputs = []) (p : xprogram) (msg : string) : string =
   let input = [%show: string list] inputs in
-  let pp = X0.Emit.emitp true p in
+  let pp = Xlang.Emit.emitp true p in
   Printf.sprintf "Input: %s\nTitle: %s:\n%s" input msg pp
 
 let s1 : xprogram = wrap_x_entry [ Movq (Constant 42, Reg RAX) ]
@@ -144,5 +144,5 @@ let test_assemble _ctxt =
     ~printer:(fun x -> x);
   assert_equal "1337" (assemble s18) ~msg:(print_debugger s18 "Jump and return") ~printer:(fun x -> x)
 
-let suite = "x0_tests" >::: [ "test_interp" >:: test_interp; "test_assemble" >:: test_assemble ]
+let suite = "xlang_tests" >::: [ "test_interp" >:: test_interp; "test_assemble" >:: test_assemble ]
 let _ = run_test_tt_main suite

@@ -1,8 +1,8 @@
 (tests
- (names x0_tests)
+ (names xlang_tests)
  (preprocess
   (pps ppx_deriving.show))
- (libraries ounit2 x0))
+ (libraries ounit2 xlang))
 
 (env
  (dev

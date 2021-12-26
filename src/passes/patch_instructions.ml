@@ -1,4 +1,4 @@
-open X0.Ast
+open Xlang.Ast
 
 let patch_instructions_instr (instr : instr) : instr list =
   match instr with
