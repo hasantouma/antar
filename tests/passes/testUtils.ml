@@ -21,7 +21,7 @@ let rlang_alpha_equiv e1 e2 : bool =
   go [] e1 e2
 
 (* clang alpha equiv *)
-open C0.Ast
+open Clang.Ast
 
 let clang_arg_alpha_equiv env a1 a2 : bool =
   match (a1, a2) with

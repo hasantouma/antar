@@ -1,7 +1,7 @@
 open OUnit2
-open C0.Ast
-open C0.Interp
-open C0.Lang
+open Clang.Ast
+open Clang.Interp
+open Clang.Lang
 
 let c1 = wrap_c_entry (Return (Number 5))
 let c2 = wrap_c_entry (Seq (Set ("x", Arg (Number 42)), Return (Var "x")))
@@ -67,5 +67,5 @@ let test_interp _ctxt =
   assert_equal (-1) (interp ~inputs:[ 2; 3 ] c11) ~msg:"c11" ~printer:string_of_int;
   assert_equal (-1) (interp ~inputs:[ 2; 3; 4 ] c12) ~msg:"c12" ~printer:string_of_int
 
-let suite = "c0_tests" >::: [ "test_interp" >:: test_interp ]
+let suite = "clang_tests" >::: [ "test_interp" >:: test_interp ]
 let _ = run_test_tt_main suite

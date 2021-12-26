@@ -1,6 +1,6 @@
 (tests
- (names c0_tests)
- (libraries ounit2 c0))
+ (names clang_tests)
+ (libraries ounit2 clang))
 
 (env
  (dev

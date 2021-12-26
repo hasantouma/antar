@@ -1,8 +1,8 @@
 open OUnit2
 open X0.Ast
 open X0.Lang
-open C0.Ast
-open C0.Lang
+open Clang.Ast
+open Clang.Lang
 open Passes.Select_instr
 
 let ul1 = wrap_c_entry (Return (Number 5))
@@ -99,13 +99,13 @@ let si7 : xprogram =
 
 (* Testing helper function. 'uncover_locals' gets called as a part of 'select_instr' *)
 let test_uncover_locals _ctxt =
-  assert_equal ul1' (uncover_locals ul1) ~msg:"uncover_locals: ul1" ~printer:C0.Pp.pp;
-  assert_equal ul2' (uncover_locals ul2) ~msg:"uncover_locals: ul2" ~printer:C0.Pp.pp;
-  assert_equal ul3' (uncover_locals ul3) ~msg:"uncover_locals: ul3" ~printer:C0.Pp.pp;
-  assert_equal ul4' (uncover_locals ul4) ~msg:"uncover_locals: ul4" ~printer:C0.Pp.pp;
-  assert_equal ul5' (uncover_locals ul5) ~msg:"uncover_locals: ul5" ~printer:C0.Pp.pp;
-  assert_equal ul6' (uncover_locals ul6) ~msg:"uncover_locals: ul6" ~printer:C0.Pp.pp;
-  assert_equal ul7' (uncover_locals ul7) ~msg:"uncover_locals: ul7" ~printer:C0.Pp.pp
+  assert_equal ul1' (uncover_locals ul1) ~msg:"uncover_locals: ul1" ~printer:Clang.Pp.pp;
+  assert_equal ul2' (uncover_locals ul2) ~msg:"uncover_locals: ul2" ~printer:Clang.Pp.pp;
+  assert_equal ul3' (uncover_locals ul3) ~msg:"uncover_locals: ul3" ~printer:Clang.Pp.pp;
+  assert_equal ul4' (uncover_locals ul4) ~msg:"uncover_locals: ul4" ~printer:Clang.Pp.pp;
+  assert_equal ul5' (uncover_locals ul5) ~msg:"uncover_locals: ul5" ~printer:Clang.Pp.pp;
+  assert_equal ul6' (uncover_locals ul6) ~msg:"uncover_locals: ul6" ~printer:Clang.Pp.pp;
+  assert_equal ul7' (uncover_locals ul7) ~msg:"uncover_locals: ul7" ~printer:Clang.Pp.pp
 
 let test_select_instr _ctxt =
   assert_equal si1 (select_instr ul1) ~msg:"select_instr: si1" ~printer:(X0.Emit.emitp true);
@@ -117,25 +117,25 @@ let test_select_instr _ctxt =
   assert_equal si7 (select_instr ul7) ~msg:"select_instr: si7" ~printer:(X0.Emit.emitp true)
 
 let test_interp_select_instr _ctxt =
-  assert_equal (X0.Interp.interp si1) (C0.Interp.interp ul1') ~msg:"interp_select_instr: si1" ~printer:string_of_int;
-  assert_equal (X0.Interp.interp si2) (C0.Interp.interp ul2') ~msg:"interp_select_instr: si2" ~printer:string_of_int;
+  assert_equal (X0.Interp.interp si1) (Clang.Interp.interp ul1') ~msg:"interp_select_instr: si1" ~printer:string_of_int;
+  assert_equal (X0.Interp.interp si2) (Clang.Interp.interp ul2') ~msg:"interp_select_instr: si2" ~printer:string_of_int;
   assert_equal
     (X0.Interp.interp ~inputs:[ 3 ] si3)
-    (C0.Interp.interp ~inputs:[ 3 ] ul3')
+    (Clang.Interp.interp ~inputs:[ 3 ] ul3')
     ~msg:"interp_select_instr: si3" ~printer:string_of_int;
   assert_equal
     (X0.Interp.interp ~inputs:[ 4 ] si4)
-    (C0.Interp.interp ~inputs:[ 4 ] ul4')
+    (Clang.Interp.interp ~inputs:[ 4 ] ul4')
     ~msg:"interp_select_instr: si4" ~printer:string_of_int;
   assert_equal
     (X0.Interp.interp ~inputs:[ 5 ] si5)
-    (C0.Interp.interp ~inputs:[ 5 ] ul5')
+    (Clang.Interp.interp ~inputs:[ 5 ] ul5')
     ~msg:"interp_select_instr: si5" ~printer:string_of_int;
   assert_equal
     (X0.Interp.interp ~inputs:[ 6 ] si6)
-    (C0.Interp.interp ~inputs:[ 6 ] ul6')
+    (Clang.Interp.interp ~inputs:[ 6 ] ul6')
     ~msg:"interp_select_instr: si6" ~printer:string_of_int;
-  assert_equal (X0.Interp.interp si7) (C0.Interp.interp ul7') ~msg:"interp_select_instr: si7" ~printer:string_of_int
+  assert_equal (X0.Interp.interp si7) (Clang.Interp.interp ul7') ~msg:"interp_select_instr: si7" ~printer:string_of_int
 
 let suite =
   "select_instr_tests"
