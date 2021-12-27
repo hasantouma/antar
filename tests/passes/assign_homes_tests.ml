@@ -1,6 +1,6 @@
 open OUnit2
 open Xlang
-open Passes.Assign_homes
+open Passes
 
 let ah1 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX) ]
 let ah1' = ah1

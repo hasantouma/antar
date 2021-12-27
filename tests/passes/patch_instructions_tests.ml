@@ -1,6 +1,6 @@
 open OUnit2
 open Xlang
-open Passes.Patch_instructions
+open Passes
 
 let pi1 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX) ]
 let pi1' = pi1

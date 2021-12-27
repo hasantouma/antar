@@ -2,7 +2,7 @@ open OUnit2
 open TestUtils
 open Rlang
 open Clang
-open Passes.Explicate_control
+open Passes
 
 let econ1 = make_rprog (EInt 5)
 let econ1' = wrap_c_entry (Return (Number 5))
@@ -55,27 +55,13 @@ let test_explicate_control _ctxt =
   assert_equal econ7' (explicate_control econ7) ~cmp:clang_alpha_equiv ~msg:"econ7" ~printer:Clang.pp
 
 let test_is_resolve_complex _ctxt =
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ1)
-    ~msg:"is_resolve_complex: econ1" ~printer:string_of_bool;
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ2)
-    ~msg:"is_resolve_complex: econ2" ~printer:string_of_bool;
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ3)
-    ~msg:"is_resolve_complex: econ3" ~printer:string_of_bool;
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ4)
-    ~msg:"is_resolve_complex: econ4" ~printer:string_of_bool;
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ5)
-    ~msg:"is_resolve_complex: econ5" ~printer:string_of_bool;
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ6)
-    ~msg:"is_resolve_complex: econ6" ~printer:string_of_bool;
-  assert_equal true
-    (Passes.Resolve_complex.is_resolve_complex econ7)
-    ~msg:"is_resolve_complex: econ7" ~printer:string_of_bool
+  assert_equal true (is_resolve_complex econ1) ~msg:"is_resolve_complex: econ1" ~printer:string_of_bool;
+  assert_equal true (is_resolve_complex econ2) ~msg:"is_resolve_complex: econ2" ~printer:string_of_bool;
+  assert_equal true (is_resolve_complex econ3) ~msg:"is_resolve_complex: econ3" ~printer:string_of_bool;
+  assert_equal true (is_resolve_complex econ4) ~msg:"is_resolve_complex: econ4" ~printer:string_of_bool;
+  assert_equal true (is_resolve_complex econ5) ~msg:"is_resolve_complex: econ5" ~printer:string_of_bool;
+  assert_equal true (is_resolve_complex econ6) ~msg:"is_resolve_complex: econ6" ~printer:string_of_bool;
+  assert_equal true (is_resolve_complex econ7) ~msg:"is_resolve_complex: econ7" ~printer:string_of_bool
 
 let test_interp_explicate_control _ctxt =
   assert_equal (Clang.interp econ1') (Rlang.interp econ1) ~msg:"interp_explicate_control: econ1" ~printer:string_of_int;

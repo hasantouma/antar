@@ -1,6 +1,6 @@
 open OUnit2
 open TestUtils
-open Passes.Resolve_complex
+open Passes
 open Rlang
 
 let rco1 = make_rprog (EInt 5)
@@ -35,13 +35,13 @@ let test_resolve_complex _ctxt =
   assert_equal rco7' (resolve_complex rco7) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco7" ~printer:pp
 
 let test_is_uniquify _ctxt =
-  assert_equal true (Passes.Uniquify.is_uniquify rco1) ~msg:"resolve_complex: is_uniquify: rco1" ~printer:string_of_bool;
-  assert_equal true (Passes.Uniquify.is_uniquify rco2) ~msg:"resolve_complex: is_uniquify: rco2" ~printer:string_of_bool;
-  assert_equal true (Passes.Uniquify.is_uniquify rco3) ~msg:"resolve_complex: is_uniquify: rco3" ~printer:string_of_bool;
-  assert_equal true (Passes.Uniquify.is_uniquify rco4) ~msg:"resolve_complex: is_uniquify: rco4" ~printer:string_of_bool;
-  assert_equal true (Passes.Uniquify.is_uniquify rco5) ~msg:"resolve_complex: is_uniquify: rco5" ~printer:string_of_bool;
-  assert_equal true (Passes.Uniquify.is_uniquify rco6) ~msg:"resolve_complex: is_uniquify: rco6" ~printer:string_of_bool;
-  assert_equal true (Passes.Uniquify.is_uniquify rco7) ~msg:"resolve_complex: is_uniquify: rco7" ~printer:string_of_bool
+  assert_equal true (is_uniquify rco1) ~msg:"resolve_complex: is_uniquify: rco1" ~printer:string_of_bool;
+  assert_equal true (is_uniquify rco2) ~msg:"resolve_complex: is_uniquify: rco2" ~printer:string_of_bool;
+  assert_equal true (is_uniquify rco3) ~msg:"resolve_complex: is_uniquify: rco3" ~printer:string_of_bool;
+  assert_equal true (is_uniquify rco4) ~msg:"resolve_complex: is_uniquify: rco4" ~printer:string_of_bool;
+  assert_equal true (is_uniquify rco5) ~msg:"resolve_complex: is_uniquify: rco5" ~printer:string_of_bool;
+  assert_equal true (is_uniquify rco6) ~msg:"resolve_complex: is_uniquify: rco6" ~printer:string_of_bool;
+  assert_equal true (is_uniquify rco7) ~msg:"resolve_complex: is_uniquify: rco7" ~printer:string_of_bool
 
 let test_is_resolve_complex _ctxt =
   assert_equal true (is_resolve_complex rco1') ~msg:"is_resolve_complex: rco1" ~printer:string_of_bool;

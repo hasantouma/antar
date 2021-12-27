@@ -11,9 +11,8 @@ type rtest =
 let make_rprog (e : string) : Rlang.rprogram = e |> Lexing.from_string |> Rlang.parse
 
 let compiler (rprog : Rlang.rprogram) : Xlang.xprogram =
-  rprog |> Rlang.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
-  |> Passes.Explicate_control.explicate_control |> Passes.Select_instr.select_instr |> Passes.Assign_homes.assign_homes
-  |> Passes.Patch_instructions.patch_instructions
+  rprog |> Rlang.optimize |> Passes.uniquify |> Passes.resolve_complex |> Passes.explicate_control
+  |> Passes.select_instr |> Passes.assign_homes |> Passes.patch_instructions
 
 (* *** Testing without optimized pass *** *)
 

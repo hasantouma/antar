@@ -1,7 +1,7 @@
 open OUnit2
 open Xlang
 open Clang
-open Passes.Select_instr
+open Passes
 
 let ul1 = wrap_c_entry (Return (Number 5))
 let ul1' = { ul1 with info = [] }

@@ -1,6 +1,6 @@
 open OUnit2
 open TestUtils
-open Passes.Uniquify
+open Passes
 open Rlang
 
 let u1 = make_rprog (ELet ("a", ERead, EVar "a"))
