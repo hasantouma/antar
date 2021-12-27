@@ -1,0 +1,5 @@
+(library
+ (name clang)
+ (preprocess
+  (pps ppx_deriving.show))
+ (libraries utils))

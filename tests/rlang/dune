@@ -1,0 +1,10 @@
+(tests
+ (names rlang_tests)
+ (preprocess
+  (pps ppx_deriving.show))
+ (libraries ounit2 passes rlang utils))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))

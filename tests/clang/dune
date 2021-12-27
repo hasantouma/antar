@@ -1,0 +1,8 @@
+(tests
+ (names clang_tests)
+ (libraries ounit2 clang))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))

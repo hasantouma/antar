@@ -1,5 +1,5 @@
-open C0.Ast
-open R1.Ast
+open Clang.Ast
+open Rlang.Ast
 
 let exp_to_arg (exp : exp) : arg =
   match exp with
@@ -8,14 +8,14 @@ let exp_to_arg (exp : exp) : arg =
 
 let rec rlang_to_clang (expr : expr) : exp =
   match expr with
-  | `EInt n -> Arg (Number n)
-  | `EVar x -> Arg (Var x)
-  | `ERead -> Read
-  | `ENegate e ->
+  | EInt n -> Arg (Number n)
+  | EVar x -> Arg (Var x)
+  | ERead -> Read
+  | ENegate e ->
     let e' = rlang_to_clang e in
     let e'' = exp_to_arg e' in
     Negate e''
-  | `EAdd (l, r) ->
+  | EAdd (l, r) ->
     let l' = rlang_to_clang l in
     let r' = rlang_to_clang r in
     let l'' = exp_to_arg l' in
@@ -25,20 +25,20 @@ let rec rlang_to_clang (expr : expr) : exp =
 
 let rec lift (expr : expr) : (var * expr) list * expr =
   match expr with
-  | `EInt n -> ([], `EInt n)
-  | `EVar x -> ([], `EVar x)
-  | `ERead -> ([], `ERead)
-  | `ENegate e -> ([], `ENegate e)
-  | `EAdd (l, r) -> ([], `EAdd (l, r))
-  | `ELet (x, ex, eb) ->
+  | EInt n -> ([], EInt n)
+  | EVar x -> ([], EVar x)
+  | ERead -> ([], ERead)
+  | ENegate e -> ([], ENegate e)
+  | EAdd (l, r) -> ([], EAdd (l, r))
+  | ELet (x, ex, eb) ->
     let xs, ex' = lift ex in
     let bs, eb' = lift eb in
     (xs @ [ (x, ex') ] @ bs, eb')
 
 let wrap_ret_arg (expr : expr) : tail =
   match expr with
-  | `EInt n -> Return (Number n)
-  | `EVar x -> Return (Var x)
+  | EInt n -> Return (Number n)
+  | EVar x -> Return (Var x)
   | _ ->
     let exp = rlang_to_clang expr in
     let x = Utils.Fresh.fresh_var () in

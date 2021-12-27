@@ -1,0 +1,10 @@
+(tests
+ (names xlang_tests)
+ (preprocess
+  (pps ppx_deriving.show))
+ (libraries ounit2 xlang))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
