@@ -1,5 +1,6 @@
 (* rlang alpha equiv *)
 open Rlang
+open Clang
 
 let rlang_alpha_equiv p1 p2 : bool =
   let rec go env e1 e2 =
@@ -21,8 +22,6 @@ let rlang_alpha_equiv p1 p2 : bool =
   go [] p1.e p2.e
 
 (* clang alpha equiv *)
-open Clang.Ast
-
 let clang_arg_alpha_equiv env a1 a2 : bool =
   match (a1, a2) with
   | Number n, Number m -> n = m

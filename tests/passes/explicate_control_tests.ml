@@ -1,7 +1,7 @@
 open OUnit2
+open TestUtils
 open Rlang
-open Clang.Ast
-open Clang.Lang
+open Clang
 open Passes.Explicate_control
 
 let econ1 = make_rprog (EInt 5)
@@ -46,13 +46,13 @@ let econ7' =
        , Seq (Set ("x", Add (Number 42, Var "y")), Seq (Set ("x1", Add (Var "x", Number 10)), Return (Var "x1"))) ))
 
 let test_explicate_control _ctxt =
-  assert_equal econ1' (explicate_control econ1) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ1" ~printer:Clang.Pp.pp;
-  assert_equal econ2' (explicate_control econ2) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ2" ~printer:Clang.Pp.pp;
-  assert_equal econ3' (explicate_control econ3) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ3" ~printer:Clang.Pp.pp;
-  assert_equal econ4' (explicate_control econ4) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ4" ~printer:Clang.Pp.pp;
-  assert_equal econ5' (explicate_control econ5) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ5" ~printer:Clang.Pp.pp;
-  assert_equal econ6' (explicate_control econ6) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ6" ~printer:Clang.Pp.pp;
-  assert_equal econ7' (explicate_control econ7) ~cmp:TestUtils.clang_alpha_equiv ~msg:"econ7" ~printer:Clang.Pp.pp
+  assert_equal econ1' (explicate_control econ1) ~cmp:clang_alpha_equiv ~msg:"econ1" ~printer:Clang.pp;
+  assert_equal econ2' (explicate_control econ2) ~cmp:clang_alpha_equiv ~msg:"econ2" ~printer:Clang.pp;
+  assert_equal econ3' (explicate_control econ3) ~cmp:clang_alpha_equiv ~msg:"econ3" ~printer:Clang.pp;
+  assert_equal econ4' (explicate_control econ4) ~cmp:clang_alpha_equiv ~msg:"econ4" ~printer:Clang.pp;
+  assert_equal econ5' (explicate_control econ5) ~cmp:clang_alpha_equiv ~msg:"econ5" ~printer:Clang.pp;
+  assert_equal econ6' (explicate_control econ6) ~cmp:clang_alpha_equiv ~msg:"econ6" ~printer:Clang.pp;
+  assert_equal econ7' (explicate_control econ7) ~cmp:clang_alpha_equiv ~msg:"econ7" ~printer:Clang.pp
 
 let test_is_resolve_complex _ctxt =
   assert_equal true
@@ -78,25 +78,25 @@ let test_is_resolve_complex _ctxt =
     ~msg:"is_resolve_complex: econ7" ~printer:string_of_bool
 
 let test_interp_explicate_control _ctxt =
-  assert_equal (Clang.Interp.interp econ1') (interp econ1) ~msg:"interp_explicate_control: econ1" ~printer:string_of_int;
-  assert_equal (Clang.Interp.interp econ2') (interp econ2) ~msg:"interp_explicate_control: econ2" ~printer:string_of_int;
+  assert_equal (Clang.interp econ1') (Rlang.interp econ1) ~msg:"interp_explicate_control: econ1" ~printer:string_of_int;
+  assert_equal (Clang.interp econ2') (Rlang.interp econ2) ~msg:"interp_explicate_control: econ2" ~printer:string_of_int;
   assert_equal
-    (Clang.Interp.interp ~inputs:[ 42 ] econ3')
-    (interp ~inputs:[ 42 ] econ3)
+    (Clang.interp ~inputs:[ 42 ] econ3')
+    (Rlang.interp ~inputs:[ 42 ] econ3)
     ~msg:"interp_explicate_control: econ3" ~printer:string_of_int;
   assert_equal
-    (Clang.Interp.interp ~inputs:[ 42 ] econ4')
-    (interp ~inputs:[ 42 ] econ4)
+    (Clang.interp ~inputs:[ 42 ] econ4')
+    (Rlang.interp ~inputs:[ 42 ] econ4)
     ~msg:"interp_explicate_control: econ4" ~printer:string_of_int;
   assert_equal
-    (Clang.Interp.interp ~inputs:[ 42 ] econ5')
-    (interp ~inputs:[ 42 ] econ5)
+    (Clang.interp ~inputs:[ 42 ] econ5')
+    (Rlang.interp ~inputs:[ 42 ] econ5)
     ~msg:"interp_explicate_control: econ5" ~printer:string_of_int;
   assert_equal
-    (Clang.Interp.interp ~inputs:[ 42 ] econ6')
-    (interp ~inputs:[ 42 ] econ6)
+    (Clang.interp ~inputs:[ 42 ] econ6')
+    (Rlang.interp ~inputs:[ 42 ] econ6)
     ~msg:"interp_explicate_control: econ6" ~printer:string_of_int;
-  assert_equal (Clang.Interp.interp econ7') (interp econ7) ~msg:"interp_explicate_control: econ7" ~printer:string_of_int
+  assert_equal (Clang.interp econ7') (Rlang.interp econ7) ~msg:"interp_explicate_control: econ7" ~printer:string_of_int
 
 let suite =
   "explicate_control_tests"

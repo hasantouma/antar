@@ -1,7 +1,5 @@
 open OUnit2
-open Clang.Ast
-open Clang.Interp
-open Clang.Lang
+open Clang
 
 let c1 = wrap_c_entry (Return (Number 5))
 let c2 = wrap_c_entry (Seq (Set ("x", Arg (Number 42)), Return (Var "x")))

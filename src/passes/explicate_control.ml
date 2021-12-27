@@ -1,4 +1,4 @@
-open Clang.Ast
+open Clang
 open Rlang
 
 let exp_to_arg (exp : exp) : arg =
