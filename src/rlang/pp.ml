@@ -1,6 +1,6 @@
 open Ast
 
-let pp expr =
+let pp (rprog : rprogram) : string =
   let rec pp indent expr =
     match expr with
     | EInt n -> string_of_int n
@@ -20,4 +20,4 @@ let pp expr =
       let spaces = String.make indent' ' ' in
       "(let ([" ^ x ^ " " ^ variable_expr ^ "])\n" ^ spaces ^ body_expr ^ ")"
   in
-  pp 0 expr
+  pp 0 rprog.e

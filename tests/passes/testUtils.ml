@@ -1,7 +1,7 @@
 (* rlang alpha equiv *)
 open Rlang
 
-let rlang_alpha_equiv e1 e2 : bool =
+let rlang_alpha_equiv p1 p2 : bool =
   let rec go env e1 e2 =
     match (e1, e2) with
     | EInt n, EInt m -> n = m
@@ -18,7 +18,7 @@ let rlang_alpha_equiv e1 e2 : bool =
       go env xe ye && go env' be1 be2
     | _ -> false
   in
-  go [] e1 e2
+  go [] p1.e p2.e
 
 (* clang alpha equiv *)
 open Clang.Ast

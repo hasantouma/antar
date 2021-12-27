@@ -1,6 +1,6 @@
 open Ast
 
-let interp ?(env = []) ?(inputs = []) expr =
+let interp ?(env = []) ?(inputs = []) (rprog : rprogram) : int =
   let read_int : unit -> int = Utils.Repl.make_read inputs in
   let rec interp env read_int expr =
     match expr with
@@ -21,14 +21,14 @@ let interp ?(env = []) ?(inputs = []) expr =
       let env' = (x, vx) :: env in
       interp env' read_int eb
   in
-  interp env read_int expr
+  interp env read_int rprog.e
 
 let simple expr : bool =
   match expr with
   | EInt _ | EVar _ -> true
   | _ -> false
 
-let optimize ?(env = []) expr : expr =
+let optimize ?(env = []) (rprog : rprogram) : rprogram =
   let rec optimize env expr =
     match expr with
     | EInt n -> EInt n
@@ -62,4 +62,5 @@ let optimize ?(env = []) expr : expr =
         let eb' = optimize env' eb in
         ELet (x, ex', eb')
   in
-  optimize env expr
+  let expr' = optimize env rprog.e in
+  { rprog with e = expr' }

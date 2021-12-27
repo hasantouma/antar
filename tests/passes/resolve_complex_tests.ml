@@ -1,33 +1,38 @@
 open OUnit2
+open TestUtils
 open Passes.Resolve_complex
 open Rlang
 
-let rco1 = EInt 5
-let rco1' = EInt 5
-let rco2 = ENegate (EInt 6)
-let rco2' = ENegate (EInt 6)
-let rco3 = EAdd (EInt 2, ERead)
-let rco3' = ELet ("x0", ERead, EAdd (EInt 2, EVar "x0"))
-let rco4 = EAdd (ENegate (EInt 42), ERead)
-let rco4' = ELet ("x0", ENegate (EInt 42), ELet ("x1", ERead, EAdd (EVar "x0", EVar "x1")))
-let rco5 = ENegate ERead
-let rco5' = ELet ("x1", ERead, ENegate (EVar "x1"))
-let rco6 = ENegate (EAdd (ERead, ENegate (EInt 42)))
+let rco1 = make_rprog (EInt 5)
+let rco1' = rco1
+let rco2 = make_rprog (ENegate (EInt 6))
+let rco2' = rco2
+let rco3 = make_rprog (EAdd (EInt 2, ERead))
+let rco3' = { rco3 with e = ELet ("x0", ERead, EAdd (EInt 2, EVar "x0")) }
+let rco4 = make_rprog (EAdd (ENegate (EInt 42), ERead))
+let rco4' = { rco4 with e = ELet ("x0", ENegate (EInt 42), ELet ("x1", ERead, EAdd (EVar "x0", EVar "x1"))) }
+let rco5 = make_rprog (ENegate ERead)
+let rco5' = { rco5 with e = ELet ("x1", ERead, ENegate (EVar "x1")) }
+let rco6 = make_rprog (ENegate (EAdd (ERead, ENegate (EInt 42))))
 
 let rco6' =
-  ELet ("x0", ELet ("x1", ERead, ELet ("x2", ENegate (EInt 42), EAdd (EVar "x1", EVar "x2"))), ENegate (EVar "x0"))
+  { rco6 with
+    e = ELet ("x0", ELet ("x1", ERead, ELet ("x2", ENegate (EInt 42), EAdd (EVar "x1", EVar "x2"))), ENegate (EVar "x0"))
+  }
 
-let rco7 = ELet ("x", EAdd (EInt 42, ENegate (EInt 10)), EAdd (EVar "x", EInt 10))
-let rco7' = ELet ("x", ELet ("x0", ENegate (EInt 10), EAdd (EInt 42, EVar "x0")), EAdd (EVar "x", EInt 10))
+let rco7 = make_rprog (ELet ("x", EAdd (EInt 42, ENegate (EInt 10)), EAdd (EVar "x", EInt 10)))
+
+let rco7' =
+  { rco7 with e = ELet ("x", ELet ("x0", ENegate (EInt 10), EAdd (EInt 42, EVar "x0")), EAdd (EVar "x", EInt 10)) }
 
 let test_resolve_complex _ctxt =
-  assert_equal rco1' (resolve_complex rco1) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco1" ~printer:pp;
-  assert_equal rco2' (resolve_complex rco2) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco2" ~printer:pp;
-  assert_equal rco3' (resolve_complex rco3) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco3" ~printer:pp;
-  assert_equal rco4' (resolve_complex rco4) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco4" ~printer:pp;
-  assert_equal rco5' (resolve_complex rco5) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco5" ~printer:pp;
-  assert_equal rco6' (resolve_complex rco6) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco6" ~printer:pp;
-  assert_equal rco7' (resolve_complex rco7) ~cmp:TestUtils.rlang_alpha_equiv ~msg:"resolve_complex: rco7" ~printer:pp
+  assert_equal rco1' (resolve_complex rco1) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco1" ~printer:pp;
+  assert_equal rco2' (resolve_complex rco2) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco2" ~printer:pp;
+  assert_equal rco3' (resolve_complex rco3) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco3" ~printer:pp;
+  assert_equal rco4' (resolve_complex rco4) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco4" ~printer:pp;
+  assert_equal rco5' (resolve_complex rco5) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco5" ~printer:pp;
+  assert_equal rco6' (resolve_complex rco6) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco6" ~printer:pp;
+  assert_equal rco7' (resolve_complex rco7) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco7" ~printer:pp
 
 let test_is_uniquify _ctxt =
   assert_equal true (Passes.Uniquify.is_uniquify rco1) ~msg:"resolve_complex: is_uniquify: rco1" ~printer:string_of_bool;

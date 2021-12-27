@@ -54,7 +54,7 @@ let choose_vars vars =
     let x = Utils.Fresh.fresh_var () in
     x :: vars
 
-let randp ?(vars = []) n =
+let randp ?(vars = []) (n : int) : rprogram =
   let rec randp vars n =
     if n = 0
     then choice randp vars
@@ -68,8 +68,9 @@ let randp ?(vars = []) n =
         let eb = randp vars' (n - 1) in
         ELet (x, ex, eb)
   in
-  randp vars n
+  let expr = randp vars n in
+  { info = false; e = expr }
 
-let generate_input_for_randp (expr : expr) : int list =
-  let reads : int = num_of_reads expr in
+let generate_input_for_randp (rprog : rprogram) : int list =
+  let reads : int = num_of_reads rprog.e in
   generate_input reads

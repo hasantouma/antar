@@ -6,7 +6,7 @@ let rec dup_exist lst =
   | [] -> false
   | hd :: tl -> List.exists (( = ) hd) tl || dup_exist tl
 
-let uniquify (expr : expr) : expr =
+let uniquify (rprog : rprogram) : rprogram =
   let rec uniquify rho expr =
     match expr with
     | EInt _ | ERead -> expr
@@ -27,10 +27,11 @@ let uniquify (expr : expr) : expr =
       let be' = uniquify rho' be in
       ELet (x', xe', be')
   in
-  uniquify [] expr
+  let expr' = uniquify [] rprog.e in
+  { rprog with e = expr' }
 
 (* is_uniquify *)
-let is_uniquify (expr : expr) : bool =
+let is_uniquify (rprog : rprogram) : bool =
   let rec is_uniquify expr : string list =
     match expr with
     | EInt _ | ERead -> []
@@ -45,5 +46,5 @@ let is_uniquify (expr : expr) : bool =
       let be' = is_uniquify be in
       [ x ] @ xe' @ be'
   in
-  let var_list = is_uniquify expr in
+  let var_list = is_uniquify rprog.e in
   var_list |> dup_exist |> not
