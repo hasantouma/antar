@@ -1,5 +1,5 @@
 open Clang.Ast
-open Rlang.Ast
+open Rlang
 
 let exp_to_arg (exp : exp) : arg =
   match exp with

@@ -70,6 +70,6 @@ let randp ?(vars = []) n =
   in
   randp vars n
 
-let generate_input_for_randp expr : int list =
+let generate_input_for_randp (expr : expr) : int list =
   let reads : int = num_of_reads expr in
   generate_input reads

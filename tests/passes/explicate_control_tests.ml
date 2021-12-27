@@ -1,5 +1,5 @@
 open OUnit2
-open Rlang.Ast
+open Rlang
 open Clang.Ast
 open Clang.Lang
 open Passes.Explicate_control
@@ -73,28 +73,25 @@ let test_is_resolve_complex _ctxt =
     ~msg:"is_resolve_complex: econ7" ~printer:string_of_bool
 
 let test_interp_explicate_control _ctxt =
-  assert_equal (Clang.Interp.interp econ1') (Rlang.Lang.interp econ1) ~msg:"interp_explicate_control: econ1"
-    ~printer:string_of_int;
-  assert_equal (Clang.Interp.interp econ2') (Rlang.Lang.interp econ2) ~msg:"interp_explicate_control: econ2"
-    ~printer:string_of_int;
+  assert_equal (Clang.Interp.interp econ1') (interp econ1) ~msg:"interp_explicate_control: econ1" ~printer:string_of_int;
+  assert_equal (Clang.Interp.interp econ2') (interp econ2) ~msg:"interp_explicate_control: econ2" ~printer:string_of_int;
   assert_equal
     (Clang.Interp.interp ~inputs:[ 42 ] econ3')
-    (Rlang.Lang.interp ~inputs:[ 42 ] econ3)
+    (interp ~inputs:[ 42 ] econ3)
     ~msg:"interp_explicate_control: econ3" ~printer:string_of_int;
   assert_equal
     (Clang.Interp.interp ~inputs:[ 42 ] econ4')
-    (Rlang.Lang.interp ~inputs:[ 42 ] econ4)
+    (interp ~inputs:[ 42 ] econ4)
     ~msg:"interp_explicate_control: econ4" ~printer:string_of_int;
   assert_equal
     (Clang.Interp.interp ~inputs:[ 42 ] econ5')
-    (Rlang.Lang.interp ~inputs:[ 42 ] econ5)
+    (interp ~inputs:[ 42 ] econ5)
     ~msg:"interp_explicate_control: econ5" ~printer:string_of_int;
   assert_equal
     (Clang.Interp.interp ~inputs:[ 42 ] econ6')
-    (Rlang.Lang.interp ~inputs:[ 42 ] econ6)
+    (interp ~inputs:[ 42 ] econ6)
     ~msg:"interp_explicate_control: econ6" ~printer:string_of_int;
-  assert_equal (Clang.Interp.interp econ7') (Rlang.Lang.interp econ7) ~msg:"interp_explicate_control: econ7"
-    ~printer:string_of_int
+  assert_equal (Clang.Interp.interp econ7') (interp econ7) ~msg:"interp_explicate_control: econ7" ~printer:string_of_int
 
 let suite =
   "explicate_control_tests"

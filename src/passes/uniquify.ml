@@ -1,4 +1,4 @@
-open Rlang.Ast
+open Rlang
 
 (* helper *)
 let rec dup_exist lst =

@@ -1,4 +1,4 @@
-open Rlang.Ast
+open Rlang
 
 let atom (expr : expr) : bool =
   match expr with
