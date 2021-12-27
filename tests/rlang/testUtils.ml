@@ -10,7 +10,7 @@ type rtest =
 
 let make_rprog (e : string) : Rlang.rprogram = e |> Lexing.from_string |> Rlang.parse
 
-let compiler (rprog : Rlang.rprogram) : Xlang.Ast.xprogram =
+let compiler (rprog : Rlang.rprogram) : Xlang.xprogram =
   rprog |> Rlang.optimize |> Passes.Uniquify.uniquify |> Passes.Resolve_complex.resolve_complex
   |> Passes.Explicate_control.explicate_control |> Passes.Select_instr.select_instr |> Passes.Assign_homes.assign_homes
   |> Passes.Patch_instructions.patch_instructions
@@ -21,14 +21,14 @@ let test_interp (t : rtest) =
   let rprog = make_rprog t.expr in
   assert_equal t.value (Rlang.interp ~inputs:t.inputs rprog) ~msg:("interp: " ^ t.message) ~printer:string_of_int;
   assert_equal t.value
-    (Xlang.Interp.interp ~inputs:t.inputs (compiler rprog))
+    (Xlang.interp ~inputs:t.inputs (compiler rprog))
     ~msg:("compiler: " ^ t.message) ~printer:string_of_int
 
 let test_compiler (t : rtest) =
   let rprog = make_rprog t.expr in
   let inputs = List.map string_of_int t.inputs in
   assert_equal (string_of_int t.value)
-    (Xlang.Assemble.assemble ~inputs (compiler rprog))
+    (Xlang.assemble ~inputs (compiler rprog))
     ~msg:("compiler: " ^ t.message)
     ~printer:(fun x -> x)
 

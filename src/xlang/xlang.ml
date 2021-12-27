@@ -1,4 +1,8 @@
-open Ast
+include Ast
+
+let assemble = Assemble.assemble
+let emitp = Emit.emitp
+let interp = Interp.interp
 
 let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
   let blocks =

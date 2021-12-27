@@ -1,7 +1,5 @@
 open OUnit2
-open Xlang.Ast
-open Xlang.Interp
-open Xlang.Lang
+open Xlang
 open Passes.Assign_homes
 
 let ah1 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX) ]
@@ -118,13 +116,13 @@ let ah7' : xprogram =
     ]
 
 let test_assign_homes _ctxt =
-  assert_equal ah1' (assign_homes ah1) ~msg:"assign_homes: ah1" ~printer:(Xlang.Emit.emitp true);
-  assert_equal ah2' (assign_homes ah2) ~msg:"assign_homes: ah2" ~printer:(Xlang.Emit.emitp true);
-  assert_equal ah3' (assign_homes ah3) ~msg:"assign_homes: ah3" ~printer:(Xlang.Emit.emitp true);
-  assert_equal ah4' (assign_homes ah4) ~msg:"assign_homes: ah4" ~printer:(Xlang.Emit.emitp true);
-  assert_equal ah5' (assign_homes ah5) ~msg:"assign_homes: ah5" ~printer:(Xlang.Emit.emitp true);
-  assert_equal ah6' (assign_homes ah6) ~msg:"assign_homes: ah6" ~printer:(Xlang.Emit.emitp true);
-  assert_equal ah7' (assign_homes ah7) ~msg:"assign_homes: ah7" ~printer:(Xlang.Emit.emitp true)
+  assert_equal ah1' (assign_homes ah1) ~msg:"assign_homes: ah1" ~printer:(Xlang.emitp true);
+  assert_equal ah2' (assign_homes ah2) ~msg:"assign_homes: ah2" ~printer:(Xlang.emitp true);
+  assert_equal ah3' (assign_homes ah3) ~msg:"assign_homes: ah3" ~printer:(Xlang.emitp true);
+  assert_equal ah4' (assign_homes ah4) ~msg:"assign_homes: ah4" ~printer:(Xlang.emitp true);
+  assert_equal ah5' (assign_homes ah5) ~msg:"assign_homes: ah5" ~printer:(Xlang.emitp true);
+  assert_equal ah6' (assign_homes ah6) ~msg:"assign_homes: ah6" ~printer:(Xlang.emitp true);
+  assert_equal ah7' (assign_homes ah7) ~msg:"assign_homes: ah7" ~printer:(Xlang.emitp true)
 
 let test_is_assign_homes _ctxt =
   assert_equal true (is_assign_homes ah1') ~msg:"is_assign_homes: ah1" ~printer:string_of_bool;

@@ -1,4 +1,4 @@
-open Xlang.Ast
+open Xlang
 
 let var_reg_map (index : int) (var : var) : var * arg =
   let offset = -1 * 8 * (index + 1) in

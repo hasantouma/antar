@@ -1,12 +1,9 @@
 open OUnit2
-open Xlang.Ast
-open Xlang.Interp
-open Xlang.Assemble
-open Xlang.Lang
+open Xlang
 
 let print_debugger ?(inputs = []) (p : xprogram) (msg : string) : string =
   let input = [%show: string list] inputs in
-  let pp = Xlang.Emit.emitp true p in
+  let pp = Xlang.emitp true p in
   Printf.sprintf "Input: %s\nTitle: %s:\n%s" input msg pp
 
 let s1 : xprogram = wrap_x_entry [ Movq (Constant 42, Reg RAX) ]

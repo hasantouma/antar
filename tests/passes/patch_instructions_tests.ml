@@ -1,7 +1,5 @@
 open OUnit2
-open Xlang.Ast
-open Xlang.Interp
-open Xlang.Lang
+open Xlang
 open Passes.Patch_instructions
 
 let pi1 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX) ]
@@ -132,13 +130,13 @@ let pi7' : xprogram =
     ]
 
 let test_patch_instructions _ctxt =
-  assert_equal pi1' (patch_instructions pi1) ~msg:"patch_instructions: pi1" ~printer:(Xlang.Emit.emitp false);
-  assert_equal pi2' (patch_instructions pi2) ~msg:"patch_instructions: pi2" ~printer:(Xlang.Emit.emitp false);
-  assert_equal pi3' (patch_instructions pi3) ~msg:"patch_instructions: pi3" ~printer:(Xlang.Emit.emitp false);
-  assert_equal pi4' (patch_instructions pi4) ~msg:"patch_instructions: pi4" ~printer:(Xlang.Emit.emitp false);
-  assert_equal pi5' (patch_instructions pi5) ~msg:"patch_instructions: pi5" ~printer:(Xlang.Emit.emitp false);
-  assert_equal pi6' (patch_instructions pi6) ~msg:"patch_instructions: pi6" ~printer:(Xlang.Emit.emitp false);
-  assert_equal pi7' (patch_instructions pi7) ~msg:"patch_instructions: pi7" ~printer:(Xlang.Emit.emitp false)
+  assert_equal pi1' (patch_instructions pi1) ~msg:"patch_instructions: pi1" ~printer:(Xlang.emitp false);
+  assert_equal pi2' (patch_instructions pi2) ~msg:"patch_instructions: pi2" ~printer:(Xlang.emitp false);
+  assert_equal pi3' (patch_instructions pi3) ~msg:"patch_instructions: pi3" ~printer:(Xlang.emitp false);
+  assert_equal pi4' (patch_instructions pi4) ~msg:"patch_instructions: pi4" ~printer:(Xlang.emitp false);
+  assert_equal pi5' (patch_instructions pi5) ~msg:"patch_instructions: pi5" ~printer:(Xlang.emitp false);
+  assert_equal pi6' (patch_instructions pi6) ~msg:"patch_instructions: pi6" ~printer:(Xlang.emitp false);
+  assert_equal pi7' (patch_instructions pi7) ~msg:"patch_instructions: pi7" ~printer:(Xlang.emitp false)
 
 let test_is_patch_instructions _ctxt =
   assert_equal true (is_patch_instructions pi1') ~msg:"is_patch_instructions: pi1" ~printer:string_of_bool;
