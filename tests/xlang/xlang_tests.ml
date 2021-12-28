@@ -1,9 +1,9 @@
 open OUnit2
 open Xlang
 
-let print_debugger ?(inputs = []) (p : xprogram) (msg : string) : string =
+let print_debugger ?(inputs = []) (xprog : xprogram) (msg : string) : string =
   let input = [%show: string list] inputs in
-  let pp = Xlang.emitp true p in
+  let pp = Xlang.emitp true xprog in
   Printf.sprintf "Input: %s\nTitle: %s:\n%s" input msg pp
 
 let s1 : xprogram = wrap_x_entry [ Movq (Constant 42, Reg RAX) ]
@@ -51,8 +51,8 @@ let s10 : xprogram =
 
 (* NOTE: Can't test this case against the system assembler because the use of refs *)
 let s11 : xprogram =
-  let entry = wrap [ Movq (Constant 13, Ref "hi"); Callq "foo" ] in
-  let foo = wrap [ Addq (Constant 10, Ref "hi"); Movq (Ref "hi", Reg RAX) ] in
+  let entry = wrap_x_helper [ Movq (Constant 13, Ref "hi"); Callq "foo" ] in
+  let foo = wrap_x_helper [ Addq (Constant 10, Ref "hi"); Movq (Ref "hi", Reg RAX) ] in
   make_xprog [ ("entry", entry); ("foo", foo) ]
 
 let s12 : xprogram = wrap_x_entry [ Callq "read_int" ]

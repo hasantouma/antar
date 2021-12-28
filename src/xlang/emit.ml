@@ -26,7 +26,7 @@ let emitr (reg : register) : string =
   | R14 -> "r14"
   | R15 -> "r15"
 
-let emita (var : bool) (arg : arg) : string =
+let emita (var : bool) (arg : xarg) : string =
   match arg with
   | Constant n -> "$" ^ string_of_int n
   | Reg reg -> emitr reg
@@ -47,6 +47,6 @@ let emiti (var : bool) (instr : instr) : string =
 
 let emitb (var : bool) (b : block) : string = List.fold_left (fun acc instr -> acc ^ emiti var instr ^ "\n") "" b.instrs
 
-let emitp (var : bool) (p : xprogram) : string =
+let emitp (var : bool) (xprog : xprogram) : string =
   let global = ".globl " ^ get_label "entry" in
-  List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ get_label label ^ ":\n" ^ emitb var block) global p.blks
+  List.fold_left (fun acc (label, block) -> acc ^ "\n" ^ get_label label ^ ":\n" ^ emitb var block) global xprog.blks

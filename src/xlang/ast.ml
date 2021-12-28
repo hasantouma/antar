@@ -1,4 +1,4 @@
-type var = string
+type xvar = string
 type label = string
 
 type register =
@@ -19,37 +19,37 @@ type register =
   | R14
   | R15
 
-type arg =
+type xarg =
   | Constant of int
   | Reg of register
   | Deref of register * int
-  | Ref of var
+  | Ref of xvar
 
 type instr =
-  | Addq of arg * arg
-  | Subq of arg * arg
-  | Movq of arg * arg
+  | Addq of xarg * xarg
+  | Subq of xarg * xarg
+  | Movq of xarg * xarg
   | Retq
-  | Negq of arg
+  | Negq of xarg
   | Callq of label
   | Jmp of label
-  | Pushq of arg
-  | Popq of arg
+  | Pushq of xarg
+  | Popq of xarg
 
 type block =
-  { info : var list
+  { info : xvar list
   ; instrs : instr list
   }
 
 type xprogram =
-  { info : var list
+  { info : xvar list
   ; blks : (label * block) list
   }
 
 type ms =
   { regs : (register * int) list
   ; addrs : (int * int) list
-  ; vars : (var * int) list
+  ; vars : (xvar * int) list
   ; labels : (label * block) list
   ; read_int : unit -> int
   }

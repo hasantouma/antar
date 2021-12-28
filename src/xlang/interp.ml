@@ -13,7 +13,7 @@ let init_ms (lst : (label * block) list) (read_int : unit -> int) : ms =
 
 (* Helpers *)
 (* 1/3: get value *)
-let rec get_val (ms : ms) (arg : arg) : int =
+let rec get_val (ms : ms) (arg : xarg) : int =
   match arg with
   | Constant n -> n
   | Reg r -> List.assoc r ms.regs
@@ -23,7 +23,7 @@ let rec get_val (ms : ms) (arg : arg) : int =
   | Ref v -> List.assoc v ms.vars
 
 (* 2/3: Update ms *)
-let update_ms (ms : ms) (arg : arg) (nn : int) : ms =
+let update_ms (ms : ms) (arg : xarg) (nn : int) : ms =
   match arg with
   | Constant _ -> raise (Failure "'update_ms()' Error - Can't update a number")
   | Reg r ->
@@ -38,7 +38,7 @@ let update_ms (ms : ms) (arg : arg) (nn : int) : ms =
     { ms with vars = updated_vars }
 
 (* 3/3: Arith *)
-let arith (ms : ms) (op : int -> int -> int) (src : arg) (dst : arg) : ms =
+let arith (ms : ms) (op : int -> int -> int) (src : xarg) (dst : xarg) : ms =
   let src_val : int = get_val ms src in
   let dst_val : int = get_val ms dst in
   update_ms ms dst (op dst_val src_val)
@@ -92,12 +92,12 @@ and interp_b (ms : ms) (label : label) : ms =
   interp_is ms block.instrs
 
 (* Interp program *)
-let interp_p (read_int : unit -> int) (p : xprogram) : ms =
-  let ms0 = init_ms p.blks read_int in
+let interp_p (read_int : unit -> int) (xprog : xprogram) : ms =
+  let ms0 = init_ms xprog.blks read_int in
   interp_b ms0 "entry"
 
 (* Get value from RAX *)
-let interp ?(inputs = []) (p : xprogram) : int =
+let interp ?(inputs = []) (xprog : xprogram) : int =
   let read_int : unit -> int = Utils.Repl.make_read inputs in
-  let ms = interp_p read_int p in
+  let ms = interp_p read_int xprog in
   List.assoc RAX ms.regs

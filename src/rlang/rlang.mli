@@ -1,12 +1,12 @@
-type var = string
+type rvar = string
 
 type expr = Ast.expr =
   | EInt of int
   | ERead
   | ENegate of expr
   | EAdd of expr * expr
-  | EVar of var
-  | ELet of var * expr * expr
+  | EVar of rvar
+  | ELet of rvar * expr * expr
 
 type rprogram =
   { info : bool

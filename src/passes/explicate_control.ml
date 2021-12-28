@@ -1,7 +1,7 @@
 open Clang
 open Rlang
 
-let exp_to_arg (exp : exp) : arg =
+let exp_to_arg (exp : exp) : carg =
   match exp with
   | Arg x -> x
   | _ -> raise (Failure "explicate_control: Invalid exp to arg")
@@ -23,7 +23,7 @@ let rec rlang_to_clang (expr : expr) : exp =
     Add (l'', r'')
   | _ -> raise (Failure "explicate_control: Invalid rlang to clang")
 
-let rec lift (expr : expr) : (var * expr) list * expr =
+let rec lift (expr : expr) : (rvar * expr) list * expr =
   match expr with
   | EInt n -> ([], EInt n)
   | EVar x -> ([], EVar x)
@@ -44,12 +44,12 @@ let wrap_ret_arg (expr : expr) : tail =
     let x = Utils.Fresh.fresh_var () in
     Seq (Set (x, exp), Return (Var x))
 
-let make_clang ((lst, expr) : (var * expr) list * expr) : (label * tail) list =
+let make_c_block_lst ((lst, expr) : (rvar * expr) list * expr) : (label * tail) list =
   let ret_arg = wrap_ret_arg expr in
   let lst' = List.map (fun (v, expr) -> (v, rlang_to_clang expr)) lst in
   let tail = List.fold_right (fun (v, exp) acc -> Seq (Set (v, exp), acc)) lst' ret_arg in
   [ ("entry", tail) ]
 
 let explicate_control (rprog : rprogram) : cprogram =
-  let blocks = lift rprog.e |> make_clang in
+  let blocks = rprog.e |> lift |> make_c_block_lst in
   { info = []; blks = blocks }

@@ -1,24 +1,24 @@
-type var = string
+type cvar = string
 type label = string
 
-type arg =
+type carg =
   | Number of int
   | Var of string
 
 type exp =
-  | Arg of arg
+  | Arg of carg
   | Read
-  | Negate of arg
-  | Add of arg * arg
+  | Negate of carg
+  | Add of carg * carg
 
-type stmt = Set of var * exp
+type stmt = Set of cvar * exp
 
 type tail =
-  | Return of arg
+  | Return of carg
   | Seq of stmt * tail
 
 type cprogram =
-  { info : var list
+  { info : cvar list
   ; blks : (label * tail) list
   }
 

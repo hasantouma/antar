@@ -18,9 +18,9 @@ let patch_instructions_blks ((label, block) : label * block) : label * block =
   let block' = patch_instructions_block block in
   (label, block')
 
-let patch_instructions (p : xprogram) : xprogram =
-  let blks' = List.map patch_instructions_blks p.blks in
-  { p with blks = blks' }
+let patch_instructions (xprog : xprogram) : xprogram =
+  let blks' = List.map patch_instructions_blks xprog.blks in
+  { xprog with blks = blks' }
 
 (* is_patch_instructions *)
 let is_patch_instructions_instr (b : bool) (instr : instr) : bool =
@@ -36,4 +36,4 @@ let is_patch_instructions_instrs (b : bool) (instrs : instr list) : bool =
 
 let is_patch_instructions_block (b : bool) (block : block) : bool = is_patch_instructions_instrs b block.instrs
 let is_patch_instructions_blks (b : bool) ((_, block) : label * block) : bool = is_patch_instructions_block b block
-let is_patch_instructions (p : xprogram) : bool = List.fold_left is_patch_instructions_blks true p.blks
+let is_patch_instructions (xprog : xprogram) : bool = List.fold_left is_patch_instructions_blks true xprog.blks

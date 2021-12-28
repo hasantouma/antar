@@ -14,11 +14,11 @@ let make_xprog ?(pinfo = []) (lst : (label * instr list) list) : xprogram =
   in
   { info = pinfo; blks = blocks }
 
-let stack_space (lst : var list) : int =
+let stack_space (lst : xvar list) : int =
   let n = List.length lst in
   if n mod 2 = 0 then 8 * n else 8 * (n + 1)
 
-let wrap ?(vars_length = 0) (lst : instr list) : instr list =
+let wrap_x_helper ?(vars_length = 0) (lst : instr list) : instr list =
   let sub = [ Subq (Constant vars_length, Reg RSP) ] in
   let add = [ Addq (Constant vars_length, Reg RSP) ] in
   let prologue = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP) ] in
@@ -32,5 +32,5 @@ let wrap ?(vars_length = 0) (lst : instr list) : instr list =
 
 let wrap_x_entry ?(pinfo = []) (instrs : instr list) : xprogram =
   let vars_length = stack_space pinfo in
-  let entry = wrap ~vars_length instrs in
+  let entry = wrap_x_helper ~vars_length instrs in
   make_xprog ~pinfo [ ("entry", entry) ]
