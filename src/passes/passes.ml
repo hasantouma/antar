@@ -20,3 +20,8 @@ let is_assign_homes = Assign_homes.is_assign_homes
 (* patch_instructions *)
 let patch_instructions = Patch_instructions.patch_instructions
 let is_patch_instructions = Patch_instructions.is_patch_instructions
+
+(* composition of passes *)
+let passes (rprog : Rlang.rprogram) : Xlang.xprogram =
+  rprog |> Rlang.optimize |> uniquify |> resolve_complex |> explicate_control |> select_instr |> assign_homes
+  |> patch_instructions

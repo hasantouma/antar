@@ -24,3 +24,6 @@ val is_assign_homes : xprogram -> bool
 (* patch_instructions *)
 val patch_instructions : xprogram -> xprogram
 val is_patch_instructions : xprogram -> bool
+
+(* composition of passes *)
+val passes : rprogram -> xprogram
