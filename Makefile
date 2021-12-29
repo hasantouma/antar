@@ -1,6 +1,6 @@
 build:
 	dune build bin/antar.exe
-	ln -sf _build/default/bin/antar.exe antar
+	cp _build/default/bin/antar.exe hcc
 
 run:
 	dune exec bin/antar.exe
@@ -12,7 +12,7 @@ test_all: runtime/runtime.o
 runtime/runtime.o: runtime/runtime.c
 
 clean:
-	rm -f antar
+	rm -f hcc
 	rm -f mygraph.dot
 	rm -f mygraph.png
 	rm -f runtime/runtime.o
