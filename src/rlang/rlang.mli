@@ -1,3 +1,5 @@
+exception BadInput of string
+
 type rvar = string
 
 type expr = Ast.expr =
