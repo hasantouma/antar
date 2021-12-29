@@ -1,4 +1,4 @@
-let runtime_obj_string = [%blob "../../runtime/runtime.o"]
+let runtime_obj_string = [%blob "runtime.o"]
 
 let handle_status (stat : Unix.process_status) : unit =
   match stat with

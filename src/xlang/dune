@@ -3,5 +3,10 @@
  (preprocess
   (pps ppx_blob))
  (preprocessor_deps
-  (file ../../runtime/runtime.o))
+  (file runtime.o))
  (libraries core utils))
+
+(rule
+ (target runtime.o)
+ (action
+  (run cc -o runtime.o -c ../../../../runtime/runtime.c)))

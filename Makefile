@@ -1,4 +1,4 @@
-build: runtime/runtime.o
+build:
 	dune build bin/antar.exe
 	cp _build/default/bin/antar.exe hcc
 
