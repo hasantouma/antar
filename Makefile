@@ -5,7 +5,7 @@ build:
 run:
 	dune exec bin/antar.exe
 
-test_all: runtime/runtime.o
+test_all:
 	dune runtest
 	make clean
 

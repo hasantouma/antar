@@ -34,7 +34,5 @@ jobs:
 
       - run: opam exec -- dune build
 
-      - run: make runtime/runtime.o
-
       - run: opam exec -- dune runtest
 
