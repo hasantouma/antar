@@ -54,7 +54,7 @@ type ms =
   ; read_int : unit -> int
   }
 
-val assemble : ?inputs:string list -> xprogram -> string
+val assemble : ?inputs:string list -> ?run:bool -> xprogram -> string
 val emitp : bool -> xprogram -> string
 val interp : ?inputs:int list -> xprogram -> int
 val make_xprog : ?pinfo:xvar list -> (label * instr list) list -> xprogram

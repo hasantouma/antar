@@ -23,7 +23,7 @@ let test_compiler (t : rtest) =
   let rprog = make_rprog t.expr in
   let inputs = List.map string_of_int t.inputs in
   assert_equal (string_of_int t.value)
-    (Xlang.assemble ~inputs (Passes.passes rprog))
+    (Xlang.assemble ~inputs ~run:true (Passes.passes rprog))
     ~msg:("composition of passes: " ^ t.message)
     ~printer:(fun x -> x)
 

@@ -44,6 +44,20 @@ let interp_file (file_name : string) : unit =
     print_endline "File does not exist!";
     exit 1)
 
+let compile (file_name : string) : unit =
+  if Sys.file_exists file_name
+  then
+    let rprog : rprogram option = parse_file file_name in
+    match rprog with
+    | None -> print_endline "No file to compile!"
+    | Some rprog ->
+      let xprog : Xlang.xprogram = Passes.passes rprog in
+      let _ = Xlang.assemble xprog in
+      ()
+  else (
+    print_endline "File does not exist!";
+    exit 1)
+
 (* TODO: This feature is not connected to the repl right now *)
 let interp_stdin (s : string) : unit =
   let lexbuf = Lexing.from_string s in

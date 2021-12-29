@@ -1,4 +1,4 @@
 (executable
  (name antar)
  (promote (until-clean))
- (libraries exceptions ocamlgraph rlang))
+ (libraries exceptions ocamlgraph passes))

@@ -15,6 +15,7 @@
   (name antar)
   (synopsis "Antar is a subset programming language of Racket")
   (depends
+    ppx_blob
     ppx_deriving
     core
     dune

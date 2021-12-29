@@ -1,4 +1,4 @@
-build:
+build: runtime/runtime.o
 	dune build bin/antar.exe
 	cp _build/default/bin/antar.exe hcc
 
@@ -13,6 +13,7 @@ runtime/runtime.o: runtime/runtime.c
 
 clean:
 	rm -f hcc
+	rm -f a.out
 	rm -f mygraph.dot
 	rm -f mygraph.png
 	rm -f runtime/runtime.o

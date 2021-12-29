@@ -1,3 +1,5 @@
+let runtime_obj_string = [%blob "../../runtime/runtime.o"]
+
 let handle_status (stat : Unix.process_status) : unit =
   match stat with
   | Unix.WEXITED n when n <> 0 -> raise (Failure (Printf.sprintf "exec_command WEXITED Error: %d" n))
@@ -9,13 +11,13 @@ let chomp s =
   let n = String.length s in
   if n > 0 && s.[n - 1] = '\n' then String.sub s 0 (n - 1) else s
 
-let unwind (protect : 'a -> unit) f x =
+let unwind protect f x =
   try
     let y = f x in
-    protect x;
+    let _ = protect x in
     y
   with e ->
-    protect x;
+    let _ = protect x in
     raise e
 
 let inputs_to_out_channel (out_chan : out_channel) (inputs : string list) : unit =
@@ -28,20 +30,23 @@ let inputs_to_out_channel (out_chan : out_channel) (inputs : string list) : unit
 let exec_command ?(inputs = []) (command : string) : string =
   let (in_chan, out_chan) : in_channel * out_channel = Unix.open_process command in
   inputs_to_out_channel out_chan inputs;
-  let res = Core.In_channel.input_all in_chan in
+  let result = Core.In_channel.input_all in_chan in
   handle_status (Unix.close_process (in_chan, out_chan));
-  res
+  result
 
-let assemble ?(inputs = []) (xprog : Ast.xprogram) : string =
-  let str : string = Emit.emitp true xprog in
-  let file, out = Filename.open_temp_file "" ".s" in
-  let bin = Filename.temp_file "" ".out" in
-  output_string out str;
-  close_out out;
-  unwind Sys.remove
-    (fun name ->
-      let _ = exec_command (Printf.sprintf "as -o %s.o %s" name name) in
-      let _ = exec_command (Printf.sprintf "cc -o %s -O0 ../../../../runtime/runtime.o %s.o" bin name) in
-      let res = exec_command ~inputs bin in
-      chomp res)
-    file
+let assemble ?(inputs = []) ?(run = false) (xprog : Ast.xprogram) : string =
+  let str : string = Emit.emitp false xprog in
+  let assembly_file, assembly_out = Filename.open_temp_file "" ".s" in
+  let runtime_file, runtime_out = Filename.open_temp_file "" ".o" in
+  let bin = if run then Filename.temp_file "" ".out" else "a.out" in
+  output_string assembly_out str;
+  output_string runtime_out runtime_obj_string;
+  close_out assembly_out;
+  close_out runtime_out;
+  unwind (List.map Sys.remove)
+    (fun _ ->
+      let _ = exec_command (Printf.sprintf "as -o %s.o %s" assembly_file assembly_file) in
+      let _ = exec_command (Printf.sprintf "cc -o %s -O0 %s %s.o" bin runtime_file assembly_file) in
+      let result : string = if run then exec_command ~inputs bin else "" in
+      chomp result)
+    [ assembly_file; runtime_file ]

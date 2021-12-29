@@ -1,6 +1,9 @@
 open OUnit2
 open Xlang
 
+(* Shadowing Xlang.assemble to set 'run' to true since all tests here need to be run to be tested! *)
+let assemble = assemble ~run:true
+
 let print_debugger ?(inputs = []) (xprog : xprogram) (msg : string) : string =
   let input = [%show: string list] inputs in
   let pp = Xlang.emitp true xprog in

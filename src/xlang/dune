@@ -1,3 +1,7 @@
 (library
  (name xlang)
+ (preprocess
+  (pps ppx_blob))
+ (preprocessor_deps
+  (file ../../runtime/runtime.o))
  (libraries core utils))

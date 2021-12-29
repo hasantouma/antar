@@ -8,6 +8,7 @@ let parse_cmd_line_args () =
     ; ("-g", Arg.Int (Repl.randp false), "<int> Generate random program of size n")
     ; ("-gv", Arg.Int (Repl.randp true), "<int> Generate, and visualize, random program of size n")
     ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
+    ; ("-c", Arg.String Repl.compile, "<file_path> Output the X86 assembly code")
     ]
   in
   Arg.parse speclist print_endline usage_msg
