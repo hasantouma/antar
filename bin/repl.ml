@@ -13,6 +13,8 @@ let parse_file (name : string) : rprogram option =
   close_in chan;
   rprog
 
+let handle_exit repl_in = if repl_in = "#quit" then exit 0
+
 let handle_display (rprog : rprogram option) : unit =
   match rprog with
   | None -> print_endline "Invalid program"
@@ -28,14 +30,10 @@ let rec repl () : unit =
   flush stdout;
   let repl_in = input_line stdin in
   handle_exit repl_in;
-  handle_comment repl_in;
   let lexbuf = Lexing.from_string repl_in in
   let rprog : rprogram option = lex_parse lexbuf in
   handle_display rprog;
   repl ()
-
-and handle_exit repl_in = if repl_in = "#quit" then exit 0
-and handle_comment repl_in = if Str.string_match (Str.regexp "^ *;") repl_in 0 then repl ()
 
 let interp_file (file_name : string) : unit =
   if Sys.file_exists file_name

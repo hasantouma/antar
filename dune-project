@@ -24,7 +24,6 @@
     (ocaml
       (>= 4.02.3))
     ocamlgraph ; For bin/viz.ml and src/rlang/viz.ml
-    ounit2 ; Testing module
-    str)) ; Regex module for bin/repl.ml
+    ounit2)) ; Testing module
 
 (using menhir 2.1)
