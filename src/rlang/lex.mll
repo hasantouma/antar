@@ -11,7 +11,6 @@ rule token = parse
   white { token lexbuf }
 | "read" { READ }
 | "let" { LET }
-| ';' [^ '\n']* '\n' { token lexbuf } (* skip ;'d lines as comments *)
 | '(' { LP }
 | ')' { RP }
 | '[' { LB }

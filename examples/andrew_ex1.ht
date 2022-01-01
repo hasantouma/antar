@@ -1,4 +1,3 @@
-; (- (+ (read) 1))
 (let ([foo (read)])
      (let ([bar (+ foo 1)])
           (- bar)))

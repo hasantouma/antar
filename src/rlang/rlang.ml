@@ -1,5 +1,4 @@
 include Ast
-include Exceptions
 
 let name = "R1"
 let make_rprog (expr : expr) : rprogram = { info = false; e = expr }

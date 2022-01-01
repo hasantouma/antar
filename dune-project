@@ -15,15 +15,15 @@
   (name antar)
   (synopsis "Antar is a subset programming language of Racket")
   (depends
-    ppx_blob ; To store runtime.o at compile time and load it again at runtime
-    ppx_deriving ; Testing derives pp for lists
-    core ; To determine OS name and read results from terminal in src/xlang/*
+    ppx_blob
+    ppx_deriving
+    core
     dune
     (menhir
-      (>= 2.1)) ; Parser
+      (>= 2.1))
     (ocaml
       (>= 4.02.3))
-    ocamlgraph ; For bin/viz.ml and src/rlang/viz.ml
-    ounit2)) ; Testing module
+    ocamlgraph
+    ounit2))
 
 (using menhir 2.1)
