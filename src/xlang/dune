@@ -8,5 +8,8 @@
 
 (rule
  (target runtime.o)
+ (deps ../../runtime/runtime.c)
  (action
-  (run cc -o runtime.o -c ../../../../runtime/runtime.c)))
+  (chdir
+   %{project_root}
+   (run cc -o %{target} -c %{deps}))))
