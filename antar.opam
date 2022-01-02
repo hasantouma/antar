@@ -10,7 +10,6 @@ depends: [
   "ppx_deriving"
   "core"
   "dune" {>= "2.9"}
-  "menhir" {>= "2.1"}
   "ocaml" {>= "4.02.3"}
   "ocamlgraph"
   "ounit2"

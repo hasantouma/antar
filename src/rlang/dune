@@ -2,8 +2,6 @@
  (name rlang)
  (libraries exceptions ocamlgraph utils))
 
-(ocamllex
- (modules lex))
+(ocamllex lex)
 
-(menhir
- (modules parse))
+(ocamlyacc parse)

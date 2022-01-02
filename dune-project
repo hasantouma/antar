@@ -1,5 +1,5 @@
-(lang dune 2.9)
-;          ^^^
+(lang dune 2.9.1)
+;          ^^^^^
 ; When changing the version, don't forget to regenerate *.opam files
 ; by running [dune build].
 
@@ -19,11 +19,8 @@
     ppx_deriving
     core
     dune
-    (menhir
-      (>= 2.1))
     (ocaml
       (>= 4.02.3))
     ocamlgraph
     ounit2))
 
-(using menhir 2.1)
