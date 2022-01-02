@@ -1,1 +1,1 @@
-exception BadInput of string
+exception SyntaxError of string

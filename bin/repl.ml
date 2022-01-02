@@ -1,9 +1,12 @@
 open Rlang
 
 let lex_parse (lexbuf : Lexing.lexbuf) : rprogram option =
-  try Some (parse lexbuf)
-  with BadInput s ->
-    print_endline ("Exception! Bad Input: " ^ s);
+  try Some (parse lexbuf) with
+  | SyntaxError s ->
+    print_endline ("Syntax Error: " ^ s);
+    None
+  | Parsing.Parse_error ->
+    print_endline "Parsing Error";
     None
 
 let parse_file (name : string) : rprogram option =
