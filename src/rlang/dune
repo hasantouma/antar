@@ -1,6 +1,6 @@
 (library
  (name rlang)
- (libraries exceptions ocamlgraph utils))
+ (libraries ocamlgraph utils))
 
 (ocamllex lex)
 

@@ -2,7 +2,7 @@ open Rlang
 
 let lex_parse (lexbuf : Lexing.lexbuf) : rprogram option =
   try Some (parse lexbuf)
-  with Exceptions.BadInput s ->
+  with BadInput s ->
     print_endline ("Exception! Bad Input: " ^ s);
     None
 
