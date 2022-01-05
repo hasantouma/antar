@@ -34,11 +34,11 @@ let exec_command ?(inputs = []) (command : string) : string =
   handle_status (Unix.close_process (in_chan, out_chan));
   result
 
-let assemble ?(inputs = []) ?(run = false) (xprog : Ast.xprogram) : string =
+let assemble ?(inputs = []) ?(run = false) ?(output_file = "a.out") (xprog : Ast.xprogram) : string =
   let str : string = Emit.emitp false xprog in
   let assembly_file, assembly_out = Filename.open_temp_file "" ".s" in
   let runtime_file, runtime_out = Filename.open_temp_file "" ".o" in
-  let bin = if run then Filename.temp_file "" ".out" else "a.out" in
+  let bin = if run then Filename.temp_file "" ".out" else output_file in
   output_string assembly_out str;
   output_string runtime_out runtime_obj_string;
   close_out assembly_out;
