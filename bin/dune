@@ -1,4 +1,7 @@
 (executable
  (name antar)
+ (preprocess
+  (pps ppx_deriving.show))
+ ; Just for debugging in bin/antar.ml
  (promote (until-clean))
  (libraries ocamlgraph passes))
