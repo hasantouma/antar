@@ -3,6 +3,7 @@ let usage_msg = Printf.sprintf "'%s' programming language" lang_name
 let greetings = Printf.sprintf "Welcome to the '%s' REPL" lang_name
 
 (* hcc helpers *)
+let assembly_ref = ref false
 let input_files_ref = ref []
 let output_file_ref = ref ""
 let anon_fun filename = input_files_ref := filename :: !input_files_ref
@@ -13,6 +14,7 @@ let parse_cmd_line_args () =
     ; ("-g", Arg.Int (Repl.randp false), "<int> Generate random program of size n")
     ; ("-gv", Arg.Int (Repl.randp true), "<int> Generate, and visualize, random program of size n")
     ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
+    ; ("-S", Arg.Set assembly_ref, "Output assembly file as <input_file>.s")
       (*; ("-c", Arg.String Repl.compile, "<file_path> Output the X86 assembly code") TODO: Remove when done *)
     ; ("-o", Arg.Set_string output_file_ref, "Set output file name")
     ]
@@ -20,11 +22,13 @@ let parse_cmd_line_args () =
   Arg.parse speclist anon_fun usage_msg;
   print_endline ("Inputs: " ^ [%show: string list] !input_files_ref);
   print_endline ("Output: " ^ !output_file_ref);
+  print_endline ("Assembly: " ^ string_of_bool !assembly_ref);
+  let output_assembly = !assembly_ref in
   let output_file = if !output_file_ref = "" then "a.out" else !output_file_ref in
   if List.length !input_files_ref > 0
   then
     let input_file = List.hd !input_files_ref in
-    Repl.compile ~input_file ~output_file
+    Repl.compile ~input_file ~output_file ~output_assembly
   else ()
 
 let run () =
