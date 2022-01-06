@@ -51,12 +51,12 @@ let file_cleanup (lst : string list) : unit = List.iter (fun f -> if Sys.file_ex
 
 let assemble ?(inputs = []) ?(run = false) ?(input_file = Filename.temp_file "" "") ?(output_file = "a.out")
     ?(output_assembly = false) (xprog : Ast.xprogram) : string =
-  let str : string = Emit.emitp false xprog in
+  let xprog_str : string = Emit.emitp false xprog in
   let assembly_file, assembly_out = open_file input_file ".s" output_assembly in
   let runtime_file, runtime_out = open_file "runtime" ".o" output_assembly in
   let bin = if run then Filename.temp_file "" ".out" else output_file in
   let cleanup_files = cleanup_list ~output_assembly ~assembly_file ~object_file:(input_file ^ ".o") ~runtime_file in
-  output_string assembly_out str;
+  output_string assembly_out xprog_str;
   output_string runtime_out runtime_obj_string;
   close_out assembly_out;
   close_out runtime_out;
