@@ -5,7 +5,7 @@ let greetings = Printf.sprintf "Welcome to the '%s' REPL" lang_name
 (* hcc helpers *)
 let assembly_ref = ref false
 let input_files_ref = ref []
-let output_file_ref = ref ""
+let output_file_ref = ref "a.out"
 let anon_fun filename = input_files_ref := filename :: !input_files_ref
 
 let parse_cmd_line_args () =
@@ -24,7 +24,7 @@ let parse_cmd_line_args () =
   print_endline ("Output: " ^ !output_file_ref);
   print_endline ("Assembly: " ^ string_of_bool !assembly_ref);
   let output_assembly = !assembly_ref in
-  let output_file = if !output_file_ref = "" then "a.out" else !output_file_ref in
+  let output_file = !output_file_ref in
   if List.length !input_files_ref > 0
   then
     let input_file = List.hd !input_files_ref in

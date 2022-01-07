@@ -47,12 +47,16 @@ let interp_file (file_name : string) : unit =
     print_endline "File does not exist!";
     exit 1)
 
+let extract_input_file (input_file : string) : string =
+  match Filename.chop_suffix_opt input_file ~suffix:".ht" with
+  | Some x -> x
+  | None -> input_file
+
 let compile ~(input_file : string) ~(output_file : string) ~(output_assembly : bool) : unit =
   if Sys.file_exists input_file
   then
     let rprog : rprogram option = parse_file input_file in
-    let input_file_len = String.length input_file in
-    let input_file = String.sub input_file 0 (input_file_len - 3) in
+    let input_file = extract_input_file input_file in
     match rprog with
     | None -> print_endline "No file to compile!"
     | Some rprog ->
