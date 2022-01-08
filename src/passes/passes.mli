@@ -2,6 +2,18 @@ open Clang
 open Rlang
 open Xlang
 
+type pass = Output.pass =
+  | Optimize
+  | Uniquify
+  | ResolveComplex
+  | ExplicateControl
+  | SelectInstr
+  | AssignHomes
+  | PatchInstrs
+
+(* optimize *)
+val optimize : ?env:(string * expr) list -> rprogram -> rprogram
+
 (* uniquify *)
 val uniquify : rprogram -> rprogram
 val is_uniquify : rprogram -> bool
@@ -27,3 +39,6 @@ val is_patch_instructions : xprogram -> bool
 
 (* composition of passes *)
 val passes : rprogram -> xprogram
+
+(* Run rprog up to the given pass and output the pretty-print of the result to <input_file>.<pass_name>.ht *)
+val process_passes : input_file:string -> rprog:rprogram -> passes:pass list -> unit

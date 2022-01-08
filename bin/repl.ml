@@ -47,15 +47,23 @@ let interp_file (file_name : string) : unit =
     print_endline "File does not exist!";
     exit 1)
 
-let compile (file_name : string) : unit =
-  if Sys.file_exists file_name
+let extract_input_file (input_file : string) : string =
+  match Filename.chop_suffix_opt input_file ~suffix:".ht" with
+  | Some x -> x
+  | None -> input_file
+
+let compile ~(input_file : string) ~(output_file : string) ~(output_assembly : bool) ~(passes : Passes.pass list) : unit
+    =
+  if Sys.file_exists input_file
   then
-    let rprog : rprogram option = parse_file file_name in
-    match rprog with
+    let rprog_opt : rprogram option = parse_file input_file in
+    let input_file = extract_input_file input_file in
+    match rprog_opt with
     | None -> print_endline "No file to compile!"
     | Some rprog ->
+      let _ = Passes.process_passes ~input_file ~rprog ~passes in
       let xprog : Xlang.xprogram = Passes.passes rprog in
-      let _ = Xlang.assemble xprog in
+      let _ = Xlang.assemble ~input_file ~output_file ~output_assembly xprog in
       ()
   else (
     print_endline "File does not exist!";

@@ -1,5 +1,6 @@
 (tests
  (names
+  optimize_tests
   uniquify_tests
   resolve_complex_tests
   explicate_control_tests
