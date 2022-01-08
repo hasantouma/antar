@@ -1,5 +1,5 @@
 (executable
  (name antar)
  ; Just for debugging in bin/antar.ml
- (promote (until-clean))
+ ; (promote (until-clean))
  (libraries ocamlgraph passes))
