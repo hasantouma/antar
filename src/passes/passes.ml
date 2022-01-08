@@ -1,3 +1,5 @@
+include Output
+
 (* uniquify *)
 let uniquify = Uniquify.uniquify
 let is_uniquify = Uniquify.is_uniquify
@@ -25,3 +27,6 @@ let is_patch_instructions = Patch_instructions.is_patch_instructions
 let passes (rprog : Rlang.rprogram) : Xlang.xprogram =
   rprog |> Rlang.optimize |> uniquify |> resolve_complex |> explicate_control |> select_instr |> assign_homes
   |> patch_instructions
+
+(* Run rprog up to the given pass and output the pretty-print of the result to <input_file>.<pass_name>.ht *)
+let process_passes = Output.process_passes
