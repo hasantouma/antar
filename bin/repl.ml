@@ -52,8 +52,8 @@ let extract_input_file (input_file : string) : string =
   | Some x -> x
   | None -> input_file
 
-let compile ~(input_file : string) ~(output_file : string) ~(output_assembly : bool) ~(passes_list : Passes.pass list) :
-    unit =
+let compile ~(input_file : string) ~(output_file : string) ~(output_assembly : bool) ~(passes : Passes.pass list) : unit
+    =
   if Sys.file_exists input_file
   then
     let rprog_opt : rprogram option = parse_file input_file in
@@ -61,7 +61,7 @@ let compile ~(input_file : string) ~(output_file : string) ~(output_assembly : b
     match rprog_opt with
     | None -> print_endline "No file to compile!"
     | Some rprog ->
-      let _ = Passes.process_passes ~input_file ~rprog ~passes:passes_list in
+      let _ = Passes.process_passes ~input_file ~rprog ~passes in
       let xprog : Xlang.xprogram = Passes.passes rprog in
       let _ = Xlang.assemble ~input_file ~output_file ~output_assembly xprog in
       ()
