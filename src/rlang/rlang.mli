@@ -18,7 +18,6 @@ type rprogram =
 val name : string
 val make_rprog : expr -> rprogram
 val interp : ?env:(string * int) list -> ?inputs:int list -> rprogram -> int
-val optimize : ?env:(string * expr) list -> rprogram -> rprogram
 val pp : rprogram -> string
 val parse : Lexing.lexbuf -> rprogram
 val randp : ?vars:string list -> int -> rprogram

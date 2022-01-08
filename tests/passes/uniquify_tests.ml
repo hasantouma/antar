@@ -42,7 +42,7 @@ let test_interp_uniquify _ctxt =
   assert_equal (interp u4') (interp u4) ~msg:"interp_uniquify: u4" ~printer:string_of_int
 
 let suite =
-  "passes_tests"
+  "uniquify_tests"
   >::: [ "uniquify" >:: test_uniquify; "is_uniquify" >:: test_is_uniquify; "interp_uniquify" >:: test_interp_uniquify ]
 
 let _ = run_test_tt_main suite

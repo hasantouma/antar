@@ -10,6 +10,9 @@ type pass = Output.pass =
   | AssignHomes
   | PatchInstrs
 
+(* optimize *)
+val optimize : ?env:(string * expr) list -> rprogram -> rprogram
+
 (* uniquify *)
 val uniquify : rprogram -> rprogram
 val is_uniquify : rprogram -> bool

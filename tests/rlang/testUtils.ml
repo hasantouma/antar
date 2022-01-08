@@ -2,7 +2,6 @@ open OUnit2
 
 type rtest =
   { expr : string
-  ; optimized : string
   ; value : int
   ; inputs : int list
   ; message : string
@@ -10,7 +9,7 @@ type rtest =
 
 let make_rprog (e : string) : Rlang.rprogram = e |> Lexing.from_string |> Rlang.parse
 
-(* *** Testing without optimized pass *** *)
+(* *** Testing interp *** *)
 
 let test_interp (t : rtest) =
   let rprog = make_rprog t.expr in
@@ -19,6 +18,8 @@ let test_interp (t : rtest) =
     (Xlang.interp ~inputs:t.inputs (Passes.passes rprog))
     ~msg:("composition of passes: " ^ t.message) ~printer:string_of_int
 
+(* *** Testing composition of passes *** *)
+
 let test_compiler (t : rtest) =
   let rprog = make_rprog t.expr in
   let inputs = List.map string_of_int t.inputs in
@@ -26,17 +27,3 @@ let test_compiler (t : rtest) =
     (Xlang.assemble ~inputs ~run:true (Passes.passes rprog))
     ~msg:("composition of passes: " ^ t.message)
     ~printer:(fun x -> x)
-
-(* *** Testing with optimized pass *** *)
-
-let test_optimize (t : rtest) =
-  let rprog_expr = make_rprog t.expr in
-  let rprog_optimized = make_rprog t.optimized in
-  assert_equal
-    (Rlang.interp ~inputs:t.inputs rprog_optimized)
-    (Rlang.interp ~inputs:t.inputs rprog_expr)
-    ~msg:("optimize vs. non-optimize: " ^ t.message)
-    ~printer:string_of_int;
-  assert_equal rprog_optimized (Rlang.optimize rprog_expr)
-    ~msg:("optimize AST vs. expr optimize AST: " ^ t.message)
-    ~printer:Rlang.pp
