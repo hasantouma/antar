@@ -3,6 +3,7 @@ open Rlang
 open Xlang
 
 type pass = Output.pass =
+  | Optimize
   | Uniquify
   | ResolveComplex
   | ExplicateControl

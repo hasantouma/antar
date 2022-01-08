@@ -9,6 +9,7 @@ let output_file_ref = ref "a.out"
 let anon_fun filename = input_files_ref := filename :: !input_files_ref
 
 (* passes flags *)
+let optimize_ref = ref false
 let uniquify_ref = ref false
 let resolve_complex_ref = ref false
 let explicate_control_ref = ref false
@@ -19,6 +20,7 @@ let passes_list_ref = ref []
 let append_pass (pass : Passes.pass) : unit = passes_list_ref := pass :: !passes_list_ref
 
 let get_passes_list () : Passes.pass list =
+  if !optimize_ref then append_pass Passes.Optimize;
   if !uniquify_ref then append_pass Passes.Uniquify;
   if !resolve_complex_ref then append_pass Passes.ResolveComplex;
   if !explicate_control_ref then append_pass Passes.ExplicateControl;
@@ -35,6 +37,7 @@ let parse_cmd_line_args () =
     ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
     ; ("-S", Arg.Set assembly_ref, "Output assembly file as <input_file>.s")
     ; ("-o", Arg.Set_string output_file_ref, "Set output file name")
+    ; ("-opt", Arg.Set optimize_ref, "Output rlang file with Optimize pass as <input_file>.opt.ht")
     ; ("-uni", Arg.Set uniquify_ref, "Output rlang file with Uniquify pass as <input_file>.uni.ht")
     ; ("-rco", Arg.Set resolve_complex_ref, "Output rlang file with Resolve-Complex pass as <input_file>.rco.ht")
     ; ("-econ", Arg.Set explicate_control_ref, "Output clang file with Explicate-Control pass as <input_file>.econ.ht")
