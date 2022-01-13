@@ -37,28 +37,31 @@ let fresh =
     counter := !counter + 1;
     !counter
 
-let[@warning "-8"] rec graph_of_expr (expr : expr) : vertex list * edge list =
-  let id = fresh () in
-  match expr with
-  | EInt _ | ERead | EVar _ -> ([ (id, expr) ], [])
-  | ENegate e ->
-    let v :: vs, es = graph_of_expr e in
-    let from = (id, expr) in
-    let vertices = from :: v :: vs in
-    let edges = (from, v) :: es in
-    (vertices, edges)
-  | EAdd (l, r) ->
-    let lv :: lvs, les = graph_of_expr l in
-    let rv :: rvs, res = graph_of_expr r in
-    let from = (id, expr) in
-    let vertices = (from :: lv :: rv :: lvs) @ rvs in
-    let edges = ((from, lv) :: (from, rv) :: les) @ res in
-    (vertices, edges)
-  | ELet (x, ex, eb) ->
-    let vv = (fresh (), EVar x) in
-    let xv :: xvs, xes = graph_of_expr ex in
-    let bv :: bvs, bes = graph_of_expr eb in
-    let from = (id, expr) in
-    let vertices = (from :: vv :: xv :: bv :: xvs) @ bvs in
-    let edges = ((from, vv) :: (vv, xv) :: (from, bv) :: xes) @ bes in
-    (vertices, edges)
+let graph_of_expr (rprog : rprogram) : vertex list * edge list =
+  let[@warning "-8"] rec graph_of_expr (expr : expr) : vertex list * edge list =
+    let id = fresh () in
+    match expr with
+    | EInt _ | ERead | EVar _ -> ([ (id, expr) ], [])
+    | ENegate e ->
+      let v :: vs, es = graph_of_expr e in
+      let from = (id, expr) in
+      let vertices = from :: v :: vs in
+      let edges = (from, v) :: es in
+      (vertices, edges)
+    | EAdd (l, r) ->
+      let lv :: lvs, les = graph_of_expr l in
+      let rv :: rvs, res = graph_of_expr r in
+      let from = (id, expr) in
+      let vertices = (from :: lv :: rv :: lvs) @ rvs in
+      let edges = ((from, lv) :: (from, rv) :: les) @ res in
+      (vertices, edges)
+    | ELet (x, ex, eb) ->
+      let vv = (fresh (), EVar x) in
+      let xv :: xvs, xes = graph_of_expr ex in
+      let bv :: bvs, bes = graph_of_expr eb in
+      let from = (id, expr) in
+      let vertices = (from :: vv :: xv :: bv :: xvs) @ bvs in
+      let edges = ((from, vv) :: (vv, xv) :: (from, bv) :: xes) @ bes in
+      (vertices, edges)
+  in
+  graph_of_expr rprog.e

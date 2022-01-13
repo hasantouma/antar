@@ -32,18 +32,18 @@ module Dot = Graph.Graphviz.Dot (struct
   let graph_attributes _ = []
 end)
 
-let generate_graph expr =
+let generate_graph (rprog : rprogram) =
   let g = G.empty in
-  let vs, es = graph_of_expr expr in
+  let vs, es = graph_of_expr rprog in
   let ns = List.map (fun v -> (v, G.V.create v)) vs in
   let get e = List.assoc e ns in
   let g = List.fold_left G.add_vertex g (List.map snd ns) in
   let g = List.fold_left (fun acc (v1, v2) -> G.add_edge acc (get v1) (get v2)) g es in
   g
 
-let write_expr_to_graphviz (expr : expr) : unit =
+let write_expr_to_graphviz (rprog : rprogram) : unit =
   let name = "mygraph.dot" in
-  let g = generate_graph expr in
+  let g = generate_graph rprog in
   let file = open_out_bin name in
   Dot.output_graph file g;
   let _ = Sys.command (Printf.sprintf "dot %s -Tpng -o mygraph.png && rm %s" name name) in

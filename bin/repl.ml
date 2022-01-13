@@ -81,10 +81,10 @@ let visualize (file_name : string) : unit =
     let rprog : rprogram option = parse_file file_name in
     handle_display rprog;
     let rprog = Option.get rprog in
-    Viz.write_expr_to_graphviz rprog.e)
+    Viz.write_expr_to_graphviz rprog)
   else interp_stdin file_name
 
 let randp (viz : bool) (n : int) : unit =
   let rprog : rprogram = randp n in
   handle_display (Some rprog);
-  if viz then Viz.write_expr_to_graphviz rprog.e else ()
+  if viz then Viz.write_expr_to_graphviz rprog else ()

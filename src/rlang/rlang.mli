@@ -27,4 +27,4 @@ type vertex = int * expr
 type edge = vertex * vertex
 
 val node_style_of_expr : expr -> Graph.Graphviz.DotAttributes.vertex list
-val graph_of_expr : expr -> vertex list * edge list
+val graph_of_expr : rprogram -> vertex list * edge list
