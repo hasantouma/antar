@@ -34,7 +34,7 @@ let parse_cmd_line_args () =
     [ ("-f", Arg.String Repl.interp_file, "<file_path> Parsing file")
     ; ("-g", Arg.Int (Repl.randp false), "<int> Generate random program of size n")
     ; ("-gv", Arg.Int (Repl.randp true), "<int> Generate, and visualize, random program of size n")
-    ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize")
+    ; ("-v", Arg.String Repl.visualize, "<file_path> File to visualize. Will output a 'mygraph.png' file.")
     ; ("-S", Arg.Set assembly_ref, "Output X86 assembly file as <input_file>.s")
     ; ("-o", Arg.Set_string output_file_ref, "Set output file name")
     ; ("-opt", Arg.Set optimize_ref, "Output rlang file with Optimize pass as <input_file>.opt.ht")
