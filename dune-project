@@ -1,4 +1,4 @@
-(lang dune 2.9.1)
+(lang dune 2.9.3)
 ;          ^^^^^
 ; When changing the version, don't forget to regenerate *.opam files
 ; by running [dune build].
