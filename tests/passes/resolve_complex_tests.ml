@@ -25,7 +25,7 @@ let rco7 = make_rprog (ELet ("x", EAdd (EInt 42, ENegate (EInt 10)), EAdd (EVar 
 let rco7' =
   { rco7 with e = ELet ("x", ELet ("x0", ENegate (EInt 10), EAdd (EInt 42, EVar "x0")), EAdd (EVar "x", EInt 10)) }
 
-let test_resolve_complex _ctxt =
+let test_resolve_complex ctxt =
   assert_equal rco1' (resolve_complex rco1) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco1" ~printer:pp;
   assert_equal rco2' (resolve_complex rco2) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco2" ~printer:pp;
   assert_equal rco3' (resolve_complex rco3) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco3" ~printer:pp;
@@ -34,7 +34,7 @@ let test_resolve_complex _ctxt =
   assert_equal rco6' (resolve_complex rco6) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco6" ~printer:pp;
   assert_equal rco7' (resolve_complex rco7) ~cmp:rlang_alpha_equiv ~msg:"resolve_complex: rco7" ~printer:pp
 
-let test_is_uniquify _ctxt =
+let test_is_uniquify ctxt =
   assert_equal true (is_uniquify rco1) ~msg:"resolve_complex: is_uniquify: rco1" ~printer:string_of_bool;
   assert_equal true (is_uniquify rco2) ~msg:"resolve_complex: is_uniquify: rco2" ~printer:string_of_bool;
   assert_equal true (is_uniquify rco3) ~msg:"resolve_complex: is_uniquify: rco3" ~printer:string_of_bool;
@@ -43,7 +43,7 @@ let test_is_uniquify _ctxt =
   assert_equal true (is_uniquify rco6) ~msg:"resolve_complex: is_uniquify: rco6" ~printer:string_of_bool;
   assert_equal true (is_uniquify rco7) ~msg:"resolve_complex: is_uniquify: rco7" ~printer:string_of_bool
 
-let test_is_resolve_complex _ctxt =
+let test_is_resolve_complex ctxt =
   assert_equal true (is_resolve_complex rco1') ~msg:"is_resolve_complex: rco1" ~printer:string_of_bool;
   assert_equal true (is_resolve_complex rco2') ~msg:"is_resolve_complex: rco2" ~printer:string_of_bool;
   assert_equal true (is_resolve_complex rco3') ~msg:"is_resolve_complex: rco3" ~printer:string_of_bool;
@@ -52,7 +52,7 @@ let test_is_resolve_complex _ctxt =
   assert_equal true (is_resolve_complex rco6') ~msg:"is_resolve_complex: rco6" ~printer:string_of_bool;
   assert_equal true (is_resolve_complex rco7') ~msg:"is_resolve_complex: rco7" ~printer:string_of_bool
 
-let test_interp_resolve_complex _ctxt =
+let test_interp_resolve_complex ctxt =
   assert_equal (interp rco1') (interp rco1) ~msg:"interp_resolve_complex: rco1" ~printer:string_of_int;
   assert_equal (interp rco2') (interp rco2) ~msg:"interp_resolve_complex: rco2" ~printer:string_of_int;
   assert_equal

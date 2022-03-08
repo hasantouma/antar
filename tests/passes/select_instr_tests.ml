@@ -96,7 +96,7 @@ let si7 : xprogram =
     ]
 
 (* Testing helper function. 'uncover_locals' gets called as a part of 'select_instr' *)
-let test_uncover_locals _ctxt =
+let test_uncover_locals ctxt =
   assert_equal ul1' (uncover_locals ul1) ~msg:"uncover_locals: ul1" ~printer:Clang.pp;
   assert_equal ul2' (uncover_locals ul2) ~msg:"uncover_locals: ul2" ~printer:Clang.pp;
   assert_equal ul3' (uncover_locals ul3) ~msg:"uncover_locals: ul3" ~printer:Clang.pp;
@@ -105,7 +105,7 @@ let test_uncover_locals _ctxt =
   assert_equal ul6' (uncover_locals ul6) ~msg:"uncover_locals: ul6" ~printer:Clang.pp;
   assert_equal ul7' (uncover_locals ul7) ~msg:"uncover_locals: ul7" ~printer:Clang.pp
 
-let test_select_instr _ctxt =
+let test_select_instr ctxt =
   assert_equal si1 (select_instr ul1) ~msg:"select_instr: si1" ~printer:(Xlang.emitp true);
   assert_equal si2 (select_instr ul2) ~msg:"select_instr: si2" ~printer:(Xlang.emitp true);
   assert_equal si3 (select_instr ul3) ~msg:"select_instr: si3" ~printer:(Xlang.emitp true);
@@ -114,7 +114,7 @@ let test_select_instr _ctxt =
   assert_equal si6 (select_instr ul6) ~msg:"select_instr: si6" ~printer:(Xlang.emitp true);
   assert_equal si7 (select_instr ul7) ~msg:"select_instr: si7" ~printer:(Xlang.emitp true)
 
-let test_interp_select_instr _ctxt =
+let test_interp_select_instr ctxt =
   assert_equal (Xlang.interp si1) (Clang.interp ul1') ~msg:"interp_select_instr: si1" ~printer:string_of_int;
   assert_equal (Xlang.interp si2) (Clang.interp ul2') ~msg:"interp_select_instr: si2" ~printer:string_of_int;
   assert_equal

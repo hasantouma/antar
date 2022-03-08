@@ -23,19 +23,19 @@ let u4' =
         , ELet ("x1", EInt 8, ELet ("x2", EAdd (EInt 1, EVar "x1"), EAdd (EVar "x2", EVar "x2"))) )
   }
 
-let test_uniquify _ctxt =
+let test_uniquify ctxt =
   assert_equal u1' (uniquify u1) ~cmp:rlang_alpha_equiv ~msg:"uniquify: u1" ~printer:pp;
   assert_equal u2' (uniquify u2) ~cmp:rlang_alpha_equiv ~msg:"uniquify: u2" ~printer:pp;
   assert_equal u3' (uniquify u3) ~cmp:rlang_alpha_equiv ~msg:"uniquify: u3" ~printer:pp;
   assert_equal u4' (uniquify u4) ~cmp:rlang_alpha_equiv ~msg:"uniquify: u4" ~printer:pp
 
-let test_is_uniquify _ctxt =
+let test_is_uniquify ctxt =
   assert_equal true (is_uniquify u1') ~msg:"is_uniquify: u1" ~printer:string_of_bool;
   assert_equal true (is_uniquify u2') ~msg:"is_uniquify: u2" ~printer:string_of_bool;
   assert_equal true (is_uniquify u3') ~msg:"is_uniquify: u3" ~printer:string_of_bool;
   assert_equal true (is_uniquify u4') ~msg:"is_uniquify: u4" ~printer:string_of_bool
 
-let test_interp_uniquify _ctxt =
+let test_interp_uniquify ctxt =
   assert_equal (interp ~inputs:[ 1 ] u1') (interp ~inputs:[ 1 ] u1) ~msg:"interp_uniquify: u1" ~printer:string_of_int;
   assert_equal (interp u2') (interp u2) ~msg:"interp_uniquify: u2" ~printer:string_of_int;
   assert_equal (interp u3') (interp u3) ~msg:"interp_uniquify: u3" ~printer:string_of_int;

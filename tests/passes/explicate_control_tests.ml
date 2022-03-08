@@ -45,7 +45,7 @@ let econ7' =
        ( Set ("y", Negate (Number 10))
        , Seq (Set ("x", Add (Number 42, Var "y")), Seq (Set ("x1", Add (Var "x", Number 10)), Return (Var "x1"))) ))
 
-let test_explicate_control _ctxt =
+let test_explicate_control ctxt =
   assert_equal econ1' (explicate_control econ1) ~cmp:clang_alpha_equiv ~msg:"econ1" ~printer:Clang.pp;
   assert_equal econ2' (explicate_control econ2) ~cmp:clang_alpha_equiv ~msg:"econ2" ~printer:Clang.pp;
   assert_equal econ3' (explicate_control econ3) ~cmp:clang_alpha_equiv ~msg:"econ3" ~printer:Clang.pp;
@@ -54,7 +54,7 @@ let test_explicate_control _ctxt =
   assert_equal econ6' (explicate_control econ6) ~cmp:clang_alpha_equiv ~msg:"econ6" ~printer:Clang.pp;
   assert_equal econ7' (explicate_control econ7) ~cmp:clang_alpha_equiv ~msg:"econ7" ~printer:Clang.pp
 
-let test_is_resolve_complex _ctxt =
+let test_is_resolve_complex ctxt =
   assert_equal true (is_resolve_complex econ1) ~msg:"is_resolve_complex: econ1" ~printer:string_of_bool;
   assert_equal true (is_resolve_complex econ2) ~msg:"is_resolve_complex: econ2" ~printer:string_of_bool;
   assert_equal true (is_resolve_complex econ3) ~msg:"is_resolve_complex: econ3" ~printer:string_of_bool;
@@ -63,7 +63,7 @@ let test_is_resolve_complex _ctxt =
   assert_equal true (is_resolve_complex econ6) ~msg:"is_resolve_complex: econ6" ~printer:string_of_bool;
   assert_equal true (is_resolve_complex econ7) ~msg:"is_resolve_complex: econ7" ~printer:string_of_bool
 
-let test_interp_explicate_control _ctxt =
+let test_interp_explicate_control ctxt =
   assert_equal (Clang.interp econ1') (Rlang.interp econ1) ~msg:"interp_explicate_control: econ1" ~printer:string_of_int;
   assert_equal (Clang.interp econ2') (Rlang.interp econ2) ~msg:"interp_explicate_control: econ2" ~printer:string_of_int;
   assert_equal

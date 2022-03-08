@@ -60,7 +60,7 @@ let opt21' = make_rprog "(let ([a (read)]) (+ a (- a)))"
 let opt22 = make_rprog "(let ([v0 (let ([v1 2]) (+ v1 3))]) (- (+ v0 (read))))"
 let opt22' = make_rprog "(+ -5 (- (read)))"
 
-let test_optimize _ctxt =
+let test_optimize ctxt =
   assert_equal opt1' (optimize opt1) ~cmp:rlang_alpha_equiv ~msg:"optimize: opt1" ~printer:Rlang.pp;
   assert_equal opt2' (optimize opt2) ~cmp:rlang_alpha_equiv ~msg:"optimize: opt2" ~printer:Rlang.pp;
   assert_equal opt3' (optimize opt3) ~cmp:rlang_alpha_equiv ~msg:"optimize: opt3" ~printer:Rlang.pp;
@@ -84,7 +84,7 @@ let test_optimize _ctxt =
   assert_equal opt21' (optimize opt21) ~cmp:rlang_alpha_equiv ~msg:"optimize: opt21" ~printer:Rlang.pp;
   assert_equal opt22' (optimize opt22) ~cmp:rlang_alpha_equiv ~msg:"optimize: opt22" ~printer:Rlang.pp
 
-let test_interp_optimize _ctxt =
+let test_interp_optimize ctxt =
   assert_equal (Rlang.interp opt1') (Rlang.interp opt1) ~msg:"interp_optimize: opt1" ~printer:string_of_int;
   assert_equal (Rlang.interp opt2') (Rlang.interp opt2) ~msg:"interp_optimize: opt2" ~printer:string_of_int;
   assert_equal

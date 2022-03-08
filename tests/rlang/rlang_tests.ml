@@ -5,31 +5,31 @@ open TestInputs
 let interp_iter = List.iter test_interp
 let compiler_iter = List.iter test_compiler
 
-let test_int _ctxt =
+let test_int ctxt =
   interp_iter int_list;
   compiler_iter int_list
 
-let test_read _ctxt =
+let test_read ctxt =
   interp_iter read_list;
   compiler_iter read_list
 
-let test_add _ctxt =
+let test_add ctxt =
   interp_iter add_list;
   compiler_iter add_list
 
-let test_negate _ctxt =
+let test_negate ctxt =
   interp_iter negate_list;
   compiler_iter negate_list
 
-let test_var _ctxt =
+let test_var ctxt =
   interp_iter var_list;
   compiler_iter var_list
 
-let test_let _ctxt =
+let test_let ctxt =
   interp_iter let_list;
   compiler_iter let_list
 
-let test_randp _ctxt =
+let test_randp ctxt =
   for _ = 1 to 100 do
     let n = Utils.Generator.depth () in
     let randp = randp n in

@@ -51,7 +51,7 @@ let c12 =
                ( Set ("w", Read)
                , Seq (Set ("y", Negate (Var "y")), Seq (Set ("z", Add (Var "x", Var "y")), Return (Var "z"))) ) ) ))
 
-let test_interp _ctxt =
+let test_interp ctxt =
   assert_equal 5 (interp c1) ~msg:"c1" ~printer:string_of_int;
   assert_equal 42 (interp c2) ~msg:"c2" ~printer:string_of_int;
   assert_equal 42 (interp c3) ~msg:"c3" ~printer:string_of_int;

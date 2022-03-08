@@ -5,4 +5,7 @@
 (env
  (dev
   (flags
-   (:standard -warn-error -A))))
+   (:standard -warn-error -A)
+   (:standard -w -27))))
+
+; Warning 27 [unused-var-strict]

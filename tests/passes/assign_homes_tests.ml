@@ -115,7 +115,7 @@ let ah7' : xprogram =
     ; Movq (Deref (RBP, -8), Reg RAX)
     ]
 
-let test_assign_homes _ctxt =
+let test_assign_homes ctxt =
   assert_equal ah1' (assign_homes ah1) ~msg:"assign_homes: ah1" ~printer:(Xlang.emitp true);
   assert_equal ah2' (assign_homes ah2) ~msg:"assign_homes: ah2" ~printer:(Xlang.emitp true);
   assert_equal ah3' (assign_homes ah3) ~msg:"assign_homes: ah3" ~printer:(Xlang.emitp true);
@@ -124,7 +124,7 @@ let test_assign_homes _ctxt =
   assert_equal ah6' (assign_homes ah6) ~msg:"assign_homes: ah6" ~printer:(Xlang.emitp true);
   assert_equal ah7' (assign_homes ah7) ~msg:"assign_homes: ah7" ~printer:(Xlang.emitp true)
 
-let test_is_assign_homes _ctxt =
+let test_is_assign_homes ctxt =
   assert_equal true (is_assign_homes ah1') ~msg:"is_assign_homes: ah1" ~printer:string_of_bool;
   assert_equal true (is_assign_homes ah2') ~msg:"is_assign_homes: ah2" ~printer:string_of_bool;
   assert_equal true (is_assign_homes ah3') ~msg:"is_assign_homes: ah3" ~printer:string_of_bool;
@@ -133,7 +133,7 @@ let test_is_assign_homes _ctxt =
   assert_equal true (is_assign_homes ah6') ~msg:"is_assign_homes: ah6" ~printer:string_of_bool;
   assert_equal true (is_assign_homes ah7') ~msg:"is_assign_homes: ah7" ~printer:string_of_bool
 
-let test_interp_assign_homes _ctxt =
+let test_interp_assign_homes ctxt =
   assert_equal (interp ah1') (interp ah1) ~msg:"interp_assign_homes: ah1" ~printer:string_of_int;
   assert_equal (interp ah2') (interp ah2) ~msg:"interp_assign_homes: ah2" ~printer:string_of_int;
   assert_equal

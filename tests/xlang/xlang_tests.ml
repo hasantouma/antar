@@ -93,7 +93,7 @@ let s18 : xprogram =
     ; ("endme", [ Movq (Constant 1337, Reg RAX); Popq (Reg RBP); Retq ])
     ]
 
-let test_interp _ctxt =
+let test_interp ctxt =
   assert_equal 42 (interp s1) ~msg:(print_debugger s1 "Movq") ~printer:string_of_int;
   assert_equal 14 (interp s2) ~msg:(print_debugger s2 "Addq") ~printer:string_of_int;
   assert_equal (-5) (interp s3) ~msg:(print_debugger s3 "Subq") ~printer:string_of_int;
@@ -119,7 +119,7 @@ let test_interp _ctxt =
     ~printer:string_of_int;
   assert_equal 1337 (interp s18) ~msg:(print_debugger s18 "Jump and return") ~printer:string_of_int
 
-let test_assemble _ctxt =
+let test_assemble ctxt =
   assert_equal "42" (assemble s1) ~msg:(print_debugger s1 "Movq") ~printer:(fun x -> x);
   assert_equal "14" (assemble s2) ~msg:(print_debugger s2 "Addq") ~printer:(fun x -> x);
   assert_equal "-5" (assemble s3) ~msg:(print_debugger s3 "Subq") ~printer:(fun x -> x);

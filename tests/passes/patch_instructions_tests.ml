@@ -129,7 +129,7 @@ let pi7' : xprogram =
     ; Movq (Deref (RSP, -8), Reg RAX)
     ]
 
-let test_patch_instructions _ctxt =
+let test_patch_instructions ctxt =
   assert_equal pi1' (patch_instructions pi1) ~msg:"patch_instructions: pi1" ~printer:(Xlang.emitp false);
   assert_equal pi2' (patch_instructions pi2) ~msg:"patch_instructions: pi2" ~printer:(Xlang.emitp false);
   assert_equal pi3' (patch_instructions pi3) ~msg:"patch_instructions: pi3" ~printer:(Xlang.emitp false);
@@ -138,7 +138,7 @@ let test_patch_instructions _ctxt =
   assert_equal pi6' (patch_instructions pi6) ~msg:"patch_instructions: pi6" ~printer:(Xlang.emitp false);
   assert_equal pi7' (patch_instructions pi7) ~msg:"patch_instructions: pi7" ~printer:(Xlang.emitp false)
 
-let test_is_patch_instructions _ctxt =
+let test_is_patch_instructions ctxt =
   assert_equal true (is_patch_instructions pi1') ~msg:"is_patch_instructions: pi1" ~printer:string_of_bool;
   assert_equal true (is_patch_instructions pi2') ~msg:"is_patch_instructions: pi2" ~printer:string_of_bool;
   assert_equal true (is_patch_instructions pi3') ~msg:"is_patch_instructions: pi3" ~printer:string_of_bool;
@@ -147,7 +147,7 @@ let test_is_patch_instructions _ctxt =
   assert_equal true (is_patch_instructions pi6') ~msg:"is_patch_instructions: pi6" ~printer:string_of_bool;
   assert_equal true (is_patch_instructions pi7') ~msg:"is_patch_instructions: pi7" ~printer:string_of_bool
 
-let test_interp_patch_instructions _ctxt =
+let test_interp_patch_instructions ctxt =
   assert_equal (interp pi1') (interp pi1) ~msg:"interp_patch_instructions: pi1" ~printer:string_of_int;
   assert_equal (interp pi2') (interp pi2) ~msg:"interp_patch_instructions: pi2" ~printer:string_of_int;
   assert_equal
