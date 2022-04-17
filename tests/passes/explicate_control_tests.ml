@@ -66,21 +66,13 @@ let test_is_resolve_complex ctxt =
 let test_interp_explicate_control ctxt =
   assert_equal (Clang.interp econ1') (Rlang.interp econ1) ~msg:"interp_explicate_control: econ1" ~printer:string_of_int;
   assert_equal (Clang.interp econ2') (Rlang.interp econ2) ~msg:"interp_explicate_control: econ2" ~printer:string_of_int;
-  assert_equal
-    (Clang.interp ~inputs:[ 42 ] econ3')
-    (Rlang.interp ~inputs:[ 42 ] econ3)
+  assert_equal (Clang.interp ~inputs:[ 42 ] econ3') (Rlang.interp ~inputs:[ 42 ] econ3)
     ~msg:"interp_explicate_control: econ3" ~printer:string_of_int;
-  assert_equal
-    (Clang.interp ~inputs:[ 42 ] econ4')
-    (Rlang.interp ~inputs:[ 42 ] econ4)
+  assert_equal (Clang.interp ~inputs:[ 42 ] econ4') (Rlang.interp ~inputs:[ 42 ] econ4)
     ~msg:"interp_explicate_control: econ4" ~printer:string_of_int;
-  assert_equal
-    (Clang.interp ~inputs:[ 42 ] econ5')
-    (Rlang.interp ~inputs:[ 42 ] econ5)
+  assert_equal (Clang.interp ~inputs:[ 42 ] econ5') (Rlang.interp ~inputs:[ 42 ] econ5)
     ~msg:"interp_explicate_control: econ5" ~printer:string_of_int;
-  assert_equal
-    (Clang.interp ~inputs:[ 42 ] econ6')
-    (Rlang.interp ~inputs:[ 42 ] econ6)
+  assert_equal (Clang.interp ~inputs:[ 42 ] econ6') (Rlang.interp ~inputs:[ 42 ] econ6)
     ~msg:"interp_explicate_control: econ6" ~printer:string_of_int;
   assert_equal (Clang.interp econ7') (Rlang.interp econ7) ~msg:"interp_explicate_control: econ7" ~printer:string_of_int
 

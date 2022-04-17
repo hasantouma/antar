@@ -105,8 +105,7 @@ let test_interp ctxt =
   assert_equal 42 (interp s9) ~msg:(print_debugger s9 "Movq RSP to RAX") ~printer:string_of_int;
   assert_equal 42 (interp s10) ~msg:(print_debugger s10 "Two labels") ~printer:string_of_int;
   assert_equal 23 (interp s11) ~msg:(print_debugger s11 "Ref var") ~printer:string_of_int;
-  assert_equal 52
-    (interp ~inputs:[ 52 ] s12)
+  assert_equal 52 (interp ~inputs:[ 52 ] s12)
     ~msg:(print_debugger ~inputs:[ "52" ] s12 "Callq 'read_int'")
     ~printer:string_of_int;
   assert_equal 4 (interp s13) ~msg:(print_debugger s13 "Override register") ~printer:string_of_int;
@@ -130,9 +129,7 @@ let test_assemble ctxt =
   assert_equal "17" (assemble s8) ~msg:(print_debugger s8 "Two Jmps to label") ~printer:(fun x -> x);
   assert_equal "42" (assemble s9) ~msg:(print_debugger s9 "Movq RSP to RAX") ~printer:(fun x -> x);
   assert_equal "42" (assemble s10) ~msg:(print_debugger s10 "Two labels") ~printer:(fun x -> x);
-  assert_equal "52"
-    (assemble ~inputs:[ "52" ] s12)
-    ~msg:(print_debugger ~inputs:[ "52" ] s12 "Callq 'read_int'")
+  assert_equal "52" (assemble ~inputs:[ "52" ] s12) ~msg:(print_debugger ~inputs:[ "52" ] s12 "Callq 'read_int'")
     ~printer:(fun x -> x);
   assert_equal "4" (assemble s13) ~msg:(print_debugger s13 "Override register") ~printer:(fun x -> x);
   assert_equal "10" (assemble s14) ~msg:(print_debugger s14 "Addq same register") ~printer:(fun x -> x);

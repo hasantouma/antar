@@ -55,22 +55,14 @@ let test_is_resolve_complex ctxt =
 let test_interp_resolve_complex ctxt =
   assert_equal (interp rco1') (interp rco1) ~msg:"interp_resolve_complex: rco1" ~printer:string_of_int;
   assert_equal (interp rco2') (interp rco2) ~msg:"interp_resolve_complex: rco2" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 42 ] rco3')
-    (interp ~inputs:[ 42 ] rco3)
-    ~msg:"interp_resolve_complex: rco3" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 42 ] rco4')
-    (interp ~inputs:[ 42 ] rco4)
-    ~msg:"interp_resolve_complex: rco4" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 42 ] rco5')
-    (interp ~inputs:[ 42 ] rco5)
-    ~msg:"interp_resolve_complex: rco5" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 42 ] rco6')
-    (interp ~inputs:[ 42 ] rco6)
-    ~msg:"interp_resolve_complex: rco6" ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 42 ] rco3') (interp ~inputs:[ 42 ] rco3) ~msg:"interp_resolve_complex: rco3"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 42 ] rco4') (interp ~inputs:[ 42 ] rco4) ~msg:"interp_resolve_complex: rco4"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 42 ] rco5') (interp ~inputs:[ 42 ] rco5) ~msg:"interp_resolve_complex: rco5"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 42 ] rco6') (interp ~inputs:[ 42 ] rco6) ~msg:"interp_resolve_complex: rco6"
+    ~printer:string_of_int;
   assert_equal (interp rco7') (interp rco7) ~msg:"interp_resolve_complex: rco7" ~printer:string_of_int
 
 let suite =

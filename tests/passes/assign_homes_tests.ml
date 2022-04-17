@@ -136,22 +136,14 @@ let test_is_assign_homes ctxt =
 let test_interp_assign_homes ctxt =
   assert_equal (interp ah1') (interp ah1) ~msg:"interp_assign_homes: ah1" ~printer:string_of_int;
   assert_equal (interp ah2') (interp ah2) ~msg:"interp_assign_homes: ah2" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 3 ] ah3')
-    (interp ~inputs:[ 3 ] ah3)
-    ~msg:"interp_assign_homes: ah3" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 4 ] ah4')
-    (interp ~inputs:[ 4 ] ah4)
-    ~msg:"interp_assign_homes: ah4" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 5 ] ah5')
-    (interp ~inputs:[ 5 ] ah5)
-    ~msg:"interp_assign_homes: ah5" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 6 ] ah6')
-    (interp ~inputs:[ 6 ] ah6)
-    ~msg:"interp_assign_homes: ah6" ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 3 ] ah3') (interp ~inputs:[ 3 ] ah3) ~msg:"interp_assign_homes: ah3"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 4 ] ah4') (interp ~inputs:[ 4 ] ah4) ~msg:"interp_assign_homes: ah4"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 5 ] ah5') (interp ~inputs:[ 5 ] ah5) ~msg:"interp_assign_homes: ah5"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 6 ] ah6') (interp ~inputs:[ 6 ] ah6) ~msg:"interp_assign_homes: ah6"
+    ~printer:string_of_int;
   assert_equal (interp ah7') (interp ah7) ~msg:"interp_assign_homes: ah7" ~printer:string_of_int
 
 let suite =

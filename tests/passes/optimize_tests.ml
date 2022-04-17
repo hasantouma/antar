@@ -87,32 +87,22 @@ let test_optimize ctxt =
 let test_interp_optimize ctxt =
   assert_equal (Rlang.interp opt1') (Rlang.interp opt1) ~msg:"interp_optimize: opt1" ~printer:string_of_int;
   assert_equal (Rlang.interp opt2') (Rlang.interp opt2) ~msg:"interp_optimize: opt2" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 12 ] opt3')
-    (Rlang.interp ~inputs:[ 12 ] opt3)
-    ~msg:"interp_optimize: opt3" ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ 12 ] opt3') (Rlang.interp ~inputs:[ 12 ] opt3) ~msg:"interp_optimize: opt3"
+    ~printer:string_of_int;
   assert_equal (Rlang.interp opt4') (Rlang.interp opt4) ~msg:"interp_optimize: opt4" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ -3 ] opt5')
-    (Rlang.interp ~inputs:[ -3 ] opt5)
-    ~msg:"interp_optimize: opt5" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 8 ] opt6')
-    (Rlang.interp ~inputs:[ 8 ] opt6)
-    ~msg:"interp_optimize: opt6" ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ -3 ] opt5') (Rlang.interp ~inputs:[ -3 ] opt5) ~msg:"interp_optimize: opt5"
+    ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ 8 ] opt6') (Rlang.interp ~inputs:[ 8 ] opt6) ~msg:"interp_optimize: opt6"
+    ~printer:string_of_int;
   assert_equal
     (Rlang.interp ~inputs:[ 2; 3 ] opt7')
     (Rlang.interp ~inputs:[ 2; 3 ] opt7)
     ~msg:"interp_optimize: opt7" ~printer:string_of_int;
   assert_equal (Rlang.interp opt8') (Rlang.interp opt8) ~msg:"interp_optimize: opt8" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 12 ] opt9')
-    (Rlang.interp ~inputs:[ 12 ] opt9)
-    ~msg:"interp_optimize: opt9" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 15 ] opt10')
-    (Rlang.interp ~inputs:[ 15 ] opt10)
-    ~msg:"interp_optimize: opt10" ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ 12 ] opt9') (Rlang.interp ~inputs:[ 12 ] opt9) ~msg:"interp_optimize: opt9"
+    ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ 15 ] opt10') (Rlang.interp ~inputs:[ 15 ] opt10) ~msg:"interp_optimize: opt10"
+    ~printer:string_of_int;
   assert_equal (Rlang.interp opt11') (Rlang.interp opt11) ~msg:"interp_optimize: opt11" ~printer:string_of_int;
   assert_equal (Rlang.interp opt12') (Rlang.interp opt12) ~msg:"interp_optimize: opt12" ~printer:string_of_int;
   assert_equal (Rlang.interp opt13') (Rlang.interp opt13) ~msg:"interp_optimize: opt13" ~printer:string_of_int;
@@ -128,18 +118,12 @@ let test_interp_optimize ctxt =
     (Rlang.interp ~inputs:[ 5; 10 ] opt19')
     (Rlang.interp ~inputs:[ 5; 10 ] opt19)
     ~msg:"interp_optimize: opt19" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 1 ] opt20')
-    (Rlang.interp ~inputs:[ 1 ] opt20)
-    ~msg:"interp_optimize: opt20" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 1 ] opt21')
-    (Rlang.interp ~inputs:[ 1 ] opt21)
-    ~msg:"interp_optimize: opt21" ~printer:string_of_int;
-  assert_equal
-    (Rlang.interp ~inputs:[ 2 ] opt22')
-    (Rlang.interp ~inputs:[ 2 ] opt22)
-    ~msg:"interp_optimize: opt22" ~printer:string_of_int
+  assert_equal (Rlang.interp ~inputs:[ 1 ] opt20') (Rlang.interp ~inputs:[ 1 ] opt20) ~msg:"interp_optimize: opt20"
+    ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ 1 ] opt21') (Rlang.interp ~inputs:[ 1 ] opt21) ~msg:"interp_optimize: opt21"
+    ~printer:string_of_int;
+  assert_equal (Rlang.interp ~inputs:[ 2 ] opt22') (Rlang.interp ~inputs:[ 2 ] opt22) ~msg:"interp_optimize: opt22"
+    ~printer:string_of_int
 
 let suite = "optimize_tests" >::: [ "optimize" >:: test_optimize; "interp_optimize" >:: test_interp_optimize ]
 let _ = run_test_tt_main suite

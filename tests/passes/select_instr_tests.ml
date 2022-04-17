@@ -117,22 +117,14 @@ let test_select_instr ctxt =
 let test_interp_select_instr ctxt =
   assert_equal (Xlang.interp si1) (Clang.interp ul1') ~msg:"interp_select_instr: si1" ~printer:string_of_int;
   assert_equal (Xlang.interp si2) (Clang.interp ul2') ~msg:"interp_select_instr: si2" ~printer:string_of_int;
-  assert_equal
-    (Xlang.interp ~inputs:[ 3 ] si3)
-    (Clang.interp ~inputs:[ 3 ] ul3')
-    ~msg:"interp_select_instr: si3" ~printer:string_of_int;
-  assert_equal
-    (Xlang.interp ~inputs:[ 4 ] si4)
-    (Clang.interp ~inputs:[ 4 ] ul4')
-    ~msg:"interp_select_instr: si4" ~printer:string_of_int;
-  assert_equal
-    (Xlang.interp ~inputs:[ 5 ] si5)
-    (Clang.interp ~inputs:[ 5 ] ul5')
-    ~msg:"interp_select_instr: si5" ~printer:string_of_int;
-  assert_equal
-    (Xlang.interp ~inputs:[ 6 ] si6)
-    (Clang.interp ~inputs:[ 6 ] ul6')
-    ~msg:"interp_select_instr: si6" ~printer:string_of_int;
+  assert_equal (Xlang.interp ~inputs:[ 3 ] si3) (Clang.interp ~inputs:[ 3 ] ul3') ~msg:"interp_select_instr: si3"
+    ~printer:string_of_int;
+  assert_equal (Xlang.interp ~inputs:[ 4 ] si4) (Clang.interp ~inputs:[ 4 ] ul4') ~msg:"interp_select_instr: si4"
+    ~printer:string_of_int;
+  assert_equal (Xlang.interp ~inputs:[ 5 ] si5) (Clang.interp ~inputs:[ 5 ] ul5') ~msg:"interp_select_instr: si5"
+    ~printer:string_of_int;
+  assert_equal (Xlang.interp ~inputs:[ 6 ] si6) (Clang.interp ~inputs:[ 6 ] ul6') ~msg:"interp_select_instr: si6"
+    ~printer:string_of_int;
   assert_equal (Xlang.interp si7) (Clang.interp ul7') ~msg:"interp_select_instr: si7" ~printer:string_of_int
 
 let suite =

@@ -150,22 +150,14 @@ let test_is_patch_instructions ctxt =
 let test_interp_patch_instructions ctxt =
   assert_equal (interp pi1') (interp pi1) ~msg:"interp_patch_instructions: pi1" ~printer:string_of_int;
   assert_equal (interp pi2') (interp pi2) ~msg:"interp_patch_instructions: pi2" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 3 ] pi3')
-    (interp ~inputs:[ 3 ] pi3)
-    ~msg:"interp_patch_instructions: pi3" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 4 ] pi4')
-    (interp ~inputs:[ 4 ] pi4)
-    ~msg:"interp_patch_instructions: pi4" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 5 ] pi5')
-    (interp ~inputs:[ 5 ] pi5)
-    ~msg:"interp_patch_instructions: pi5" ~printer:string_of_int;
-  assert_equal
-    (interp ~inputs:[ 6 ] pi6')
-    (interp ~inputs:[ 6 ] pi6)
-    ~msg:"interp_patch_instructions: pi6" ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 3 ] pi3') (interp ~inputs:[ 3 ] pi3) ~msg:"interp_patch_instructions: pi3"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 4 ] pi4') (interp ~inputs:[ 4 ] pi4) ~msg:"interp_patch_instructions: pi4"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 5 ] pi5') (interp ~inputs:[ 5 ] pi5) ~msg:"interp_patch_instructions: pi5"
+    ~printer:string_of_int;
+  assert_equal (interp ~inputs:[ 6 ] pi6') (interp ~inputs:[ 6 ] pi6) ~msg:"interp_patch_instructions: pi6"
+    ~printer:string_of_int;
   assert_equal (interp pi7') (interp pi7) ~msg:"interp_patch_instructions: pi7" ~printer:string_of_int
 
 let suite =
