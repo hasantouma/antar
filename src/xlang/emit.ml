@@ -1,20 +1,12 @@
 open Ast
 
-let os_name_ref : string ref = ref ""
+let os_name : string =
+  let ic = Unix.open_process_in "uname" in
+  let uname = input_line ic in
+  close_in ic;
+  String.lowercase_ascii uname
 
-let get_os_name () : string =
-  if !os_name_ref = ""
-  then (
-    let ic = Unix.open_process_in "uname" in
-    let uname = input_line ic in
-    let () = close_in ic in
-    os_name_ref := String.lowercase_ascii uname;
-    !os_name_ref)
-  else !os_name_ref
-
-let get_label label =
-  let os_name = get_os_name () in
-  if os_name = "darwin" then "_" ^ label else label
+let get_label label = if os_name = "darwin" then "_" ^ label else label
 
 let emitr (reg : register) : string =
   "%"
