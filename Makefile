@@ -10,7 +10,6 @@ run:
 .PHONY: test_all
 test_all:
 	dune runtest
-	make clean
 
 runtime/runtime.o: runtime/runtime.c
 
@@ -20,7 +19,6 @@ clean:
 	rm -f a.out
 	rm -f mygraph.dot
 	rm -f mygraph.png
-	rm -f runtime/runtime.o
 	dune clean
 
 # You can stick this section in your own project if you wish.
