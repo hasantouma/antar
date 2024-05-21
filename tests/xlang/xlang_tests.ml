@@ -12,18 +12,18 @@ let print_debugger ?(inputs = []) (xprog : xprogram) (msg : string) : string =
 let s1 : xprogram = wrap_x_entry [ Movq (Constant 42, Reg RAX) ]
 let s2 : xprogram = wrap_x_entry [ Movq (Constant 12, Reg RAX); Addq (Constant 2, Reg RAX) ]
 let s3 : xprogram = wrap_x_entry [ Movq (Constant 5, Reg RAX); Subq (Constant 10, Reg RAX) ]
-let s4 : xprogram = wrap_x_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg RBX); Subq (Reg RBX, Reg RAX) ]
+let s4 : xprogram = wrap_x_entry [ Movq (Constant 32, Reg RAX); Movq (Constant 1, Reg R12); Subq (Reg R12, Reg RAX) ]
 let s5 : xprogram = wrap_x_entry [ Movq (Constant (-57), Reg RAX); Negq (Reg RAX) ]
 
 let s6 : xprogram =
   wrap_x_entry
     [ Movq (Constant 23, Reg RAX)
     ; Pushq (Reg RAX)
-    ; Movq (Constant 8, Reg RBX)
-    ; Pushq (Reg RBX)
+    ; Movq (Constant 8, Reg R12)
+    ; Pushq (Reg R12)
     ; Popq (Reg RAX)
-    ; Popq (Reg RBX)
-    ; Subq (Reg RBX, Reg RAX)
+    ; Popq (Reg R12)
+    ; Subq (Reg R12, Reg RAX)
     ]
 
 let s7 : xprogram =
@@ -33,8 +33,8 @@ let s7 : xprogram =
 
 let s8 : xprogram =
   let entry = [ Pushq (Reg RBP); Movq (Reg RSP, Reg RBP); Pushq (Constant 17); Jmp "foo" ] in
-  let foo = [ Popq (Reg RBX); Jmp "bar" ] in
-  let bar = [ Movq (Reg RBX, Reg RAX); Popq (Reg RBP); Retq ] in
+  let foo = [ Popq (Reg R12); Jmp "bar" ] in
+  let bar = [ Movq (Reg R12, Reg RAX); Popq (Reg RBP); Retq ] in
   make_xprog [ ("entry", entry); ("foo", foo); ("bar", bar) ]
 
 let s9 : xprogram = wrap_x_entry [ Pushq (Constant 42); Movq (Deref (RSP, 0), Reg RAX); Addq (Constant 8, Reg RSP) ]
@@ -66,18 +66,18 @@ let s15 : xprogram =
   wrap_x_entry
     [ Movq (Constant 5, Reg RAX)
     ; Pushq (Reg RAX)
-    ; Popq (Reg RBX)
+    ; Popq (Reg R12)
     ; Movq (Constant 6, Reg RAX)
     ; Pushq (Reg RAX)
     ; Popq (Reg RCX)
-    ; Addq (Reg RBX, Reg RCX)
+    ; Addq (Reg R12, Reg RCX)
     ; Subq (Reg RCX, Reg RAX)
     ]
 
 let s16 : xprogram = make_xprog [ ("entry", [ Movq (Constant 42, Reg RAX); Retq; Movq (Constant 15, Reg RAX) ]) ]
 
 let s17 : xprogram =
-  wrap_x_entry [ Callq "read_int"; Movq (Reg RAX, Reg RBX); Callq "read_int"; Subq (Reg RBX, Reg RAX) ]
+  wrap_x_entry [ Callq "read_int"; Movq (Reg RAX, Reg R12); Callq "read_int"; Subq (Reg R12, Reg RAX) ]
 
 let s18 : xprogram =
   make_xprog
@@ -137,7 +137,7 @@ let test_assemble ctxt =
   assert_equal "42" (assemble s16) ~msg:(print_debugger s16 "Movq after Retq") ~printer:(fun x -> x);
   assert_equal "7"
     (assemble ~inputs:[ "3"; "10" ] s17)
-    ~msg:(print_debugger ~inputs:[ "52" ] s17 "Callq 'read_int' twice")
+    ~msg:(print_debugger ~inputs:[ "3"; "10" ] s17 "Callq 'read_int' twice")
     ~printer:(fun x -> x);
   assert_equal "1337" (assemble s18) ~msg:(print_debugger s18 "Jump and return") ~printer:(fun x -> x)
 
