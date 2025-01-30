@@ -19,7 +19,7 @@ jobs:
         os:
           - ubuntu-latest
         ocaml-compiler:
-          - 4.12.x
+          - 5.2.x
 
     runs-on: ${{ matrix.os }}
 
@@ -38,4 +38,3 @@ jobs:
       - run: opam exec -- dune build
 
       - run: opam exec -- dune runtest
-

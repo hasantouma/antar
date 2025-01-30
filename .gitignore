@@ -2,6 +2,7 @@
 antar
 hcc
 _build
+_opam
 
 # VS Code
 .vscode

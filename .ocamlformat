@@ -1,4 +1,4 @@
-version = 0.26.2
+version = 0.27.0
 profile = conventional
 margin = 120
 break-separators = before
@@ -19,4 +19,3 @@ cases-exp-indent = 2
 break-cases = fit-or-vertical
 indicate-nested-or-patterns = unsafe-no
 parse-docstrings = true
-

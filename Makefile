@@ -33,3 +33,11 @@ deps.png:
 utop:
 	dune utop src/
 
+.PHONY: fmt
+fmt:
+	dune fmt
+
+.PHONY: install-deps
+install-deps:
+	opam install . --deps-only --with-test
+	opam install dune-deps
