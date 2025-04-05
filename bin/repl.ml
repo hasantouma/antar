@@ -28,13 +28,16 @@ let handle_display (rprog : rprogram option) : unit =
       print_endline (pp rprog ^ " -> " ^ answer)
     with Not_found -> print_endline "Can't find var in env.")
 
+let rprog_opt_of_string (s : string) : rprogram option =
+  let lexbuf = Lexing.from_string s in
+  lex_parse lexbuf
+
 let rec repl () : unit =
   output_string stdout "> ";
   flush stdout;
   let repl_in = input_line stdin in
   handle_exit repl_in;
-  let lexbuf = Lexing.from_string repl_in in
-  let rprog : rprogram option = lex_parse lexbuf in
+  let rprog : rprogram option = rprog_opt_of_string repl_in in
   handle_display rprog;
   repl ()
 
@@ -69,20 +72,16 @@ let compile ~(input_file : string) ~(output_file : string) ~(output_assembly : b
     print_endline "File does not exist!";
     exit 1)
 
-(* TODO: This feature is not connected to the repl right now *)
-let interp_stdin (s : string) : unit =
-  let lexbuf = Lexing.from_string s in
-  let rprog : rprogram option = lex_parse lexbuf in
-  handle_display rprog
-
 let visualize (file_name : string) : unit =
-  if Sys.file_exists file_name
-  then (
-    let rprog : rprogram option = parse_file file_name in
+  let rprog : rprogram option =
+    if Sys.file_exists file_name
+    then
+      parse_file file_name
+    else
+      rprog_opt_of_string file_name in
     handle_display rprog;
     let rprog = Option.get rprog in
-    Viz.write_expr_to_graphviz rprog)
-  else interp_stdin file_name
+    Viz.write_expr_to_graphviz rprog
 
 let randp (viz : bool) (n : int) : unit =
   let rprog : rprogram = randp n in
